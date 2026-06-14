@@ -1,0 +1,1 @@
+appointment_id,user_id,patient_name,patient_email,doctor_id,clinic_id,date,time,duration_minutes,status,symptom
