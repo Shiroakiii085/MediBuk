@@ -1,15 +1,14 @@
 'use client';
 
-import { signIn, useSession } from 'next-auth/react';
+import { signIn } from 'next-auth/react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useState, Suspense, useEffect } from 'react';
+import { useState, Suspense } from 'react';
 import Link from 'next/link';
 import { Mail, Lock, LogIn, AlertCircle } from 'lucide-react';
 
 function SignInForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const { data: session, status } = useSession();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -17,13 +16,6 @@ function SignInForm() {
 
   const callbackUrl = searchParams.get('callbackUrl') || '/dashboard';
   const urlError = searchParams.get('error');
-
-  // If already logged in, redirect to dashboard
-  useEffect(() => {
-    if (status === 'authenticated') {
-      router.push('/dashboard');
-    }
-  }, [status, router]);
 
   const getErrorMessage = (errType: string) => {
     if (errType === 'CredentialsSignin') return 'Email hoặc mật khẩu không đúng.';
@@ -45,8 +37,7 @@ function SignInForm() {
       if (result?.error) {
         setError(result.error || 'Email hoặc mật khẩu không chính xác.');
       } else {
-        router.push(callbackUrl);
-        router.refresh();
+        window.location.href = callbackUrl;
       }
     } catch (err: any) {
       setError('Lỗi kết nối máy chủ. Vui lòng thử lại.');

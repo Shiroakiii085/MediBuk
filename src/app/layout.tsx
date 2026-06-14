@@ -4,6 +4,8 @@ import './globals.css';
 import 'leaflet/dist/leaflet.css';
 import { Providers } from '@/components/Providers';
 import Navbar from '@/components/Navbar';
+import { getServerSession } from 'next-auth/next';
+import { authOptions } from '@/lib/auth';
 
 const outfit = Outfit({
   subsets: ['latin'],
@@ -16,15 +18,17 @@ export const metadata: Metadata = {
   description: 'Đặt lịch khám bệnh online nhanh chóng, tìm kiếm bác sĩ phù hợp theo triệu chứng và vị trí. Kết nối với 25+ bệnh viện hàng đầu Việt Nam.'
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const session = await getServerSession(authOptions);
+
   return (
     <html lang="vi" className={`${outfit.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col bg-slate-50/50 text-slate-800 font-sans">
-        <Providers>
+        <Providers session={session}>
           <Navbar />
           <main className="flex-grow">
             {children}

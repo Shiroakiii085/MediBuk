@@ -61,6 +61,10 @@ const octokit = isGitHubConfigured ? new Octokit({ auth: GITHUB_TOKEN }) : null;
 // Local DB directory (for fallback)
 const LOCAL_DATA_DIR = path.join(process.cwd(), 'data');
 
+// In-memory cache for CSV data (60s TTL)
+const csvCache = new Map<string, { data: any[]; timestamp: number }>();
+const CACHE_TTL = 60 * 1000; // 60 seconds
+
 /**
  * Utility to parse numbers properly
  */
@@ -81,9 +85,15 @@ function castValues(file: string, row: any): any {
 }
 
 /**
- * Reads CSV data from GitHub or Local filesystem
+ * Reads CSV data from GitHub or Local filesystem (with in-memory cache)
  */
 export async function readCSV<T>(fileName: string): Promise<T[]> {
+  // Check cache first
+  const cached = csvCache.get(fileName);
+  if (cached && Date.now() - cached.timestamp < CACHE_TTL) {
+    return cached.data as T[];
+  }
+
   const filePath = `data/${fileName}`;
 
   if (isGitHubConfigured && octokit) {
@@ -92,7 +102,6 @@ export async function readCSV<T>(fileName: string): Promise<T[]> {
         owner: GITHUB_OWNER!,
         repo: GITHUB_REPO!,
         path: filePath,
-        // Bypass GitHub cache to get latest data
         headers: { 'If-None-Match': '' }
       });
 
@@ -102,11 +111,12 @@ export async function readCSV<T>(fileName: string): Promise<T[]> {
           header: true,
           skipEmptyLines: true
         });
-        return parsed.data.map((row: any) => castValues(fileName, row)) as T[];
+        const data = parsed.data.map((row: any) => castValues(fileName, row)) as T[];
+        csvCache.set(fileName, { data, timestamp: Date.now() });
+        return data;
       }
     } catch (error: any) {
       console.error(`Error reading ${fileName} from GitHub:`, error.message || error);
-      // If file not found, we can try to fall back to local if it exists, or return empty array
     }
   }
 
@@ -119,7 +129,9 @@ export async function readCSV<T>(fileName: string): Promise<T[]> {
         header: true,
         skipEmptyLines: true
       });
-      return parsed.data.map((row: any) => castValues(fileName, row)) as T[];
+      const data = parsed.data.map((row: any) => castValues(fileName, row)) as T[];
+      csvCache.set(fileName, { data, timestamp: Date.now() });
+      return data;
     }
   } catch (error) {
     console.error(`Error reading ${fileName} locally:`, error);
@@ -132,6 +144,9 @@ export async function readCSV<T>(fileName: string): Promise<T[]> {
  * Writes CSV data to GitHub or Local filesystem with automatic SHA update
  */
 export async function writeCSV<T>(fileName: string, data: T[]): Promise<void> {
+  // Invalidate cache for this file
+  csvCache.delete(fileName);
+  
   const filePath = `data/${fileName}`;
   const csvContent = Papa.unparse(data, { header: true });
 

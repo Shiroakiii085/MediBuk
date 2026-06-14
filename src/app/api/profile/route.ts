@@ -61,8 +61,8 @@ export async function POST(request: Request) {
         return NextResponse.json({ error: 'Vui lòng cung cấp đầy đủ mật khẩu cũ và mới.' }, { status: 400 });
       }
 
-      // Compare old password
-      const isOldValid = bcrypt.compareSync(oldPassword, currentUser.password_hash);
+      // Compare old password (async to avoid blocking event loop)
+      const isOldValid = await bcrypt.compare(oldPassword, currentUser.password_hash);
       if (!isOldValid) {
         return NextResponse.json({ error: 'Mật khẩu cũ không chính xác.' }, { status: 400 });
       }

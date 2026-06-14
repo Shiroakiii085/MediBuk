@@ -24,8 +24,8 @@ export const authOptions: AuthOptions = {
           throw new Error('Email không tồn tại trong hệ thống.');
         }
 
-        // Compare password hashes
-        const isValid = bcrypt.compareSync(credentials.password, user.password_hash);
+        // Compare password hashes (async to avoid blocking event loop)
+        const isValid = await bcrypt.compare(credentials.password, user.password_hash);
 
         if (!isValid) {
           throw new Error('Mật khẩu không chính xác.');
