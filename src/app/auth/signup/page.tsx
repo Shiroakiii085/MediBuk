@@ -3,7 +3,8 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { UserPlus, Mail, Lock, User, MapPin, Phone, AlertCircle, CheckCircle2 } from 'lucide-react';
+import { UserPlus, Mail, Lock, User, MapPin, Phone, AlertCircle, CheckCircle2, Crosshair } from 'lucide-react';
+import { geocodeAddress } from '@/lib/geocode';
 
 export default function SignUp() {
   const router = useRouter();
@@ -18,6 +19,21 @@ export default function SignUp() {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [geoLoading, setGeoLoading] = useState(false);
+
+  const handleAutoGeocode = async () => {
+    if (!address.trim()) return;
+    setGeoLoading(true);
+    try {
+      const result = await geocodeAddress(address);
+      if (result) {
+        setLat(result.lat.toString());
+        setLng(result.lng.toString());
+      }
+    } finally {
+      setGeoLoading(false);
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -191,10 +207,20 @@ export default function SignUp() {
                   required
                   value={address}
                   onChange={(e) => setAddress(e.target.value)}
-                  className="block w-full rounded-xl border border-slate-300 bg-slate-50 py-3 pl-10 pr-3 text-slate-900 placeholder-slate-400 focus:border-emerald-500 focus:bg-white focus:outline-none focus:ring-1 focus:ring-emerald-500 sm:text-sm transition-all"
+                  className="block w-full rounded-xl border border-slate-300 bg-slate-50 py-3 pl-10 pr-12 text-slate-900 placeholder-slate-400 focus:border-emerald-500 focus:bg-white focus:outline-none focus:ring-1 focus:ring-emerald-500 sm:text-sm transition-all"
                   placeholder="Số nhà, Tên đường, Quận/Huyện, Tỉnh/Thành phố"
                 />
+                <button
+                  type="button"
+                  onClick={handleAutoGeocode}
+                  disabled={geoLoading || !address.trim()}
+                  className="absolute inset-y-0 right-0 flex items-center pr-3 text-emerald-600 hover:text-emerald-700 disabled:text-slate-300 transition-colors"
+                  title="Tự động lấy tọa độ từ địa chỉ"
+                >
+                  <Crosshair className={`h-5 w-5 ${geoLoading ? 'animate-spin' : ''}`} />
+                </button>
               </div>
+              <p className="text-[11px] text-slate-400 mt-1">Nhấn biểu tượng GPS để tự động lấy tọa độ vĩ độ, kinh độ</p>
             </div>
 
             {/* Vĩ độ (Lat) */}

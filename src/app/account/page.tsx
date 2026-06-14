@@ -3,7 +3,8 @@
 import { useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 import dynamic from 'next/dynamic';
-import { User, Phone, MapPin, Mail, Lock, Shield, KeyRound, AlertCircle, CheckCircle2, Save } from 'lucide-react';
+import { User, Phone, MapPin, Mail, Lock, Shield, KeyRound, AlertCircle, CheckCircle2, Save, Crosshair } from 'lucide-react';
+import { geocodeAddress } from '@/lib/geocode';
 
 // Load map dynamically to prevent SSR errors
 const LeafletMap = dynamic(() => import('@/components/Map'), {
@@ -40,6 +41,7 @@ export default function AccountPage() {
   const [profileSuccess, setProfileSuccess] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const [passwordSuccess, setPasswordSuccess] = useState('');
+  const [geoLoading, setGeoLoading] = useState(false);
 
   // Fetch current user details
   useEffect(() => {
@@ -68,6 +70,20 @@ export default function AccountPage() {
       fetchProfile();
     }
   }, [session]);
+
+  const handleAutoGeocode = async () => {
+    if (!address.trim()) return;
+    setGeoLoading(true);
+    try {
+      const result = await geocodeAddress(address);
+      if (result) {
+        setLat(result.lat);
+        setLng(result.lng);
+      }
+    } finally {
+      setGeoLoading(false);
+    }
+  };
 
   const handleProfileSave = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -263,10 +279,20 @@ export default function AccountPage() {
                       required
                       value={address}
                       onChange={(e) => setAddress(e.target.value)}
-                      className="block w-full rounded-xl border border-slate-300 py-3 pl-10 pr-3 text-slate-900 focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500 sm:text-sm"
+                      className="block w-full rounded-xl border border-slate-300 py-3 pl-10 pr-12 text-slate-900 focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500 sm:text-sm"
                       placeholder="Số nhà, Tên đường, Quận, Tỉnh"
                     />
+                    <button
+                      type="button"
+                      onClick={handleAutoGeocode}
+                      disabled={geoLoading || !address.trim()}
+                      className="absolute inset-y-0 right-0 flex items-center pr-3 text-emerald-600 hover:text-emerald-700 disabled:text-slate-300 transition-colors"
+                      title="Tự động lấy tọa độ từ địa chỉ"
+                    >
+                      <Crosshair className={`h-5 w-5 ${geoLoading ? 'animate-spin' : ''}`} />
+                    </button>
                   </div>
+                  <p className="text-[11px] text-slate-400 mt-1">Nhấn biểu tượng GPS để tự động cập nhật tọa độ</p>
                 </div>
 
                 {/* Tọa độ Lat */}

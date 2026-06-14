@@ -12,8 +12,8 @@ const outfit = Outfit({
 });
 
 export const metadata: Metadata = {
-  title: 'MediBuk - Đặt Lịch Khám Sức Khỏe Online',
-  description: 'Hệ thống đặt lịch khám bệnh trực tuyến nhanh chóng, tiện lợi, tìm kiếm bác sĩ phù hợp theo triệu chứng và vị trí gần bạn nhất.'
+  title: 'MediBuk - Hệ thống đặt lịch khám bệnh trực tuyến',
+  description: 'Đặt lịch khám bệnh online nhanh chóng, tìm kiếm bác sĩ phù hợp theo triệu chứng và vị trí. Kết nối với 25+ bệnh viện hàng đầu Việt Nam.'
 };
 
 export default function RootLayout({

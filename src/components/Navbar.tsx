@@ -4,7 +4,7 @@ import { useSession, signOut } from 'next-auth/react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
-import { CalendarHeart, User, LogOut, Menu, X, LayoutDashboard } from 'lucide-react';
+import { User, LogOut, Menu, X } from 'lucide-react';
 
 export default function Navbar() {
   const { data: session } = useSession();
@@ -18,8 +18,13 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex items-center">
-            <Link href="/" className="flex items-center space-x-2 text-emerald-600 font-extrabold text-xl tracking-tight">
-              <CalendarHeart className="h-7 w-7 animate-pulse text-emerald-500" />
+            <Link href="/" className="flex items-center space-x-2 text-emerald-600 font-bold text-xl tracking-tight">
+              {/* Medical Cross Logo */}
+              <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                <rect x="4" y="10" width="24" height="12" rx="3" fill="#059669"/>
+                <rect x="10" y="4" width="12" height="24" rx="3" fill="#059669"/>
+                <rect x="13" y="13" width="6" height="6" rx="1.5" fill="#34d399"/>
+              </svg>
               <span>MediBuk</span>
             </Link>
             <div className="hidden md:flex ml-10 space-x-6">

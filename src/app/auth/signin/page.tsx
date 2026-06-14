@@ -1,14 +1,15 @@
 'use client';
 
-import { signIn } from 'next-auth/react';
+import { signIn, useSession } from 'next-auth/react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useState, Suspense } from 'react';
+import { useState, Suspense, useEffect } from 'react';
 import Link from 'next/link';
 import { Mail, Lock, LogIn, AlertCircle } from 'lucide-react';
 
 function SignInForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const { data: session, status } = useSession();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -16,6 +17,13 @@ function SignInForm() {
 
   const callbackUrl = searchParams.get('callbackUrl') || '/dashboard';
   const urlError = searchParams.get('error');
+
+  // If already logged in, redirect to dashboard
+  useEffect(() => {
+    if (status === 'authenticated') {
+      router.push('/dashboard');
+    }
+  }, [status, router]);
 
   const getErrorMessage = (errType: string) => {
     if (errType === 'CredentialsSignin') return 'Email hoặc mật khẩu không đúng.';
@@ -132,8 +140,8 @@ function SignInForm() {
       {/* Helper credentials display to ease testing */}
       <div className="mt-6 border-t border-slate-100 pt-4 text-xs text-slate-400 text-center">
         <p className="font-semibold text-slate-500 mb-1">Tài khoản demo test nhanh:</p>
-        <p>Admin: <span className="font-mono text-slate-600">admin@medibuk.vn</span> / <span className="font-mono text-slate-600">admin123</span></p>
-        <p>Bệnh nhân: <span className="font-mono text-slate-600">patient1@gmail.com</span> / <span className="font-mono text-slate-600">patient123</span></p>
+        <p>Admin: <span className="font-mono text-slate-600">admin@medibuk.vn</span> / <span className="font-mono text-slate-600">123456</span></p>
+        <p>Bệnh nhân: <span className="font-mono text-slate-600">patient1@gmail.com</span> / <span className="font-mono text-slate-600">123456</span></p>
       </div>
     </div>
   );

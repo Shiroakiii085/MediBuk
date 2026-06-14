@@ -7,8 +7,9 @@ import dynamic from 'next/dynamic';
 import { Clinic, Doctor, User } from '@/lib/githubDb';
 import { 
   Compass, MapPin, Stethoscope, Calendar, Clock, Sparkles, 
-  ChevronRight, ArrowLeft, CheckCircle2, AlertCircle, RefreshCw 
+  ChevronRight, ArrowLeft, CheckCircle2, AlertCircle, RefreshCw, Crosshair 
 } from 'lucide-react';
+import { geocodeAddress } from '@/lib/geocode';
 
 // Dynamic import Leaflet map
 const LeafletMap = dynamic(() => import('@/components/Map'), {
@@ -52,6 +53,7 @@ export default function BookingPage() {
   const [bookingLoading, setBookingLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [blockedSlots, setBlockedSlots] = useState<{ display: string }[]>([]);
+  const [geoLoading, setGeoLoading] = useState(false);
 
   // DB Data
   const [clinics, setClinics] = useState<Clinic[]>([]);
@@ -129,12 +131,27 @@ export default function BookingPage() {
     }
   };
 
-  // Calculate sorted clinics with distances
+  // Auto-geocode from address text
+  const handleAutoGeocode = async () => {
+    if (!addressText.trim()) return;
+    setGeoLoading(true);
+    try {
+      const result = await geocodeAddress(addressText);
+      if (result) {
+        setUserLat(result.lat);
+        setUserLng(result.lng);
+      }
+    } finally {
+      setGeoLoading(false);
+    }
+  };
+
+  // Calculate sorted clinics with distances, filter within 50km
   const clinicsWithDistance = useMemo(() => {
     return clinics.map(c => {
       const dist = getHaversineDistance(userLat, userLng, c.lat, c.lng);
       return { ...c, distance: dist };
-    }).sort((a, b) => a.distance - b.distance);
+    }).filter(c => c.distance <= 50).sort((a, b) => a.distance - b.distance);
   }, [clinics, userLat, userLng]);
 
   // Map markers for clinics & user
@@ -355,14 +372,26 @@ export default function BookingPage() {
                 <div className="space-y-4 pt-4 border-t border-slate-100">
                   <div>
                     <label className="block text-sm font-semibold text-slate-700 mb-1.5">Địa chỉ khám mới</label>
-                    <input
-                      type="text"
-                      required
-                      value={addressText}
-                      onChange={(e) => setAddressText(e.target.value)}
-                      className="block w-full rounded-xl border border-slate-300 py-3 px-3 text-slate-900 focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500 sm:text-sm"
-                      placeholder="Số nhà, Tên đường, Quận, Tỉnh"
-                    />
+                    <div className="relative">
+                      <input
+                        type="text"
+                        required
+                        value={addressText}
+                        onChange={(e) => setAddressText(e.target.value)}
+                        className="block w-full rounded-xl border border-slate-300 py-3 px-3 pr-12 text-slate-900 focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500 sm:text-sm"
+                        placeholder="Số nhà, Tên đường, Quận, Tỉnh"
+                      />
+                      <button
+                        type="button"
+                        onClick={handleAutoGeocode}
+                        disabled={geoLoading || !addressText.trim()}
+                        className="absolute inset-y-0 right-0 flex items-center pr-3 text-emerald-600 hover:text-emerald-700 disabled:text-slate-300 transition-colors"
+                        title="Tự động lấy tọa độ từ địa chỉ"
+                      >
+                        <Crosshair className={`h-5 w-5 ${geoLoading ? 'animate-spin' : ''}`} />
+                      </button>
+                    </div>
+                    <p className="text-[11px] text-slate-400 mt-1">Nhấn GPS để tự động lấy tọa độ, hoặc click vào bản đồ</p>
                   </div>
                   <div className="grid grid-cols-2 gap-4">
                     <div>
