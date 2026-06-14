@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { MapPin, Clock, Phone, Mail, Shield, Calendar, ArrowRight } from 'lucide-react';
 
 export default function Home() {
@@ -61,25 +62,51 @@ export default function Home() {
                 </div>
               </div>
             </div>
-            <div className="flex-shrink-0">
-              {/* Medical Cross Logo */}
-              <div className="relative">
-                <div className="w-72 h-72 bg-emerald-50 rounded-full flex items-center justify-center border-4 border-emerald-100">
-                  <div className="relative">
-                    {/* Medical Cross */}
-                    <svg width="140" height="140" viewBox="0 0 140 140" fill="none">
-                      {/* Horizontal bar */}
-                      <rect x="20" y="45" width="100" height="50" rx="8" fill="#059669"/>
-                      {/* Vertical bar */}
-                      <rect x="45" y="20" width="50" height="100" rx="8" fill="#059669"/>
-                      {/* Inner cross highlight */}
-                      <rect x="55" y="55" width="30" height="30" rx="4" fill="#34d399"/>
-                    </svg>
-                  </div>
+
+            {/* Doctor Image with Text Overlay */}
+            <div className="flex-shrink-0 relative w-full max-w-lg lg:w-[520px]">
+              <div className="relative rounded-2xl overflow-hidden shadow-2xl shadow-slate-200/50">
+                {/* Doctor Image */}
+                <div className="relative h-[420px] w-full bg-slate-100">
+                  <Image
+                    src="/doctor-hero.png"
+                    alt="Bác sĩ MediBuk"
+                    fill
+                    className="object-cover object-top"
+                    priority
+                  />
+                  {/* Dark gradient overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-emerald-900/90 via-emerald-900/40 to-transparent"></div>
                 </div>
-                {/* Decorative dots */}
-                <div className="absolute -top-4 -right-4 w-20 h-20 bg-emerald-100 rounded-full -z-10"></div>
-                <div className="absolute -bottom-6 -left-6 w-24 h-24 bg-emerald-50 rounded-full -z-10"></div>
+
+                {/* Text overlay on image */}
+                <div className="absolute bottom-0 left-0 right-0 p-8">
+                  <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm border border-white/30 rounded-full px-3 py-1 text-xs font-medium text-white mb-3">
+                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                      <rect x="2" y="4.5" width="10" height="5" rx="1.5" fill="white"/>
+                      <rect x="4.5" y="2" width="5" height="10" rx="1.5" fill="white"/>
+                    </svg>
+                    Đội ngũ y bác sĩ chuyên nghiệp
+                  </div>
+                  <h3 className="text-2xl font-bold text-white leading-snug">
+                    Hơn 60 bác sĩ chuyên khoa<br />
+                    <span className="text-emerald-300">sẵn sàng hỗ trợ bạn</span>
+                  </h3>
+                  <p className="mt-3 text-sm text-white/80 leading-relaxed">
+                    Được đào tạo bài bản, giàu kinh nghiệm tại các bệnh viện hàng đầu
+                  </p>
+                </div>
+              </div>
+
+              {/* Floating badge */}
+              <div className="absolute -top-4 -right-4 bg-white rounded-xl shadow-lg border border-slate-100 px-4 py-3 flex items-center gap-3">
+                <div className="w-10 h-10 bg-emerald-100 rounded-full flex items-center justify-center">
+                  <Shield className="h-5 w-5 text-emerald-600" />
+                </div>
+                <div>
+                  <p className="text-xs text-slate-500">Đạt chuẩn</p>
+                  <p className="text-sm font-bold text-slate-900">Bộ Y Tế</p>
+                </div>
               </div>
             </div>
           </div>
