@@ -1,4 +1,4 @@
 user_id,email,password_hash,full_name,address,lat,lng,role,phone
 usr_admin,admin@medibuk.vn,$2b$10$eLu.j0i8DEExdbwRpTV0b.rUtblJ9ZZwgUwYq1lLPd5JCCZJcqsf.,Quản trị viên,Hà Nội,21.0285,105.8542,admin,0987654321
-usr_pat1,patient1@gmail.com,$2b$10$eLu.j0i8DEExdbwRpTV0b.rUtblJ9ZZwgUwYq1lLPd5JCCZJcqsf.,Nguyễn Văn A,Đà Nẵng,20.93611,105.768299,21.0033,105.8412
+usr_pat1,patient1@gmail.com,$2b$10$eLu.j0i8DEExdbwRpTV0b.rUtblJ9ZZwgUwYq1lLPd5JCCZJcqsf.,Nguyễn Văn A,Khu đô thị phú lương,20.950702,105.770173,21.0033,105.8412
 usr_pat2,patient2@gmail.com,$2b$10$eLu.j0i8DEExdbwRpTV0b.rUtblJ9ZZwgUwYq1lLPd5JCCZJcqsf.,Trần Thị B,201B Nguyễn Chí Thanh,0,0,10.7546,106.6602
