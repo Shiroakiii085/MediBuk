@@ -132,17 +132,18 @@ function SignInForm() {
             disabled={loading}
             className="group relative flex w-full justify-center rounded-xl bg-emerald-600 py-3 px-4 text-sm font-semibold text-white shadow-md shadow-emerald-500/10 hover:bg-emerald-700 hover:shadow-emerald-500/20 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 transition-all active:scale-95 disabled:opacity-50 disabled:pointer-events-none"
           >
-            {loading ? 'Đang xác thực...' : 'Đăng nhập'}
+            {loading ? (
+              <span className="flex items-center gap-2">
+                <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24" fill="none">
+                  <rect x="2" y="6" width="20" height="12" rx="2" fill="#dc2626"/>
+                  <rect x="6" y="2" width="12" height="20" rx="2" fill="#dc2626"/>
+                </svg>
+                Đang xác thực...
+              </span>
+            ) : 'Đăng nhập'}
           </button>
         </div>
       </form>
-      
-      {/* Helper credentials display to ease testing */}
-      <div className="mt-6 border-t border-slate-100 pt-4 text-xs text-slate-400 text-center">
-        <p className="font-semibold text-slate-500 mb-1">Tài khoản demo test nhanh:</p>
-        <p>Admin: <span className="font-mono text-slate-600">admin@medibuk.vn</span> / <span className="font-mono text-slate-600">123456</span></p>
-        <p>Bệnh nhân: <span className="font-mono text-slate-600">patient1@gmail.com</span> / <span className="font-mono text-slate-600">123456</span></p>
-      </div>
     </div>
   );
 }

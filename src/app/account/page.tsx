@@ -174,8 +174,14 @@ export default function AccountPage() {
   if (profileLoading) {
     return (
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-        <div className="text-center py-20 text-slate-500 animate-pulse">
-          Đang tải thông tin tài khoản...
+        <div className="text-center py-20">
+          <div className="flex flex-col items-center justify-center">
+            <svg className="animate-spin mb-4" width="48" height="48" viewBox="0 0 64 64" fill="none">
+              <rect x="8" y="22" width="48" height="20" rx="4" fill="#dc2626" />
+              <rect x="22" y="8" width="20" height="48" rx="4" fill="#dc2626" />
+            </svg>
+            <p className="text-sm font-medium text-slate-600 animate-pulse">Đang tải thông tin tài khoản...</p>
+          </div>
         </div>
       </div>
     );

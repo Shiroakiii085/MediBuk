@@ -278,8 +278,14 @@ function DashboardContent() {
 
   if (loading) {
     return (
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 text-center text-slate-500 animate-pulse">
-        Đang đồng bộ dữ liệu Dashboard từ GitHub CSV...
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 text-center">
+        <div className="flex flex-col items-center justify-center py-20">
+          <svg className="animate-spin mb-4" width="48" height="48" viewBox="0 0 64 64" fill="none">
+            <rect x="8" y="22" width="48" height="20" rx="4" fill="#dc2626" />
+            <rect x="22" y="8" width="20" height="48" rx="4" fill="#dc2626" />
+          </svg>
+          <p className="text-sm font-medium text-slate-600 animate-pulse">Đang đồng bộ dữ liệu Dashboard...</p>
+        </div>
       </div>
     );
   }
