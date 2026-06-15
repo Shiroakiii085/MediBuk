@@ -18,17 +18,13 @@ function formatDate(dateStr: string): string {
 
 // Shared logic: find appointments and send reminder emails
 async function sendReminders(targetDate: string) {
-  console.log(`[REMIND] Reading CSV data for date: ${targetDate}`);
   const appointments = await readCSV<Appointment>('appointments.csv');
   const clinics = await readCSV<Clinic>('clinics.csv');
   const doctors = await readCSV<Doctor>('doctors.csv');
-  console.log(`[REMIND] CSV loaded: ${appointments.length} appointments, ${clinics.length} clinics, ${doctors.length} doctors`);
 
-  // Filter confirmed appointments for target date
   const targetAppointments = appointments.filter(
     app => app.date === targetDate && app.status === 'confirmed'
   );
-  console.log(`[REMIND] Found ${targetAppointments.length} confirmed appointments for ${targetDate}`);
 
   if (targetAppointments.length === 0) {
     return {
@@ -41,12 +37,12 @@ async function sendReminders(targetDate: string) {
   }
 
   const GMAIL_USER = process.env.GMAIL_USER;
-  const GMAIL_APP_PASSWORD = process.env.GMAIL_APP_PASSWORD?.replace(/\s/g, ''); // Remove any spaces
+  const GMAIL_APP_PASSWORD = process.env.GMAIL_APP_PASSWORD?.replace(/\s/g, '');
 
   if (!GMAIL_USER || !GMAIL_APP_PASSWORD || GMAIL_USER.includes('your_gmail')) {
     return {
       success: false,
-      message: `Tìm thấy ${targetAppointments.length} lịch hẹn nhưng chưa cấu hình Gmail SMTP. Vui lòng 设置 GMAIL_USER và GMAIL_APP_PASSWORD.`,
+      message: `Tìm thấy ${targetAppointments.length} lịch hẹn nhưng chưa cấu hình Gmail SMTP.`,
       totalFound: targetAppointments.length,
       sentSuccessfully: 0,
       failed: targetAppointments.length
@@ -55,26 +51,8 @@ async function sendReminders(targetDate: string) {
 
   const transporter = nodemailer.createTransport({
     service: 'gmail',
-    auth: {
-      user: GMAIL_USER,
-      pass: GMAIL_APP_PASSWORD
-    }
+    auth: { user: GMAIL_USER, pass: GMAIL_APP_PASSWORD }
   });
-
-  try {
-    console.log('[REMIND] Verifying SMTP connection...');
-    const verified = await transporter.verify();
-    console.log('[REMIND] SMTP verified:', verified);
-  } catch (verifyErr) {
-    console.error('[REMIND] SMTP verification FAILED:', verifyErr);
-    return {
-      success: false,
-      message: `SMTP verification failed: ${(verifyErr as Error).message}`,
-      totalFound: targetAppointments.length,
-      sentSuccessfully: 0,
-      failed: targetAppointments.length
-    };
-  }
 
   let sentCount = 0;
   let failCount = 0;
@@ -83,12 +61,8 @@ async function sendReminders(targetDate: string) {
     const selectedDoctor = doctors.find(d => d.doctor_id.toString() === app.doctor_id.toString());
     const selectedClinic = clinics.find(c => c.clinic_id.toString() === app.clinic_id.toString());
 
-    const docName = selectedDoctor ? selectedDoctor.name : 'Bác sĩ chuyên khoa';
-    const clinicName = selectedClinic ? selectedClinic.name : 'Bệnh viện liên kết';
-    const clinicAddr = selectedClinic ? selectedClinic.address : '';
-
     try {
-      const mailOptions = {
+      await transporter.sendMail({
         from: `"MediBuk Y Tế" <${GMAIL_USER}>`,
         to: app.patient_email,
         subject: `[Nhắc Lịch Hẹn] Lịch khám bệnh ngày ${formatDate(targetDate)} - Mã ${app.appointment_id}`,
@@ -100,30 +74,22 @@ async function sendReminders(targetDate: string) {
             
             <div style="background-color: #f0f9ff; padding: 15px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #0284c7;">
               <p style="margin: 5px 0;"><strong>Thời gian:</strong> <span style="color: #0369a1; font-weight: bold;">${app.time} ngày ${formatDate(app.date)}</span></p>
-              <p style="margin: 5px 0;"><strong>Bác sĩ khám:</strong> ${docName}</p>
-              <p style="margin: 5px 0;"><strong>Bệnh viện:</strong> ${clinicName}</p>
-              <p style="margin: 5px 0;"><strong>Địa chỉ:</strong> ${clinicAddr}</p>
+              <p style="margin: 5px 0;"><strong>Bác sĩ khám:</strong> ${selectedDoctor?.name || 'Bác sĩ chuyên khoa'}</p>
+              <p style="margin: 5px 0;"><strong>Bệnh viện:</strong> ${selectedClinic?.name || 'Bệnh viện liên kết'}</p>
+              <p style="margin: 5px 0;"><strong>Địa chỉ:</strong> ${selectedClinic?.address || ''}</p>
               <p style="margin: 5px 0;"><strong>Thời lượng dự kiến:</strong> ${app.duration_minutes} phút</p>
               <p style="margin: 5px 0;"><strong>Triệu chứng đã ghi nhận:</strong> ${app.symptom}</p>
             </div>
 
-            <p>Vui lòng đến đúng giờ để có trải nghiệm khám chữa bệnh tốt nhất. Nếu bạn có thay đổi đột xuất, hãy truy cập vào Dashboard để quản lý lịch hẹn.</p>
+            <p>Vui lòng đến đúng giờ để có trải nghiệm khám chữa bệnh tốt nhất.</p>
             <hr style="border: 0; border-top: 1px solid #e2e8f0; margin: 20px 0;" />
             <p style="font-size: 12px; color: #64748b; text-align: center; margin-bottom: 0;">Cảm ơn bạn đã lựa chọn dịch vụ đặt lịch khám trực tuyến MediBuk.</p>
           </div>
         `
-      };
-
-      const info = await transporter.sendMail(mailOptions);
-        console.log(`[REMIND] sendMail result for ${app.patient_email}:`, JSON.stringify({
-          messageId: info.messageId,
-          accepted: info.accepted,
-          rejected: info.rejected,
-          response: info.response
-        }));
-        sentCount++;
+      });
+      sentCount++;
     } catch (err) {
-      console.error(`Failed to send reminder to ${app.patient_email}:`, err);
+      console.error(`Gửi mail nhắc lịch thất bại cho ${app.patient_email}:`, err);
       failCount++;
     }
   }
@@ -137,7 +103,6 @@ async function sendReminders(targetDate: string) {
   };
 }
 
-// GET: Vercel cron auto-trigger (daily)
 export async function GET(request: Request) {
   const authHeader = request.headers.get('authorization');
   const cronSecret = process.env.CRONSECRET;
@@ -148,36 +113,27 @@ export async function GET(request: Request) {
 
   try {
     const tomorrowStr = getVietnamDateStr(1);
-    console.log(`[CRON] Scanning appointments for tomorrow: ${tomorrowStr}`);
     const result = await sendReminders(tomorrowStr);
     return NextResponse.json(result);
   } catch (error: any) {
-    console.error('Cron remind error:', error);
     return NextResponse.json({ error: error.message || 'Lỗi hệ thống.' }, { status: 500 });
   }
 }
 
-// POST: Admin manual trigger
 export async function POST(request: Request) {
   try {
-    console.log('[ADMIN] Reminder POST request received');
-    
     const session = await getServerSession(authOptions);
-    console.log('[ADMIN] Session:', session ? `user=${session.user?.name}, role=${(session.user as any)?.role}` : 'null');
     
     if (!session || (session.user as any).role !== 'admin') {
-      return NextResponse.json({ error: 'Chỉ quản trị viên mới có quyền thực hiện. Vui lòng đăng nhập lại.' }, { status: 403 });
+      return NextResponse.json({ error: 'Chỉ quản trị viên mới có quyền thực hiện.' }, { status: 403 });
     }
 
     const body = await request.json().catch(() => ({}));
     const targetDate = body.date || getVietnamDateStr(1);
-    console.log(`[ADMIN] Manual reminder trigger for date: ${targetDate}`);
 
     const result = await sendReminders(targetDate);
-    console.log('[ADMIN] Result:', JSON.stringify(result));
     return NextResponse.json(result);
   } catch (error: any) {
-    console.error('[ADMIN] Manual remind error:', error);
     return NextResponse.json({ error: error.message || 'Lỗi gửi mail nhắc lịch.' }, { status: 500 });
   }
 }

@@ -123,15 +123,8 @@ export async function POST(request: Request) {
       try {
         const transporter = nodemailer.createTransport({
           service: 'gmail',
-          auth: {
-            user: GMAIL_USER,
-            pass: GMAIL_APP_PASSWORD
-          }
+          auth: { user: GMAIL_USER, pass: GMAIL_APP_PASSWORD }
         });
-
-        console.log('[EMAIL] Verifying SMTP connection...');
-        const verified = await transporter.verify();
-        console.log('[EMAIL] SMTP verified:', verified);
 
         const mailOptions = {
           from: `"MediBuk Y Tế" <${GMAIL_USER}>`,
@@ -161,21 +154,10 @@ export async function POST(request: Request) {
           `
         };
 
-        const info = await transporter.sendMail(mailOptions);
-        console.log('[EMAIL] sendMail result:', JSON.stringify({
-          messageId: info.messageId,
-          accepted: info.accepted,
-          rejected: info.rejected,
-          response: info.response
-        }));
-        console.log(`Confirmation email sent successfully to ${patient_email}`);
+        await transporter.sendMail(mailOptions);
       } catch (emailErr) {
-        console.error('[EMAIL] Failed to send nodemailer confirmation email:', emailErr);
-        // Do not fail the whole request because email sending failed; booking is already recorded!
+        console.error('Gửi email xác nhận thất bại:', emailErr);
       }
-    } else {
-      console.log('Nodemailer configuration missing. Emailed:');
-      console.log(`To: ${patient_email}\nSubject: Confirmation\nDoctor: ${selectedDoctor.name}, Clinic: ${selectedClinic.name}, Date: ${date}, Time: ${time}`);
     }
 
     return NextResponse.json({ 
