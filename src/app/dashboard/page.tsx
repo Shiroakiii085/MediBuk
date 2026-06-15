@@ -556,6 +556,11 @@ function DashboardContent() {
                     )}
                     <span>{reminderLoading ? 'Đang gửi...' : 'Gửi mail nhắc lịch'}</span>
                   </button>
+                  {reminderResult && (
+                    <span className={`text-xs font-medium px-3 py-1.5 rounded-lg ${reminderResult.includes('Đã gửi') ? 'bg-emerald-50 text-emerald-700' : 'bg-amber-50 text-amber-700'}`}>
+                      {reminderResult}
+                    </span>
+                  )}
                 </div>
               )}
             </div>

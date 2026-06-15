@@ -18,14 +18,17 @@ function formatDate(dateStr: string): string {
 
 // Shared logic: find appointments and send reminder emails
 async function sendReminders(targetDate: string) {
+  console.log(`[REMIND] Reading CSV data for date: ${targetDate}`);
   const appointments = await readCSV<Appointment>('appointments.csv');
   const clinics = await readCSV<Clinic>('clinics.csv');
   const doctors = await readCSV<Doctor>('doctors.csv');
+  console.log(`[REMIND] CSV loaded: ${appointments.length} appointments, ${clinics.length} clinics, ${doctors.length} doctors`);
 
   // Filter confirmed appointments for target date
   const targetAppointments = appointments.filter(
     app => app.date === targetDate && app.status === 'confirmed'
   );
+  console.log(`[REMIND] Found ${targetAppointments.length} confirmed appointments for ${targetDate}`);
 
   if (targetAppointments.length === 0) {
     return {
@@ -136,19 +139,24 @@ export async function GET(request: Request) {
 // POST: Admin manual trigger
 export async function POST(request: Request) {
   try {
+    console.log('[ADMIN] Reminder POST request received');
+    
     const session = await getServerSession(authOptions);
+    console.log('[ADMIN] Session:', session ? `user=${session.user?.name}, role=${(session.user as any)?.role}` : 'null');
+    
     if (!session || (session.user as any).role !== 'admin') {
-      return NextResponse.json({ error: 'Chỉ quản trị viên mới có quyền thực hiện.' }, { status: 403 });
+      return NextResponse.json({ error: 'Chỉ quản trị viên mới có quyền thực hiện. Vui lòng đăng nhập lại.' }, { status: 403 });
     }
 
     const body = await request.json().catch(() => ({}));
-    const targetDate = body.date || getVietnamDateStr(1); // Default: tomorrow
-
+    const targetDate = body.date || getVietnamDateStr(1);
     console.log(`[ADMIN] Manual reminder trigger for date: ${targetDate}`);
+
     const result = await sendReminders(targetDate);
+    console.log('[ADMIN] Result:', JSON.stringify(result));
     return NextResponse.json(result);
   } catch (error: any) {
-    console.error('Manual remind error:', error);
+    console.error('[ADMIN] Manual remind error:', error);
     return NextResponse.json({ error: error.message || 'Lỗi gửi mail nhắc lịch.' }, { status: 500 });
   }
 }
