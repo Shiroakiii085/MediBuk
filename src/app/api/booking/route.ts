@@ -117,7 +117,7 @@ export async function POST(request: Request) {
 
     // 3. Send email confirmation via Nodemailer
     const GMAIL_USER = process.env.GMAIL_USER;
-    const GMAIL_APP_PASSWORD = process.env.GMAIL_APP_PASSWORD;
+    const GMAIL_APP_PASSWORD = process.env.GMAIL_APP_PASSWORD?.replace(/\s/g, ''); // Remove any spaces
 
     if (GMAIL_USER && GMAIL_APP_PASSWORD) {
       try {
