@@ -129,6 +129,10 @@ export async function POST(request: Request) {
           }
         });
 
+        console.log('[EMAIL] Verifying SMTP connection...');
+        const verified = await transporter.verify();
+        console.log('[EMAIL] SMTP verified:', verified);
+
         const mailOptions = {
           from: `"MediBuk Y Tế" <${GMAIL_USER}>`,
           to: patient_email,
@@ -157,10 +161,16 @@ export async function POST(request: Request) {
           `
         };
 
-        await transporter.sendMail(mailOptions);
+        const info = await transporter.sendMail(mailOptions);
+        console.log('[EMAIL] sendMail result:', JSON.stringify({
+          messageId: info.messageId,
+          accepted: info.accepted,
+          rejected: info.rejected,
+          response: info.response
+        }));
         console.log(`Confirmation email sent successfully to ${patient_email}`);
       } catch (emailErr) {
-        console.error('Failed to send nodemailer confirmation email:', emailErr);
+        console.error('[EMAIL] Failed to send nodemailer confirmation email:', emailErr);
         // Do not fail the whole request because email sending failed; booking is already recorded!
       }
     } else {

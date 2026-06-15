@@ -61,6 +61,21 @@ async function sendReminders(targetDate: string) {
     }
   });
 
+  try {
+    console.log('[REMIND] Verifying SMTP connection...');
+    const verified = await transporter.verify();
+    console.log('[REMIND] SMTP verified:', verified);
+  } catch (verifyErr) {
+    console.error('[REMIND] SMTP verification FAILED:', verifyErr);
+    return {
+      success: false,
+      message: `SMTP verification failed: ${(verifyErr as Error).message}`,
+      totalFound: targetAppointments.length,
+      sentSuccessfully: 0,
+      failed: targetAppointments.length
+    };
+  }
+
   let sentCount = 0;
   let failCount = 0;
 
@@ -99,8 +114,14 @@ async function sendReminders(targetDate: string) {
         `
       };
 
-      await transporter.sendMail(mailOptions);
-      sentCount++;
+      const info = await transporter.sendMail(mailOptions);
+        console.log(`[REMIND] sendMail result for ${app.patient_email}:`, JSON.stringify({
+          messageId: info.messageId,
+          accepted: info.accepted,
+          rejected: info.rejected,
+          response: info.response
+        }));
+        sentCount++;
     } catch (err) {
       console.error(`Failed to send reminder to ${app.patient_email}:`, err);
       failCount++;
