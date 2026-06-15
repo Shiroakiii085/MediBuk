@@ -27,6 +27,11 @@ function DashboardContent() {
   // Active Admin Tab: 'appointments' | 'clinics' | 'doctors'
   const [adminTab, setAdminTab] = useState<'appointments' | 'clinics' | 'doctors'>('appointments');
 
+  // Reminder email state
+  const [reminderLoading, setReminderLoading] = useState(false);
+  const [reminderResult, setReminderResult] = useState('');
+  const [reminderDate, setReminderDate] = useState('');
+
   // Modals state for Admin CRUD
   const [clinicModal, setClinicModal] = useState<{ open: boolean; mode: 'add' | 'edit'; data?: any }>({ open: false, mode: 'add' });
   const [doctorModal, setDoctorModal] = useState<{ open: boolean; mode: 'add' | 'edit'; data?: any }>({ open: false, mode: 'add' });
@@ -124,6 +129,29 @@ function DashboardContent() {
       setClinicLat('21.0285');
       setClinicLng('105.8542');
       setClinicSpecialties('');
+    }
+  };
+
+  // Send reminder email manually
+  const handleSendReminder = async () => {
+    setReminderLoading(true);
+    setReminderResult('');
+    try {
+      const res = await fetch('/api/cron/remind', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ date: reminderDate || undefined })
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setReminderResult(data.error || 'Gửi mail thất bại.');
+      } else {
+        setReminderResult(data.message || `Đã gửi ${data.sentSuccessfully}/${data.totalFound} email nhắc lịch.`);
+      }
+    } catch {
+      setReminderResult('Lỗi kết nối máy chủ.');
+    } finally {
+      setReminderLoading(false);
     }
   };
 
@@ -328,6 +356,15 @@ function DashboardContent() {
         </div>
       )}
 
+      {reminderResult && (
+        <div className="flex items-center gap-x-2 rounded-xl bg-sky-50 border border-sky-100 p-4 text-sm text-sky-700 mb-6">
+          <svg className="h-5 w-5 text-sky-500 shrink-0" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
+          </svg>
+          <p>{reminderResult}</p>
+        </div>
+      )}
+
       {/* -------------------------------------------------------------
           PATIENT WORKSPACE VIEW
           ------------------------------------------------------------- */}
@@ -493,6 +530,33 @@ function DashboardContent() {
                   <Plus className="h-4 w-4" />
                   <span>Thêm Bác sĩ</span>
                 </button>
+              )}
+
+              {/* Send reminder email */}
+              {adminTab === 'appointments' && (
+                <div className="flex items-center gap-2">
+                  <input
+                    type="date"
+                    value={reminderDate}
+                    onChange={(e) => setReminderDate(e.target.value)}
+                    className="px-3 py-2 text-xs border border-slate-300 rounded-xl focus:outline-none focus:ring-1 focus:ring-emerald-500"
+                    placeholder="Chọn ngày (mặc định: ngày mai)"
+                  />
+                  <button
+                    onClick={handleSendReminder}
+                    disabled={reminderLoading}
+                    className="flex items-center gap-x-1 px-4 py-2 bg-sky-600 hover:bg-sky-700 text-white text-xs font-bold rounded-xl shadow-sm transition-colors disabled:opacity-50"
+                  >
+                    {reminderLoading ? (
+                      <RefreshCw className="h-4 w-4 animate-spin" />
+                    ) : (
+                      <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
+                      </svg>
+                    )}
+                    <span>{reminderLoading ? 'Đang gửi...' : 'Gửi mail nhắc lịch'}</span>
+                  </button>
+                </div>
               )}
             </div>
 
