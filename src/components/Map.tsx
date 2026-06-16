@@ -7,16 +7,17 @@ import L from 'leaflet';
 // Fix Leaflet icons issues by using HTML/CSS custom icons
 const markerIcon = (color: string) => L.divIcon({
   html: `
-    <div class="flex items-center justify-center">
-      <span class="absolute flex h-6 w-6">
-        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-${color}-400 opacity-75"></span>
-        <span class="relative inline-flex rounded-full h-4 w-4 bg-${color}-600 border border-white shadow-lg"></span>
-      </span>
+    <div style="position:relative;width:32px;height:40px;">
+      <svg viewBox="0 0 32 40" width="32" height="40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M16 0C7.163 0 0 7.163 0 16c0 12 16 24 16 24s16-12 16-24C32 7.163 24.837 0 16 0z" fill="${color === 'blue' ? '#0284C7' : color === 'rose' ? '#E11D48' : color === 'amber' ? '#D97706' : '#0284C7'}"/>
+        <circle cx="16" cy="14" r="6" fill="white"/>
+      </svg>
     </div>
   `,
   className: 'custom-leaflet-icon',
-  iconSize: [24, 24],
-  iconAnchor: [12, 12]
+  iconSize: [32, 40],
+  iconAnchor: [16, 40],
+  popupAnchor: [0, -36]
 });
 
 interface MapProps {
