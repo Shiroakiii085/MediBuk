@@ -140,7 +140,7 @@ export async function POST(request: Request) {
           'X-OpenRouter-Title': 'MediBuk Medical Assistant',
         },
         body: JSON.stringify({
-          model: 'google/gemma-4-31b:free',
+          model: 'google/gemma-4-31b-it:free',
           messages: apiMessages,
           max_tokens: 1024,
           temperature: 0.7,
@@ -222,7 +222,7 @@ export async function POST(request: Request) {
         'X-OpenRouter-Title': 'MediBuk Medical Assistant',
       },
       body: JSON.stringify({
-        model: 'google/gemma-4-31b:free',
+        model: 'google/gemma-4-31b-it:free',
         messages: apiMessages,
         max_tokens: 1024,
         temperature: 0.7,

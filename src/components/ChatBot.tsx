@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useRef, useEffect, useCallback } from 'react';
-import { MessageCircle, X, Send, Bot, User, Loader2, Stethoscope } from 'lucide-react';
+import { X, Send, User, Loader2 } from 'lucide-react';
 
 interface Message {
   role: 'user' | 'assistant';
@@ -30,8 +30,46 @@ const SUGGESTIONS = [
   'Bệnh viện Bạch Mai có bác sĩ nào?',
 ];
 
+// Doraemon 2D SVG Avatar
+function DoraemonIcon({ size = 56 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+      {/* Body */}
+      <ellipse cx="50" cy="56" rx="38" ry="36" fill="#00A1E9"/>
+      {/* Face (white area) */}
+      <ellipse cx="50" cy="52" rx="28" ry="26" fill="white"/>
+      {/* Eyes */}
+      <ellipse cx="40" cy="42" rx="7" ry="8" fill="white" stroke="#333" strokeWidth="1.5"/>
+      <ellipse cx="60" cy="42" rx="7" ry="8" fill="white" stroke="#333" strokeWidth="1.5"/>
+      <ellipse cx="41" cy="43" rx="3" ry="3.5" fill="#333"/>
+      <ellipse cx="61" cy="43" rx="3" ry="3.5" fill="#333"/>
+      {/* Nose */}
+      <circle cx="50" cy="50" r="4" fill="#E74C3C"/>
+      <ellipse cx="49" cy="49" rx="1.5" ry="1" fill="white" opacity="0.6"/>
+      {/* Mouth */}
+      <path d="M36 56 Q50 68 64 56" stroke="#333" strokeWidth="1.8" fill="none" strokeLinecap="round"/>
+      {/* Whiskers */}
+      <line x1="20" y1="48" x2="36" y2="52" stroke="#333" strokeWidth="1.2"/>
+      <line x1="20" y1="54" x2="36" y2="54" stroke="#333" strokeWidth="1.2"/>
+      <line x1="20" y1="60" x2="36" y2="56" stroke="#333" strokeWidth="1.2"/>
+      <line x1="80" y1="48" x2="64" y2="52" stroke="#333" strokeWidth="1.2"/>
+      <line x1="80" y1="54" x2="64" y2="54" stroke="#333" strokeWidth="1.2"/>
+      <line x1="80" y1="60" x2="64" y2="56" stroke="#333" strokeWidth="1.2"/>
+      {/* Bell */}
+      <circle cx="50" cy="74" r="5" fill="#FFD700" stroke="#DAA520" strokeWidth="1"/>
+      <line x1="45" y1="74" x2="55" y2="74" stroke="#DAA520" strokeWidth="1"/>
+      <circle cx="50" cy="77" r="1.5" fill="#DAA520"/>
+      {/* Collar */}
+      <path d="M22 70 Q50 82 78 70" stroke="#E74C3C" strokeWidth="3" fill="none"/>
+      {/* Pocket */}
+      <ellipse cx="50" cy="68" rx="12" ry="8" fill="white" stroke="#00A1E9" strokeWidth="1.5"/>
+    </svg>
+  );
+}
+
 export default function ChatBot() {
   const [isOpen, setIsOpen] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
   const [messages, setMessages] = useState<Message[]>([WELCOME_MESSAGE]);
   const [inputValue, setInputValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -144,34 +182,51 @@ export default function ChatBot() {
 
   return (
     <>
-      {/* Chat Toggle Button */}
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className={`fixed bottom-6 right-6 z-50 h-14 w-14 rounded-full shadow-lg flex items-center justify-center transition-all duration-300 ${
-          isOpen
-            ? 'bg-slate-600 hover:bg-slate-700 rotate-0'
-            : 'bg-primary hover:bg-sky-700 animate-bounce'
-        }`}
-        aria-label={isOpen ? 'Đóng chat' : 'Mở chat'}
-      >
-        {isOpen ? (
-          <X className="h-6 w-6 text-white" />
-        ) : (
-          <MessageCircle className="h-6 w-6 text-white" />
+      {/* Chat Toggle Button with Doraemon */}
+      <div className="fixed bottom-6 right-6 z-50">
+        {/* Hover Tooltip */}
+        {!isOpen && isHovered && (
+          <div className="absolute bottom-full right-0 mb-3 whitespace-nowrap bg-white px-4 py-2 rounded-xl shadow-lg border border-slate-200 text-sm font-medium text-slate-700 animate-fadeIn">
+            <span className="text-primary font-bold">Hãy ấn vào tôi để được hỗ trợ!</span>
+            <div className="absolute bottom-0 right-6 translate-y-1/2 rotate-45 w-2.5 h-2.5 bg-white border-r border-b border-slate-200" />
+          </div>
         )}
-      </button>
+        
+        {/* Doraemon Button */}
+        <button
+          onClick={() => setIsOpen(!isOpen)}
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+          className={`relative h-16 w-16 rounded-full shadow-xl flex items-center justify-center transition-all duration-300 ${
+            isOpen
+              ? 'bg-slate-600 hover:bg-slate-700'
+              : 'bg-white hover:shadow-2xl hover:scale-110'
+          }`}
+          aria-label={isOpen ? 'Đóng chat' : 'Mở chat'}
+        >
+          {isOpen ? (
+            <X className="h-6 w-6 text-white" />
+          ) : (
+            <>
+              <DoraemonIcon size={56} />
+              {/* Notification dot */}
+              <span className="absolute -top-1 -right-1 h-4 w-4 bg-red-500 rounded-full border-2 border-white animate-pulse" />
+            </>
+          )}
+        </button>
+      </div>
 
       {/* Chat Window */}
       {isOpen && (
-        <div className="fixed bottom-24 right-6 z-50 w-[380px] h-[520px] bg-white rounded-3xl shadow-2xl border border-slate-200 flex flex-col overflow-hidden animate-fadeIn">
+        <div className="fixed bottom-28 right-6 z-50 w-[380px] h-[520px] bg-white rounded-3xl shadow-2xl border border-slate-200 flex flex-col overflow-hidden animate-fadeIn">
           {/* Header */}
-          <div className="bg-primary px-5 py-4 flex items-center gap-3">
-            <div className="h-10 w-10 bg-white/20 rounded-full flex items-center justify-center">
-              <Stethoscope className="h-5 w-5 text-white" />
+          <div className="bg-gradient-to-r from-[#00A1E9] to-[#0088CC] px-5 py-4 flex items-center gap-3">
+            <div className="h-11 w-11 rounded-full overflow-hidden bg-white/20 flex items-center justify-center">
+              <DoraemonIcon size={44} />
             </div>
             <div className="flex-1">
-              <h3 className="text-white font-bold text-sm">MediBuk AI</h3>
-              <p className="text-sky-100 text-xs">Trợ lý y tế thông minh</p>
+              <h3 className="text-white font-bold text-sm">Doraemon Y Tế</h3>
+              <p className="text-sky-100 text-xs">Trợ lý AI MediBuk • Sẵn sàng hỗ trợ</p>
             </div>
             <div className="h-2.5 w-2.5 bg-green-400 rounded-full animate-pulse" />
           </div>
@@ -186,15 +241,15 @@ export default function ChatBot() {
                 <div className={`flex items-start gap-2 max-w-[85%] ${
                   msg.role === 'user' ? 'flex-row-reverse' : ''
                 }`}>
-                  <div className={`h-7 w-7 rounded-full flex items-center justify-center shrink-0 ${
+                  <div className={`h-8 w-8 rounded-full flex items-center justify-center shrink-0 ${
                     msg.role === 'user'
                       ? 'bg-slate-200'
-                      : 'bg-primary/10'
+                      : 'bg-[#00A1E9]/10 overflow-hidden'
                   }`}>
                     {msg.role === 'user' ? (
                       <User className="h-4 w-4 text-slate-600" />
                     ) : (
-                      <Bot className="h-4 w-4 text-primary" />
+                      <DoraemonIcon size={32} />
                     )}
                   </div>
                   <div className={`rounded-2xl px-4 py-2.5 text-sm leading-relaxed ${
@@ -212,8 +267,8 @@ export default function ChatBot() {
             {streamingContent && (
               <div className="flex justify-start">
                 <div className="flex items-start gap-2 max-w-[85%]">
-                  <div className="h-7 w-7 rounded-full flex items-center justify-center shrink-0 bg-primary/10">
-                    <Bot className="h-4 w-4 text-primary" />
+                  <div className="h-8 w-8 rounded-full flex items-center justify-center shrink-0 bg-[#00A1E9]/10 overflow-hidden">
+                    <DoraemonIcon size={32} />
                   </div>
                   <div className="rounded-2xl px-4 py-2.5 text-sm leading-relaxed bg-slate-100 text-slate-800 rounded-tl-sm">
                     <div className="whitespace-pre-wrap">{streamingContent}</div>
@@ -226,8 +281,8 @@ export default function ChatBot() {
             {isLoading && !streamingContent && (
               <div className="flex justify-start">
                 <div className="flex items-start gap-2">
-                  <div className="h-7 w-7 rounded-full flex items-center justify-center shrink-0 bg-primary/10">
-                    <Bot className="h-4 w-4 text-primary" />
+                  <div className="h-8 w-8 rounded-full flex items-center justify-center shrink-0 bg-[#00A1E9]/10 overflow-hidden">
+                    <DoraemonIcon size={32} />
                   </div>
                   <div className="rounded-2xl px-4 py-3 bg-slate-100">
                     <Loader2 className="h-4 w-4 text-primary animate-spin" />
@@ -246,7 +301,7 @@ export default function ChatBot() {
                 <button
                   key={idx}
                   onClick={() => handleSend(s)}
-                  className="text-xs px-3 py-1.5 bg-slate-100 hover:bg-primary/10 text-slate-600 hover:text-primary rounded-full transition-colors"
+                  className="text-xs px-3 py-1.5 bg-slate-100 hover:bg-[#00A1E9]/10 text-slate-600 hover:text-[#00A1E9] rounded-full transition-colors"
                 >
                   {s}
                 </button>
