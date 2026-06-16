@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useCallback, useRef } from 'react';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import dynamic from 'next/dynamic';
@@ -73,6 +73,9 @@ export default function BookingPage() {
   const [bookingDate, setBookingDate] = useState('');
   const [bookingTime, setBookingTime] = useState('');
   const [durationMinutes, setDurationMinutes] = useState(30);
+  const [symptomSuggestions, setSymptomSuggestions] = useState<{name: string; description: string}[]>([]);
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const symptomInputRef = useRef<HTMLTextAreaElement>(null);
 
   // Fetch initial clinics, doctors, and user profile
   useEffect(() => {
@@ -145,6 +148,21 @@ export default function BookingPage() {
       setGeoLoading(false);
     }
   };
+
+  // Fetch symptom suggestions
+  const fetchSymptomSuggestions = useCallback(async (query: string) => {
+    if (query.length < 2) {
+      setSymptomSuggestions([]);
+      return;
+    }
+    try {
+      const res = await fetch(`/api/symptoms?q=${encodeURIComponent(query)}`);
+      const data = await res.json();
+      setSymptomSuggestions(data.symptoms || []);
+    } catch {
+      setSymptomSuggestions([]);
+    }
+  }, []);
 
   // Calculate sorted clinics with distances, filter within 50km
   const clinicsWithDistance = useMemo(() => {
@@ -524,15 +542,40 @@ export default function BookingPage() {
 
               <div>
                 <label className="block text-sm font-semibold text-slate-700 mb-1.5">Mô tả triệu chứng bệnh lý</label>
-                <textarea
-                  value={symptomInput}
-                  onChange={(e) => {
-                    setSymptomInput(e.target.value);
-                    setSelectedDoctor(null); // Reset selected doctor when symptoms change
-                  }}
-                  className="block w-full rounded-xl border border-slate-300 py-3 px-3 text-slate-900 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary/100 sm:text-sm h-24"
-                  placeholder="Ví dụ: tôi bị đau đầu, mệt mỏi và sốt nhẹ từ tối qua..."
-                />
+                <div className="relative">
+                  <textarea
+                    ref={symptomInputRef}
+                    value={symptomInput}
+                    onChange={(e) => {
+                      setSymptomInput(e.target.value);
+                      setSelectedDoctor(null);
+                      fetchSymptomSuggestions(e.target.value);
+                      setShowSuggestions(true);
+                    }}
+                    onBlur={() => setTimeout(() => setShowSuggestions(false), 200)}
+                    className="block w-full rounded-xl border border-slate-300 py-3 px-3 text-slate-900 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary/100 sm:text-sm h-24"
+                    placeholder="Ví dụ: tôi bị đau đầu, mệt mỏi và sốt nhẹ từ tối qua..."
+                  />
+                  {showSuggestions && symptomSuggestions.length > 0 && (
+                    <div className="absolute z-10 w-full bg-white border border-slate-200 rounded-xl shadow-lg mt-1 max-h-48 overflow-y-auto">
+                      {symptomSuggestions.map((s, idx) => (
+                        <button
+                          key={idx}
+                          type="button"
+                          className="w-full text-left px-4 py-2 hover:bg-slate-50 text-sm border-b border-slate-100 last:border-0"
+                          onMouseDown={() => {
+                            setSymptomInput(prev => prev ? `${prev}, ${s.name}` : s.name);
+                            setShowSuggestions(false);
+                          }}
+                        >
+                          <span className="font-medium text-slate-800">{s.name}</span>
+                          <span className="text-xs text-slate-500 ml-2">- {s.description}</span>
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
+                <p className="text-[11px] text-slate-400 mt-1">Gõ triệu chứng để nhận gợi ý tự động</p>
               </div>
 
               {selectedClinic && (
