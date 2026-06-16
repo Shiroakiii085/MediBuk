@@ -4,6 +4,7 @@ import './globals.css';
 import 'leaflet/dist/leaflet.css';
 import { Providers } from '@/components/Providers';
 import Navbar from '@/components/Navbar';
+import ChatBot from '@/components/ChatBot';
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from '@/lib/auth';
 
@@ -39,6 +40,7 @@ export default async function RootLayout({
               <p className="mt-1 text-slate-400">Ứng dụng chăm sóc sức khỏe trực tuyến 100% bằng tiếng Việt.</p>
             </div>
           </footer>
+          <ChatBot />
         </Providers>
       </body>
     </html>
