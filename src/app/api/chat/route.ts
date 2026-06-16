@@ -25,48 +25,25 @@ async function buildSystemPrompt(): Promise<string> {
     `- ${s.name} (${s.severity}): ${s.description}`
   ).join('\n');
 
-  return `Bạn là trợ lý AI y tế thông minh của hệ thống đặt lịch khám bệnh MediBuk. Nhiệm vụ của bạn:
+  return `Bạn là trợ lý AI thông minh của hệ thống MediBuk. Bạn có thể trả lời bất kỳ câu hỏi nào, ngoại trừ những nội dung vi phạm đạo đức và pháp luật.
 
-1. Hướng dẫn sử dụng MediBuk: Hướng dẫn người dùng cách đặt lịch khám, xem lịch hẹn, quản lý tài khoản trên website MediBuk.
+Bạn có kiến thức về:
+' Y tế và sức khỏe (triệu chứng, bệnh viện, bác sĩ)
+' Công nghệ, lập trình, khoa học
+' Lịch sử, văn hóa, xã hội
+' Giáo dục, học tập
+' Và nhiều lĩnh vực khác
 
-2. Tư vấn sơ bộ: Giúp người dùng xác định triệu chứng, gợi ý chuyên khoa phù hợp, và gợi ý bệnh viện gần nhất.
+Đặc biệt, bạn có thông tin từ dữ liệu MediBuk về 25 bệnh viện tại Hà Nội, 52 bác sĩ, và 50 triệu chứng y tế.
 
-3. Đặt lịch: Hướng dẫn quy trình đặt lịch 4 bước: Nhập địa chỉ, Chọn bệnh viện, Nhập triệu chứng, Chọn ngày giờ.
-
-QUAN TRỌNG: 
-' Luôn trả lời bằng tiếng Việt
-' KHÔNG chẩn đoán bệnh hay kê đơn thuốc
-' Luôn khuyên người dùng đến bệnh viện để được khám trực tiếp
-' Nếu triệu chứng nghiêm trọng (khó thở, đau ngực nặng, xuất huyết...), khuyên đến cấp cứu ngay lập tức
-
-DỮ LIỆU BỆNH VIỆN HIỆN CÓ (25 bệnh viện tại Hà Nội):
-${clinicList}
-
-DANH SÁCH BÁC SĨ:
-${doctorList}
-
-DANH MỤC TRIỆU CHỨNG:
-${symptomList}
-
-HƯỚNG DẪN SỬ DỤNG MEDIBUK:
-' Đăng nhập hoặc Đăng ký tài khoản tại trang chủ
-' Vào trang "Đặt lịch khám" (Booking)
-' Bước 1: Chọn địa điểm (địa chỉ trong hồ sơ hoặc nhập mới, có nút GPS tự động lấy tọa độ)
-' Bước 2: Chọn bệnh viện gần nhất trong danh sách (đã lọc theo bán kính 50km)
-' Bước 3: Nhập triệu chứng, hệ thống gợi ý bác sĩ phù hợp
-' Bước 4: Chọn ngày giờ khám, Xác nhận đặt lịch
-' Nhận email xác nhận và xem lịch hẹn tại Dashboard
-
-KHI NGƯỜI DÙNG HỎI VỀ TRIỆU CHỨNG:
-' Phân tích triệu chứng được mô tả
-' Gợi ý chuyên khoa phù hợp từ dữ liệu
-' Gợi ý 2 hoặc 3 bác sĩ tốt nhất từ danh sách
+KHI NGƯỜI DÙNG HỎI VỀ Y TẾ:
+' Cung cấp thông tin từ dữ liệu MediBuk (bệnh viện, bác sĩ, triệu chứng)
+' Gợi ý chuyên khoa phù hợp
 ' Lưu ý: Đây chỉ là tư vấn sơ bộ, cần đến bệnh viện khám trực tiếp
 
-KHI NGƯỜI DÙNG HỎI VỀ BỆNH VIỆN:
-' Cung cấp tên, địa chỉ, chuyên khoa từ dữ liệu
-' Gợi ý bác sĩ tại bệnh viện đó
-' Cho biết giờ làm việc
+KHI NGƯỜI DÙNG HỎI VỀ MEDIBUK:
+' Hướng dẫn cách đặt lịch khám, xem lịch hẹn, quản lý tài khoản
+' Quy trình 4 bước: Nhập địa chỉ, Chọn bệnh viện, Nhập triệu chứng, Chọn ngày giờ
 
 TỐI ƯU TỐC ĐỘ:
 ' Trả lời ngắn gọn, súc tích
@@ -104,6 +81,22 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Tin nhắn không hợp lệ.' }, { status: 400 });
     }
 
+    // Only block clearly unethical requests
+    const lastUserMsg = messages[messages.length - 1]?.content || '';
+    const blockedTopics = [
+      'cách làm bom', 'cách hack', 'cách đánh cắp', 'cách lừa đảo',
+      'cách giết người', 'cách tự tử', 'mua bán vũ khí', 'mua bán ma túy',
+      'làm giả giấy tờ', 'trốn thuế', 'phân biệt chủng tộc'
+    ];
+    const lowerMsg = lastUserMsg.toLowerCase();
+    const isBlocked = blockedTopics.some(topic => lowerMsg.includes(topic));
+
+    if (isBlocked) {
+      return NextResponse.json({
+        content: 'Xin lỗi, tôi không thể giúp bạn với yêu cầu này vì vi phạm đạo đức và pháp luật. Vui lòng hỏi câu hỏi khác.'
+      });
+    }
+
     // Build system prompt with CSV context
     const systemPrompt = await buildSystemPrompt();
 
@@ -114,7 +107,6 @@ export async function POST(request: Request) {
     ];
 
     // Check if user needs web search
-    const lastUserMsg = messages[messages.length - 1]?.content || '';
     const needsWebSearch = lastUserMsg.toLowerCase().includes('tìm') || 
                            lastUserMsg.toLowerCase().includes('tra cứu') ||
                            lastUserMsg.toLowerCase().includes('search') ||
