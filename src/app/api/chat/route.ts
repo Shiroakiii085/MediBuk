@@ -3,59 +3,61 @@ import { readCSV } from '@/lib/githubDb';
 
 const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY;
 const OPENROUTER_BASE_URL = 'https://openrouter.ai/api/v1/chat/completions';
+const AI_MODEL = 'qwen/qwen3-next-80b-a3b-instruct:free';
 
 // Compact system prompt - only summaries
 async function buildSystemPrompt(): Promise<string> {
-  const [clinics, doctors, symptoms] = await Promise.all([
-    readCSV<any>('clinics.csv'),
-    readCSV<any>('doctors.csv'),
-    readCSV<any>('symptoms.csv'),
-  ]);
+  try {
+    const [clinics, doctors, symptoms] = await Promise.all([
+      readCSV<any>('clinics.csv').catch(() => []),
+      readCSV<any>('doctors.csv').catch(() => []),
+      readCSV<any>('symptoms.csv').catch(() => []),
+    ]);
 
-  // Compact clinic summary: group by city, only name + specialties
-  const clinicsByCity: Record<string, string[]> = {};
-  clinics.forEach((c: any) => {
-    const addr = c.address || '';
-    let city = 'Khác';
-    if (addr.includes('Hà Nội') || addr.includes('Hai Bà') || addr.includes('Đống Đa') || addr.includes('Hoàn Kiếm') || addr.includes('Cầu Giấy') || addr.includes('Ba Đình') || addr.includes('Long Biên') || addr.includes('Tây Hồ') || addr.includes('Thanh Nhàn') || addr.includes('Bách Khoa') || addr.includes('Phương Mai') || addr.includes('Ngọc Hà')) city = 'Hà Nội';
-    else if (addr.includes('Đà Nẵng') || addr.includes('Hải Châu') || addr.includes('Thanh Khê') || addr.includes('Ngũ Hành') || addr.includes('Liên Chiểu') || addr.includes('Cẩm Lệ') || addr.includes('Sơn Trà')) city = 'Đà Nẵng';
-    else if (addr.includes('TP.HCM') || addr.includes('Quận') || addr.includes('Thành phố Hồ Chí Minh')) city = 'TP.HCM';
-    else if (addr.includes('Hải Phòng')) city = 'Hải Phòng';
-    else if (addr.includes('Cần Thơ')) city = 'Cần Thơ';
-    else if (addr.includes('Nha Trang') || addr.includes('Khánh Hòa')) city = 'Nha Trang';
-    else if (addr.includes('Huế')) city = 'Huế';
-    else if (addr.includes('Quy Nhơn') || addr.includes('Bình Định')) city = 'Quy Nhơn';
-    else if (addr.includes('Nghệ An') || addr.includes('Vinh')) city = 'Vinh';
-    else if (addr.includes('Đà Lạt') || addr.includes('Lâm Đồng')) city = 'Đà Lạt';
-    else if (addr.includes('Nam Định')) city = 'Nam Định';
-    else if (addr.includes('Thanh Hóa')) city = 'Thanh Hóa';
-    else if (addr.includes('Hải Dương')) city = 'Hải Dương';
-    if (!clinicsByCity[city]) clinicsByCity[city] = [];
-    clinicsByCity[city].push(`${c.name} [${c.specialties.split(';').slice(0, 3).join(';')}]`);
-  });
+    // Compact clinic summary: group by city, only name + specialties
+    const clinicsByCity: Record<string, string[]> = {};
+    clinics.forEach((c: any) => {
+      const addr = c.address || '';
+      let city = 'Khác';
+      if (addr.includes('Hà Nội') || addr.includes('Hai Bà') || addr.includes('Đống Đa') || addr.includes('Hoàn Kiếm') || addr.includes('Cầu Giấy') || addr.includes('Ba Đình') || addr.includes('Long Biên') || addr.includes('Tây Hồ') || addr.includes('Thanh Nhàn') || addr.includes('Bách Khoa') || addr.includes('Phương Mai') || addr.includes('Ngọc Hà')) city = 'Hà Nội';
+      else if (addr.includes('Đà Nẵng') || addr.includes('Hải Châu') || addr.includes('Thanh Khê') || addr.includes('Ngũ Hành') || addr.includes('Liên Chiểu') || addr.includes('Cẩm Lệ') || addr.includes('Sơn Trà')) city = 'Đà Nẵng';
+      else if (addr.includes('TP.HCM') || addr.includes('Quận') || addr.includes('Thành phố Hồ Chí Minh')) city = 'TP.HCM';
+      else if (addr.includes('Hải Phòng')) city = 'Hải Phòng';
+      else if (addr.includes('Cần Thơ')) city = 'Cần Thơ';
+      else if (addr.includes('Nha Trang') || addr.includes('Khánh Hòa')) city = 'Nha Trang';
+      else if (addr.includes('Huế')) city = 'Huế';
+      else if (addr.includes('Quy Nhơn') || addr.includes('Bình Định')) city = 'Quy Nhơn';
+      else if (addr.includes('Nghệ An') || addr.includes('Vinh')) city = 'Vinh';
+      else if (addr.includes('Đà Lạt') || addr.includes('Lâm Đồng')) city = 'Đà Lạt';
+      else if (addr.includes('Nam Định')) city = 'Nam Định';
+      else if (addr.includes('Thanh Hóa')) city = 'Thanh Hóa';
+      else if (addr.includes('Hải Dương')) city = 'Hải Dương';
+      if (!clinicsByCity[city]) clinicsByCity[city] = [];
+      clinicsByCity[city].push(`${c.name} [${c.specialties.split(';').slice(0, 3).join(';')}]`);
+    });
 
-  const clinicSummary = Object.entries(clinicsByCity)
-    .map(([city, list]) => `${city} (${list.length} BV): ${list.join(', ')}`)
-    .join('\n');
+    const clinicSummary = Object.entries(clinicsByCity)
+      .map(([city, list]) => `${city} (${list.length} BV): ${list.join(', ')}`)
+      .join('\n');
 
-  // Compact doctor summary: only top 2 per specialty
-  const specialtyDoctors: Record<string, string[]> = {};
-  doctors.forEach((d: any) => {
-    const spec = d.specialty.split(';')[0];
-    if (!specialtyDoctors[spec]) specialtyDoctors[spec] = [];
-    if (specialtyDoctors[spec].length < 2) {
-      const clinic = clinics.find((c: any) => c.clinic_id.toString() === d.clinic_id.toString());
-      specialtyDoctors[spec].push(`${d.name} (${clinic?.name || 'N/A'})`);
-    }
-  });
-  const doctorSummary = Object.entries(specialtyDoctors)
-    .map(([spec, list]) => `${spec}: ${list.join(', ')}`)
-    .join('\n');
+    // Compact doctor summary: only top 2 per specialty
+    const specialtyDoctors: Record<string, string[]> = {};
+    doctors.forEach((d: any) => {
+      const spec = d.specialty.split(';')[0];
+      if (!specialtyDoctors[spec]) specialtyDoctors[spec] = [];
+      if (specialtyDoctors[spec].length < 2) {
+        const clinic = clinics.find((c: any) => c.clinic_id.toString() === d.clinic_id.toString());
+        specialtyDoctors[spec].push(`${d.name} (${clinic?.name || 'N/A'})`);
+      }
+    });
+    const doctorSummary = Object.entries(specialtyDoctors)
+      .map(([spec, list]) => `${spec}: ${list.join(', ')}`)
+      .join('\n');
 
-  // Compact symptom list: only name + specialty
-  const symptomSummary = symptoms.map((s: any) => `${s.name} -> ${s.specialty_hint}`).join(', ');
+    // Compact symptom list: only name + specialty
+    const symptomSummary = symptoms.map((s: any) => `${s.name} -> ${s.specialty_hint}`).join(', ');
 
-  return `BẠN LÀ TRỢ LÝ AI CỦA MEDIBUK - HỆ THỐNG ĐẶT LỊCH KHÁM BỆNH.
+    return `BẠN LÀ TRỢ LÝ AI CỦA MEDIBUK - HỆ THỐNG ĐẶT LỊCH KHÁM BỆNH.
 
 DỮ LIỆU BỆNH VIỆN (${clinics.length} bệnh viện, 13 thành phố):
 ${clinicSummary}
@@ -77,11 +79,16 @@ NGUYÊN TẮC:
 - Nếu triệu chứng nghiêm trọng (severe) cảnh báo đến bệnh viện ngay
 - Luôn gợi ý đặt lịch /booking nếu liên quan khám bệnh
 - Không đưa chẩn đoán chính xác, chỉ tư vấn sơ bộ`;
+  } catch (error) {
+    console.error('Error building system prompt:', error);
+    return 'Bạn là trợ lý AI của MediBuk. Trả lời bằng tiếng Việt, ngắn gọn.';
+  }
 }
 
 export async function POST(request: Request) {
   try {
-    const { messages, stream = true } = await request.json();
+    const body = await request.json().catch(() => ({}));
+    const { messages, stream = true } = body;
 
     if (!OPENROUTER_API_KEY) {
       return NextResponse.json(
@@ -129,7 +136,7 @@ export async function POST(request: Request) {
             'X-OpenRouter-Title': 'MediBuk Medical Assistant',
           },
           body: JSON.stringify({
-            model: 'qwen/qwen3.6-plus:free',
+            model: AI_MODEL,
             messages: apiMessages,
             max_tokens: 1024,
             temperature: 0.7,
@@ -140,6 +147,7 @@ export async function POST(request: Request) {
         if (!response.ok) {
           const errorData = await response.json().catch(() => ({}));
           lastError = `${response.status}: ${errorData.error?.message || 'Unknown'}`;
+          console.error(`OpenRouter error (attempt ${attempt}):`, lastError);
           if (response.status === 429) {
             await new Promise(r => setTimeout(r, attempt * 2000));
             continue;
@@ -152,11 +160,14 @@ export async function POST(request: Request) {
 
         // Stream response
         const reader = response.body?.getReader();
+        if (!reader) {
+          return NextResponse.json({ error: 'Không đọc được dữ liệu từ AI.' }, { status: 500 });
+        }
+
         const encoder = new TextEncoder();
 
         const streamResponse = new ReadableStream({
           async start(controller) {
-            if (!reader) { controller.close(); return; }
             try {
               while (true) {
                 const { done, value } = await reader.read();
@@ -192,20 +203,21 @@ export async function POST(request: Request) {
           headers: { 'Content-Type': 'text/event-stream', 'Cache-Control': 'no-cache', 'Connection': 'keep-alive' },
         });
       } catch (err: any) {
-        lastError = err.message;
+        lastError = err.message || 'Network error';
+        console.error(`Fetch error (attempt ${attempt}):`, lastError);
         if (attempt < 3) await new Promise(r => setTimeout(r, attempt * 2000));
       }
     }
 
     return NextResponse.json(
-      { error: `AI đang bận, vui lòng thử lại sau. (${lastError})` },
+      { error: `AI đang bận, vui lòng thử lại sau.` },
       { status: 503 }
     );
 
   } catch (error: any) {
-    console.error('Chat API error:', error);
+    console.error('Chat API fatal error:', error);
     return NextResponse.json(
-      { error: error.message || 'Lỗi xử lý yêu cầu.' },
+      { error: 'Lỗi xử lý yêu cầu. Vui lòng thử lại.' },
       { status: 500 }
     );
   }
