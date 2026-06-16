@@ -322,18 +322,18 @@ function DashboardContent() {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
       
       {/* Welcome banner */}
-      <div className="bg-gradient-to-r from-emerald-600 to-teal-500 text-white rounded-3xl p-8 mb-8 shadow-xl shadow-emerald-500/10">
+      <div className="bg-gradient-to-r from-primary to-sky-600 text-white rounded-3xl p-8 mb-8 shadow-xl shadow-primary/10">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
           <div>
             <h1 className="text-3xl font-extrabold tracking-tight">Xin chào, {session?.user.name}!</h1>
-            <p className="text-emerald-100 mt-1">
+            <p className="text-sky-100 mt-1">
               Quyền hạn: <span className="font-bold uppercase tracking-wider">{role === 'admin' ? 'Quản trị viên' : 'Bệnh nhân'}</span>
             </p>
           </div>
           {role === 'patient' && (
             <Link
               href="/booking"
-              className="px-6 py-3.5 bg-white text-emerald-700 font-bold rounded-xl shadow-md hover:bg-emerald-50 active:scale-95 transition-all"
+              className="px-6 py-3.5 bg-white text-primary font-bold rounded-xl shadow-md hover:bg-primary-light active:scale-95 transition-all"
             >
               Đặt lịch khám mới
             </Link>
@@ -350,8 +350,8 @@ function DashboardContent() {
       )}
 
       {successMsg && (
-        <div className="flex items-center gap-x-2 rounded-xl bg-emerald-50 border border-emerald-100 p-4 text-sm text-emerald-700 mb-6 animate-fadeIn">
-          <CheckCircle2 className="h-5 w-5 text-emerald-500 shrink-0" />
+        <div className="flex items-center gap-x-2 rounded-xl bg-primary-light border border-sky-100 p-4 text-sm text-primary mb-6 animate-fadeIn">
+          <CheckCircle2 className="h-5 w-5 text-primary shrink-0" />
           <p>{successMsg}</p>
         </div>
       )}
@@ -371,14 +371,14 @@ function DashboardContent() {
       {role === 'patient' && (
         <div className="bg-white rounded-3xl border border-slate-200 p-8 shadow-sm">
           <h2 className="text-xl font-bold text-slate-900 mb-6 flex items-center gap-x-2">
-            <CalendarDays className="h-5 w-5 text-emerald-500" />
+            <CalendarDays className="h-5 w-5 text-primary" />
             Lịch hẹn của tôi
           </h2>
 
           {appointments.length === 0 ? (
             <div className="text-center py-12 text-slate-400">
               Bạn chưa có bất kỳ lịch hẹn khám nào. <br />
-              <Link href="/booking" className="text-emerald-600 font-semibold hover:underline mt-2 inline-block">
+              <Link href="/booking" className="text-primary font-semibold hover:underline mt-2 inline-block">
                 Đặt lịch khám đầu tiên của bạn ngay!
               </Link>
             </div>
@@ -401,7 +401,7 @@ function DashboardContent() {
                       <td className="px-6 py-4 whitespace-nowrap font-mono text-xs text-slate-500">{app.appointment_id}</td>
                       <td className="px-6 py-4">
                         <div className="font-bold text-slate-900">{app.doctor_name}</div>
-                        <div className="text-xs text-emerald-700 font-semibold">{app.doctor_specialty}</div>
+                        <div className="text-xs text-primary font-semibold">{app.doctor_specialty}</div>
                         <div className="text-xs text-slate-500 mt-0.5">{app.clinic_name}</div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
@@ -412,7 +412,7 @@ function DashboardContent() {
                       <td className="px-6 py-4 whitespace-nowrap">
                         <span className={`inline-flex items-center gap-x-1 text-xs font-semibold px-2.5 py-1 rounded-full ${
                           app.status === 'confirmed'
-                            ? 'bg-emerald-50 text-emerald-700 border border-emerald-100'
+                            ? 'bg-primary-light text-primary border border-sky-100'
                             : 'bg-rose-50 text-rose-700 border border-rose-100'
                         }`}>
                           {app.status === 'confirmed' ? (
@@ -462,7 +462,7 @@ function DashboardContent() {
                 <p className="text-xs font-bold text-slate-400 uppercase tracking-wider">Tổng số lịch hẹn</p>
                 <p className="text-3xl font-extrabold text-slate-900 mt-2">{appointments.length}</p>
               </div>
-              <div className="h-12 w-12 rounded-2xl bg-emerald-50 flex items-center justify-center text-emerald-600">
+              <div className="h-12 w-12 rounded-2xl bg-primary-light flex items-center justify-center text-primary">
                 <Calendar className="h-6 w-6" />
               </div>
             </div>
@@ -502,7 +502,7 @@ function DashboardContent() {
                     onClick={() => setAdminTab(t.key)}
                     className={`px-4 py-2 text-sm font-semibold rounded-xl transition-colors ${
                       adminTab === t.key
-                        ? 'bg-emerald-600 text-white shadow-sm'
+                        ? 'bg-primary text-white shadow-sm'
                         : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
                     }`}
                   >
@@ -515,7 +515,7 @@ function DashboardContent() {
               {adminTab === 'clinics' && (
                 <button
                   onClick={() => openClinicModal('add')}
-                  className="flex items-center gap-x-1 px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl shadow-sm transition-colors"
+                  className="flex items-center gap-x-1 px-4 py-2 bg-primary hover:bg-sky-700 text-white text-xs font-bold rounded-xl shadow-sm transition-colors"
                 >
                   <Plus className="h-4 w-4" />
                   <span>Thêm Bệnh viện</span>
@@ -525,7 +525,7 @@ function DashboardContent() {
               {adminTab === 'doctors' && (
                 <button
                   onClick={() => openDoctorModal('add')}
-                  className="flex items-center gap-x-1 px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl shadow-sm transition-colors"
+                  className="flex items-center gap-x-1 px-4 py-2 bg-primary hover:bg-sky-700 text-white text-xs font-bold rounded-xl shadow-sm transition-colors"
                 >
                   <Plus className="h-4 w-4" />
                   <span>Thêm Bác sĩ</span>
@@ -539,7 +539,7 @@ function DashboardContent() {
                     type="date"
                     value={reminderDate}
                     onChange={(e) => setReminderDate(e.target.value)}
-                    className="px-3 py-2 text-xs border border-slate-300 rounded-xl focus:outline-none focus:ring-1 focus:ring-emerald-500"
+                    className="px-3 py-2 text-xs border border-slate-300 rounded-xl focus:outline-none focus:ring-1 focus:ring-primary"
                     placeholder="Chọn ngày (mặc định: ngày mai)"
                   />
                   <button
@@ -557,7 +557,7 @@ function DashboardContent() {
                     <span>{reminderLoading ? 'Đang gửi...' : 'Gửi mail nhắc lịch'}</span>
                   </button>
                   {reminderResult && (
-                    <span className={`text-xs font-medium px-3 py-1.5 rounded-lg ${reminderResult.includes('Đã gửi') ? 'bg-emerald-50 text-emerald-700' : 'bg-amber-50 text-amber-700'}`}>
+                    <span className={`text-xs font-medium px-3 py-1.5 rounded-lg ${reminderResult.includes('Đã gửi') ? 'bg-primary-light text-primary' : 'bg-amber-50 text-amber-700'}`}>
                       {reminderResult}
                     </span>
                   )}
@@ -592,7 +592,7 @@ function DashboardContent() {
                           </td>
                           <td className="px-6 py-4">
                             <div className="font-semibold text-slate-800">{app.doctor_name}</div>
-                            <div className="text-xs text-emerald-700 font-medium">{app.doctor_specialty}</div>
+                            <div className="text-xs text-primary font-medium">{app.doctor_specialty}</div>
                             <div className="text-xs text-slate-400">{app.clinic_name}</div>
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap">
@@ -601,7 +601,7 @@ function DashboardContent() {
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap">
                             <span className={`inline-flex items-center gap-x-1 text-xs font-semibold px-2 py-0.5 rounded-full ${
-                              app.status === 'confirmed' ? 'bg-emerald-50 text-emerald-700' : 'bg-rose-50 text-rose-700'
+                              app.status === 'confirmed' ? 'bg-primary-light text-primary' : 'bg-rose-50 text-rose-700'
                             }`}>
                               {app.status === 'confirmed' ? 'Xác nhận' : 'Đã hủy'}
                             </span>
@@ -706,7 +706,7 @@ function DashboardContent() {
                               <div className="text-xs text-slate-400">Giờ khám: {d.work_hours}</div>
                             </td>
                             <td className="px-6 py-4 text-slate-600 font-medium">{clinic ? clinic.name : `Mã PK: ${d.clinic_id}`}</td>
-                            <td className="px-6 py-4 font-semibold text-emerald-700">{d.specialty}</td>
+                            <td className="px-6 py-4 font-semibold text-primary">{d.specialty}</td>
                             <td className="px-6 py-4 text-slate-500 max-w-xs truncate" title={d.symptoms_handled}>{d.symptoms_handled}</td>
                             <td className="px-6 py-4 whitespace-nowrap text-center">
                               <div className="flex justify-center space-x-2">
@@ -757,7 +757,7 @@ function DashboardContent() {
                       required
                       value={clinicName}
                       onChange={(e) => setClinicName(e.target.value)}
-                      className="block w-full rounded-xl border border-slate-300 py-2.5 px-3 text-sm focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500"
+                      className="block w-full rounded-xl border border-slate-300 py-2.5 px-3 text-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
                       placeholder="Bệnh viện Bạch Mai"
                     />
                   </div>
@@ -769,7 +769,7 @@ function DashboardContent() {
                       required
                       value={clinicAddress}
                       onChange={(e) => setClinicAddress(e.target.value)}
-                      className="block w-full rounded-xl border border-slate-300 py-2.5 px-3 text-sm focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500"
+                      className="block w-full rounded-xl border border-slate-300 py-2.5 px-3 text-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
                       placeholder="Số 78 Giải Phóng, Đống Đa, Hà Nội"
                     />
                   </div>
@@ -783,7 +783,7 @@ function DashboardContent() {
                         required
                         value={clinicLat}
                         onChange={(e) => setClinicLat(e.target.value)}
-                        className="block w-full rounded-xl border border-slate-300 py-2.5 px-3 text-sm focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500"
+                        className="block w-full rounded-xl border border-slate-300 py-2.5 px-3 text-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
                       />
                     </div>
                     <div>
@@ -794,7 +794,7 @@ function DashboardContent() {
                         required
                         value={clinicLng}
                         onChange={(e) => setClinicLng(e.target.value)}
-                        className="block w-full rounded-xl border border-slate-300 py-2.5 px-3 text-sm focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500"
+                        className="block w-full rounded-xl border border-slate-300 py-2.5 px-3 text-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
                       />
                     </div>
                   </div>
@@ -806,7 +806,7 @@ function DashboardContent() {
                       required
                       value={clinicSpecialties}
                       onChange={(e) => setClinicSpecialties(e.target.value)}
-                      className="block w-full rounded-xl border border-slate-300 py-2.5 px-3 text-sm focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500"
+                      className="block w-full rounded-xl border border-slate-300 py-2.5 px-3 text-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
                       placeholder="Nội tổng quát;Nhi;Da liễu;Tim mạch"
                     />
                   </div>
@@ -821,7 +821,7 @@ function DashboardContent() {
                     </button>
                     <button
                       type="submit"
-                      className="px-5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-sm font-semibold shadow-sm"
+                      className="px-5 py-2 bg-primary hover:bg-sky-700 text-white rounded-xl text-sm font-semibold shadow-sm"
                     >
                       Lưu thay đổi
                     </button>
@@ -847,7 +847,7 @@ function DashboardContent() {
                       required
                       value={doctorName}
                       onChange={(e) => setDoctorName(e.target.value)}
-                      className="block w-full rounded-xl border border-slate-300 py-2.5 px-3 text-sm focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500"
+                      className="block w-full rounded-xl border border-slate-300 py-2.5 px-3 text-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
                       placeholder="BS. Nguyễn Văn An"
                     />
                   </div>
@@ -857,7 +857,7 @@ function DashboardContent() {
                     <select
                       value={doctorClinicId}
                       onChange={(e) => setDoctorClinicId(e.target.value)}
-                      className="block w-full rounded-xl border border-slate-300 py-2.5 px-3 text-sm focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500 bg-white"
+                      className="block w-full rounded-xl border border-slate-300 py-2.5 px-3 text-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary bg-white"
                     >
                       {clinics.map(c => (
                         <option key={c.clinic_id} value={c.clinic_id}>{c.name}</option>
@@ -872,7 +872,7 @@ function DashboardContent() {
                       required
                       value={doctorSpecialty}
                       onChange={(e) => setDoctorSpecialty(e.target.value)}
-                      className="block w-full rounded-xl border border-slate-300 py-2.5 px-3 text-sm focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500"
+                      className="block w-full rounded-xl border border-slate-300 py-2.5 px-3 text-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
                       placeholder="Da liễu (Phải nằm trong danh sách chuyên khoa của bệnh viện chọn)"
                     />
                   </div>
@@ -884,7 +884,7 @@ function DashboardContent() {
                       required
                       value={doctorSymptoms}
                       onChange={(e) => setDoctorSymptoms(e.target.value)}
-                      className="block w-full rounded-xl border border-slate-300 py-2.5 px-3 text-sm focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500"
+                      className="block w-full rounded-xl border border-slate-300 py-2.5 px-3 text-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
                       placeholder="ngứa;mẩn đỏ;mụn;dị ứng da"
                     />
                   </div>
@@ -896,7 +896,7 @@ function DashboardContent() {
                       required
                       value={doctorWorkHours}
                       onChange={(e) => setDoctorWorkHours(e.target.value)}
-                      className="block w-full rounded-xl border border-slate-300 py-2.5 px-3 text-sm focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500"
+                      className="block w-full rounded-xl border border-slate-300 py-2.5 px-3 text-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
                       placeholder="07:30-11:30,13:30-17:00"
                     />
                   </div>
@@ -911,7 +911,7 @@ function DashboardContent() {
                     </button>
                     <button
                       type="submit"
-                      className="px-5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-sm font-semibold shadow-sm"
+                      className="px-5 py-2 bg-primary hover:bg-sky-700 text-white rounded-xl text-sm font-semibold shadow-sm"
                     >
                       Lưu thay đổi
                     </button>

@@ -200,7 +200,7 @@ export default function AccountPage() {
         <div className="lg:col-span-2 space-y-8">
           <div className="bg-white p-8 rounded-3xl border border-slate-200/80 shadow-sm">
             <h2 className="text-xl font-bold text-slate-900 flex items-center gap-x-2 mb-6">
-              <User className="h-5 w-5 text-emerald-500" />
+              <User className="h-5 w-5 text-primary" />
               Thông tin cá nhân
             </h2>
 
@@ -212,8 +212,8 @@ export default function AccountPage() {
             )}
 
             {profileSuccess && (
-              <div className="flex items-center gap-x-2 rounded-xl bg-emerald-50 border border-emerald-100 p-4 text-sm text-emerald-700 mb-6 animate-fadeIn">
-                <CheckCircle2 className="h-5 w-5 text-emerald-500 shrink-0" />
+              <div className="flex items-center gap-x-2 rounded-xl bg-primary-light border border-sky-100 p-4 text-sm text-primary mb-6 animate-fadeIn">
+                <CheckCircle2 className="h-5 w-5 text-primary shrink-0" />
                 <p>{profileSuccess}</p>
               </div>
             )}
@@ -249,7 +249,7 @@ export default function AccountPage() {
                       required
                       value={phone}
                       onChange={(e) => setPhone(e.target.value)}
-                      className="block w-full rounded-xl border border-slate-300 py-3 pl-10 pr-3 text-slate-900 focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500 sm:text-sm"
+                      className="block w-full rounded-xl border border-slate-300 py-3 pl-10 pr-3 text-slate-900 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary sm:text-sm"
                       placeholder="0912345678"
                     />
                   </div>
@@ -267,7 +267,7 @@ export default function AccountPage() {
                       required
                       value={fullName}
                       onChange={(e) => setFullName(e.target.value)}
-                      className="block w-full rounded-xl border border-slate-300 py-3 pl-10 pr-3 text-slate-900 focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500 sm:text-sm"
+                      className="block w-full rounded-xl border border-slate-300 py-3 pl-10 pr-3 text-slate-900 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary sm:text-sm"
                       placeholder="Nguyễn Văn A"
                     />
                   </div>
@@ -285,14 +285,14 @@ export default function AccountPage() {
                       required
                       value={address}
                       onChange={(e) => setAddress(e.target.value)}
-                      className="block w-full rounded-xl border border-slate-300 py-3 pl-10 pr-12 text-slate-900 focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500 sm:text-sm"
+                      className="block w-full rounded-xl border border-slate-300 py-3 pl-10 pr-12 text-slate-900 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary sm:text-sm"
                       placeholder="Số nhà, Tên đường, Quận, Tỉnh"
                     />
                     <button
                       type="button"
                       onClick={handleAutoGeocode}
                       disabled={geoLoading || !address.trim()}
-                      className="absolute inset-y-0 right-0 flex items-center pr-3 text-emerald-600 hover:text-emerald-700 disabled:text-slate-300 transition-colors"
+                      className="absolute inset-y-0 right-0 flex items-center pr-3 text-emerald-600 hover:text-primary disabled:text-slate-300 transition-colors"
                       title="Tự động lấy tọa độ từ địa chỉ"
                     >
                       <Crosshair className={`h-5 w-5 ${geoLoading ? 'animate-spin' : ''}`} />
@@ -310,7 +310,7 @@ export default function AccountPage() {
                     required
                     value={lat}
                     onChange={(e) => setLat(parseFloat(e.target.value) || 0)}
-                    className="block w-full rounded-xl border border-slate-300 py-3 px-3 text-slate-900 focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500 sm:text-sm"
+                    className="block w-full rounded-xl border border-slate-300 py-3 px-3 text-slate-900 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary sm:text-sm"
                   />
                 </div>
 
@@ -323,7 +323,7 @@ export default function AccountPage() {
                     required
                     value={lng}
                     onChange={(e) => setLng(parseFloat(e.target.value) || 0)}
-                    className="block w-full rounded-xl border border-slate-300 py-3 px-3 text-slate-900 focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500 sm:text-sm"
+                    className="block w-full rounded-xl border border-slate-300 py-3 px-3 text-slate-900 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary sm:text-sm"
                   />
                 </div>
 
@@ -345,7 +345,7 @@ export default function AccountPage() {
                 <button
                   type="submit"
                   disabled={profileSaving}
-                  className="flex items-center gap-x-2 px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-xl shadow-md shadow-emerald-500/10 hover:shadow-emerald-500/20 transition-all active:scale-95 disabled:opacity-50"
+                  className="flex items-center gap-x-2 px-6 py-3 bg-primary hover:bg-sky-700 text-white font-semibold rounded-xl shadow-md shadow-primary/10 hover:shadow-primary/20 transition-all active:scale-95 disabled:opacity-50"
                 >
                   <Save className="h-5 w-5" />
                   <span>{profileSaving ? 'Đang lưu...' : 'Lưu thay đổi'}</span>
@@ -359,7 +359,7 @@ export default function AccountPage() {
         <div className="space-y-8">
           <div className="bg-white p-8 rounded-3xl border border-slate-200/80 shadow-sm">
             <h2 className="text-xl font-bold text-slate-900 flex items-center gap-x-2 mb-6">
-              <KeyRound className="h-5 w-5 text-emerald-500" />
+              <KeyRound className="h-5 w-5 text-primary" />
               Đổi mật khẩu
             </h2>
 
@@ -371,8 +371,8 @@ export default function AccountPage() {
             )}
 
             {passwordSuccess && (
-              <div className="flex items-center gap-x-2 rounded-xl bg-emerald-50 border border-emerald-100 p-4 text-sm text-emerald-700 mb-6">
-                <CheckCircle2 className="h-5 w-5 text-emerald-500 shrink-0" />
+              <div className="flex items-center gap-x-2 rounded-xl bg-primary-light border border-sky-100 p-4 text-sm text-primary mb-6">
+                <CheckCircle2 className="h-5 w-5 text-primary shrink-0" />
                 <p>{passwordSuccess}</p>
               </div>
             )}
@@ -389,7 +389,7 @@ export default function AccountPage() {
                     required
                     value={oldPassword}
                     onChange={(e) => setOldPassword(e.target.value)}
-                    className="block w-full rounded-xl border border-slate-300 py-3 pl-10 pr-3 text-slate-900 focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500 sm:text-sm"
+                    className="block w-full rounded-xl border border-slate-300 py-3 pl-10 pr-3 text-slate-900 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary sm:text-sm"
                     placeholder="••••••••"
                   />
                 </div>
@@ -406,7 +406,7 @@ export default function AccountPage() {
                     required
                     value={newPassword}
                     onChange={(e) => setNewPassword(e.target.value)}
-                    className="block w-full rounded-xl border border-slate-300 py-3 pl-10 pr-3 text-slate-900 focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500 sm:text-sm"
+                    className="block w-full rounded-xl border border-slate-300 py-3 pl-10 pr-3 text-slate-900 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary sm:text-sm"
                     placeholder="Tối thiểu 6 ký tự"
                     minLength={6}
                   />
@@ -424,7 +424,7 @@ export default function AccountPage() {
                     required
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
-                    className="block w-full rounded-xl border border-slate-300 py-3 pl-10 pr-3 text-slate-900 focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500 sm:text-sm"
+                    className="block w-full rounded-xl border border-slate-300 py-3 pl-10 pr-3 text-slate-900 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary sm:text-sm"
                     placeholder="••••••••"
                   />
                 </div>

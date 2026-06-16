@@ -161,13 +161,13 @@ export default function BookingPage() {
       lng: number;
       title: string;
       description?: string;
-      color?: 'emerald' | 'blue' | 'rose' | 'amber';
+      color?: 'blue' | 'sky' | 'rose' | 'amber';
     }[] = clinicsWithDistance.map(c => ({
       lat: c.lat,
       lng: c.lng,
       title: c.name,
       description: `Khoảng cách: ${c.distance} km. Chuyên khoa: ${c.specialties}`,
-      color: selectedClinic?.clinic_id === c.clinic_id ? 'emerald' : 'rose'
+      color: selectedClinic?.clinic_id === c.clinic_id ? 'blue' : 'rose'
     }));
 
     // Add user marker
@@ -321,19 +321,19 @@ export default function BookingPage() {
                 <div className="flex flex-col items-center">
                   <div className={`h-10 w-10 flex items-center justify-center rounded-full text-sm font-bold border transition-colors ${
                     isCompleted 
-                      ? 'bg-emerald-500 border-emerald-500 text-white' 
+                      ? 'bg-primary border-primary text-white' 
                       : isCurrent 
-                        ? 'bg-white border-emerald-600 text-emerald-600 ring-4 ring-emerald-50' 
+                        ? 'bg-white border-primary text-primary ring-4 ring-primary/10' 
                         : 'bg-white border-slate-200 text-slate-400'
                   }`}>
                     {isCompleted ? <CheckCircle2 className="h-6 w-6" /> : <Icon className="h-5 w-5" />}
                   </div>
-                  <span className={`text-xs mt-2 font-medium ${isCurrent ? 'text-emerald-700 font-bold' : 'text-slate-500'}`}>
+                  <span className={`text-xs mt-2 font-medium ${isCurrent ? 'text-primary font-bold' : 'text-slate-500'}`}>
                     {item.label}
                   </span>
                 </div>
                 {idx < 3 && (
-                  <div className={`flex-1 h-0.5 mx-4 transition-colors ${isCompleted ? 'bg-emerald-500' : 'bg-slate-200'}`} />
+                  <div className={`flex-1 h-0.5 mx-4 transition-colors ${isCompleted ? 'bg-primary' : 'bg-slate-200'}`} />
                 )}
               </div>
             );
@@ -351,7 +351,7 @@ export default function BookingPage() {
           {step === 1 && (
             <div className="space-y-6">
               <h2 className="text-xl font-bold text-slate-950 flex items-center gap-x-2">
-                <MapPin className="h-5 w-5 text-emerald-500" />
+                <MapPin className="h-5 w-5 text-primary" />
                 Bước 1: Chọn nguồn địa điểm
               </h2>
               
@@ -361,7 +361,7 @@ export default function BookingPage() {
                   onClick={() => handleAddressSourceChange('profile')}
                   className={`p-5 rounded-2xl border text-left transition-all relative ${
                     addressSource === 'profile'
-                      ? 'border-emerald-500 bg-emerald-50/20 ring-2 ring-emerald-50'
+                      ? 'border-primary bg-primary-light/20 ring-2 ring-primary/10'
                       : 'border-slate-200 hover:bg-slate-50/50'
                   }`}
                 >
@@ -374,7 +374,7 @@ export default function BookingPage() {
                   onClick={() => handleAddressSourceChange('custom')}
                   className={`p-5 rounded-2xl border text-left transition-all relative ${
                     addressSource === 'custom'
-                      ? 'border-emerald-500 bg-emerald-50/20 ring-2 ring-emerald-50'
+                      ? 'border-primary bg-primary-light/20 ring-2 ring-primary/10'
                       : 'border-slate-200 hover:bg-slate-50/50'
                   }`}
                 >
@@ -393,14 +393,14 @@ export default function BookingPage() {
                         required
                         value={addressText}
                         onChange={(e) => setAddressText(e.target.value)}
-                        className="block w-full rounded-xl border border-slate-300 py-3 px-3 pr-12 text-slate-900 focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500 sm:text-sm"
+                        className="block w-full rounded-xl border border-slate-300 py-3 px-3 pr-12 text-slate-900 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary/100 sm:text-sm"
                         placeholder="Số nhà, Tên đường, Quận, Tỉnh"
                       />
                       <button
                         type="button"
                         onClick={handleAutoGeocode}
                         disabled={geoLoading || !addressText.trim()}
-                        className="absolute inset-y-0 right-0 flex items-center pr-3 text-emerald-600 hover:text-emerald-700 disabled:text-slate-300 transition-colors"
+                        className="absolute inset-y-0 right-0 flex items-center pr-3 text-primary hover:text-primary disabled:text-slate-300 transition-colors"
                         title="Tự động lấy tọa độ từ địa chỉ"
                       >
                         <Crosshair className={`h-5 w-5 ${geoLoading ? 'animate-spin' : ''}`} />
@@ -417,7 +417,7 @@ export default function BookingPage() {
                         required
                         value={userLat}
                         onChange={(e) => setUserLat(parseFloat(e.target.value) || 0)}
-                        className="block w-full rounded-xl border border-slate-300 py-3 px-3 text-slate-900 focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500 sm:text-sm"
+                        className="block w-full rounded-xl border border-slate-300 py-3 px-3 text-slate-900 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary/100 sm:text-sm"
                       />
                     </div>
                     <div>
@@ -428,7 +428,7 @@ export default function BookingPage() {
                         required
                         value={userLng}
                         onChange={(e) => setUserLng(parseFloat(e.target.value) || 0)}
-                        className="block w-full rounded-xl border border-slate-300 py-3 px-3 text-slate-900 focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500 sm:text-sm"
+                        className="block w-full rounded-xl border border-slate-300 py-3 px-3 text-slate-900 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary/100 sm:text-sm"
                       />
                     </div>
                   </div>
@@ -441,7 +441,7 @@ export default function BookingPage() {
                   type="button"
                   onClick={() => setStep(2)}
                   disabled={!addressText}
-                  className="px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-xl flex items-center gap-x-1 transition-all disabled:opacity-50 active:scale-95 shadow-md shadow-emerald-500/10"
+                  className="px-6 py-3 bg-primary hover:bg-sky-700 text-white font-semibold rounded-xl flex items-center gap-x-1 transition-all disabled:opacity-50 active:scale-95 shadow-md shadow-primary/10"
                 >
                   <span>Tiếp tục</span>
                   <ChevronRight className="h-4 w-4" />
@@ -454,7 +454,7 @@ export default function BookingPage() {
           {step === 2 && (
             <div className="space-y-6">
               <h2 className="text-xl font-bold text-slate-950 flex items-center gap-x-2">
-                <Compass className="h-5 w-5 text-emerald-500" />
+                <Compass className="h-5 w-5 text-primary" />
                 Bước 2: Chọn bệnh viện gần bạn nhất
               </h2>
 
@@ -468,7 +468,7 @@ export default function BookingPage() {
                     }}
                     className={`p-4 rounded-2xl border text-left cursor-pointer transition-all ${
                       selectedClinic?.clinic_id === c.clinic_id
-                        ? 'border-emerald-500 bg-emerald-50/10 ring-2 ring-emerald-50'
+                        ? 'border-primary bg-primary-light/10 ring-2 ring-primary/10'
                         : 'border-slate-200 hover:bg-slate-50/50'
                     }`}
                   >
@@ -477,7 +477,7 @@ export default function BookingPage() {
                         <h4 className="font-bold text-slate-900">{c.name}</h4>
                         <p className="text-xs text-slate-500 mt-1">{c.address}</p>
                       </div>
-                      <span className="text-xs font-semibold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-100 shrink-0">
+                      <span className="text-xs font-semibold text-primary bg-primary-light px-2.5 py-1 rounded-full border border-sky-200 shrink-0">
                         {c.distance} km
                       </span>
                     </div>
@@ -505,7 +505,7 @@ export default function BookingPage() {
                   type="button"
                   onClick={() => setStep(3)}
                   disabled={!selectedClinic}
-                  className="px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-xl flex items-center gap-x-1 transition-all disabled:opacity-50 active:scale-95 shadow-md shadow-emerald-500/10"
+                  className="px-6 py-3 bg-primary hover:bg-sky-700 text-white font-semibold rounded-xl flex items-center gap-x-1 transition-all disabled:opacity-50 active:scale-95 shadow-md shadow-primary/10"
                 >
                   <span>Tiếp tục</span>
                   <ChevronRight className="h-4 w-4" />
@@ -518,7 +518,7 @@ export default function BookingPage() {
           {step === 3 && (
             <div className="space-y-6">
               <h2 className="text-xl font-bold text-slate-950 flex items-center gap-x-2">
-                <Stethoscope className="h-5 w-5 text-emerald-500" />
+                <Stethoscope className="h-5 w-5 text-primary" />
                 Bước 3: Nhập triệu chứng & Chọn bác sĩ phù hợp
               </h2>
 
@@ -530,7 +530,7 @@ export default function BookingPage() {
                     setSymptomInput(e.target.value);
                     setSelectedDoctor(null); // Reset selected doctor when symptoms change
                   }}
-                  className="block w-full rounded-xl border border-slate-300 py-3 px-3 text-slate-900 focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500 sm:text-sm h-24"
+                  className="block w-full rounded-xl border border-slate-300 py-3 px-3 text-slate-900 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary/100 sm:text-sm h-24"
                   placeholder="Ví dụ: tôi bị đau đầu, mệt mỏi và sốt nhẹ từ tối qua..."
                 />
               </div>
@@ -548,20 +548,20 @@ export default function BookingPage() {
                           onClick={() => setSelectedDoctor(doc as any)}
                           className={`p-4 rounded-2xl border text-left cursor-pointer transition-all relative ${
                             selectedDoctor?.doctor_id === doc.doctor_id
-                              ? 'border-emerald-500 bg-emerald-50/10 ring-2 ring-emerald-50'
+                              ? 'border-primary bg-primary-light/10 ring-2 ring-primary/10'
                               : 'border-slate-200 hover:bg-slate-50/50'
                           }`}
                         >
                           <div className="flex justify-between items-start">
                             <div>
                               <h4 className="font-bold text-slate-900">{doc.name}</h4>
-                              <p className="text-xs text-slate-500 mt-1">Chuyên khoa: <span className="font-semibold text-emerald-700">{doc.specialty}</span></p>
+                              <p className="text-xs text-slate-500 mt-1">Chuyên khoa: <span className="font-semibold text-primary">{doc.specialty}</span></p>
                               <p className="text-xs text-slate-400 mt-1">Giờ làm việc: {doc.work_hours}</p>
                             </div>
                             
                             {isRecommended && (
-                              <span className="inline-flex items-center gap-x-1 text-[10px] font-bold text-emerald-800 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-full shrink-0">
-                                <Sparkles className="h-3 w-3 text-emerald-600 animate-pulse" />
+                              <span className="inline-flex items-center gap-x-1 text-[10px] font-bold text-primary bg-primary-light border border-sky-200 px-2 py-0.5 rounded-full shrink-0">
+                                <Sparkles className="h-3 w-3 text-primary animate-pulse" />
                                 Phù hợp nhất
                               </span>
                             )}
@@ -569,7 +569,7 @@ export default function BookingPage() {
                           
                           {/* Reason for match */}
                           {isRecommended && (
-                            <div className="mt-3 pt-2 border-t border-dashed border-emerald-100 text-[11px] text-emerald-700 flex flex-wrap gap-1">
+                            <div className="mt-3 pt-2 border-t border-dashed border-sky-100 text-[11px] text-primary flex flex-wrap gap-1">
                               <span className="font-semibold">Lý do gợi ý:</span>
                               Khớp với triệu chứng: {doc.matchedKeywords.join(', ')}
                             </div>
@@ -594,7 +594,7 @@ export default function BookingPage() {
                   type="button"
                   onClick={() => setStep(4)}
                   disabled={!selectedDoctor}
-                  className="px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-xl flex items-center gap-x-1 transition-all disabled:opacity-50 active:scale-95 shadow-md shadow-emerald-500/10"
+                  className="px-6 py-3 bg-primary hover:bg-sky-700 text-white font-semibold rounded-xl flex items-center gap-x-1 transition-all disabled:opacity-50 active:scale-95 shadow-md shadow-primary/10"
                 >
                   <span>Tiếp tục</span>
                   <ChevronRight className="h-4 w-4" />
@@ -607,7 +607,7 @@ export default function BookingPage() {
           {step === 4 && (
             <div className="space-y-6 animate-fadeIn">
               <h2 className="text-xl font-bold text-slate-950 flex items-center gap-x-2">
-                <Calendar className="h-5 w-5 text-emerald-500" />
+                <Calendar className="h-5 w-5 text-primary" />
                 Bước 4: Chọn thời gian khám & xác nhận
               </h2>
 
@@ -644,7 +644,7 @@ export default function BookingPage() {
                       value={bookingDate}
                       min={new Date().toISOString().split('T')[0]} // limit past dates
                       onChange={(e) => setBookingDate(e.target.value)}
-                      className="block w-full rounded-xl border border-slate-300 py-3 px-3 text-slate-900 focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500 sm:text-sm"
+                      className="block w-full rounded-xl border border-slate-300 py-3 px-3 text-slate-900 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary/100 sm:text-sm"
                     />
                   </div>
 
@@ -660,7 +660,7 @@ export default function BookingPage() {
                         required
                         value={bookingTime}
                         onChange={(e) => setBookingTime(e.target.value)}
-                        className="block w-full rounded-xl border border-slate-300 py-3 pl-10 pr-3 text-slate-900 focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500 sm:text-sm"
+                        className="block w-full rounded-xl border border-slate-300 py-3 pl-10 pr-3 text-slate-900 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary/100 sm:text-sm"
                       />
                     </div>
                   </div>
@@ -671,7 +671,7 @@ export default function BookingPage() {
                     <select
                       value={durationMinutes}
                       onChange={(e) => setDurationMinutes(parseInt(e.target.value, 10))}
-                      className="block w-full rounded-xl border border-slate-300 py-3 px-3 text-slate-900 focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500 sm:text-sm bg-white"
+                      className="block w-full rounded-xl border border-slate-300 py-3 px-3 text-slate-900 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary/100 sm:text-sm bg-white"
                     >
                       <option value={15}>15 phút</option>
                       <option value={30}>30 phút (Mặc định)</option>
@@ -689,7 +689,7 @@ export default function BookingPage() {
                   <p><strong>Bác sĩ:</strong> {selectedDoctor?.name} ({selectedDoctor?.specialty})</p>
                   <p><strong>Tại:</strong> {selectedClinic?.name} - {selectedClinic?.address}</p>
                   {bookingDate && bookingTime && (
-                    <p className="text-emerald-700 font-semibold">
+                    <p className="text-primary font-semibold">
                       <strong>Thời gian:</strong> {bookingTime} ngày {bookingDate.split('-').reverse().join('/')} ({durationMinutes} phút)
                     </p>
                   )}
@@ -708,7 +708,7 @@ export default function BookingPage() {
                   <button
                     type="submit"
                     disabled={bookingLoading || !bookingDate || !bookingTime}
-                    className="px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-xl flex items-center gap-x-2 transition-all disabled:opacity-50 active:scale-95 shadow-md shadow-emerald-500/10 hover:shadow-emerald-500/20"
+                    className="px-6 py-3 bg-primary hover:bg-sky-700 text-white font-semibold rounded-xl flex items-center gap-x-2 transition-all disabled:opacity-50 active:scale-95 shadow-md shadow-primary/10 hover:shadow-primary/20"
                   >
                     {bookingLoading ? (
                       <>
@@ -732,7 +732,7 @@ export default function BookingPage() {
           {/* MAP Container */}
           <div className="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm">
             <h3 className="text-base font-bold text-slate-950 mb-3 flex items-center gap-x-1.5">
-              <MapPin className="h-5 w-5 text-emerald-500" />
+              <MapPin className="h-5 w-5 text-primary" />
               Bản đồ định vị bệnh viện
             </h3>
             <div className="h-[350px]">
@@ -749,20 +749,20 @@ export default function BookingPage() {
 
           {/* Selected Booking details preview widget */}
           {(selectedClinic || selectedDoctor) && (
-            <div className="bg-emerald-950 text-emerald-50 p-6 rounded-3xl border border-emerald-900 shadow-sm space-y-4">
-              <h3 className="text-sm font-bold tracking-wider text-emerald-400 uppercase">Thông tin đã chọn:</h3>
+            <div className="bg-sky-950 text-sky-50 p-6 rounded-3xl border border-sky-900 shadow-sm space-y-4">
+              <h3 className="text-sm font-bold tracking-wider text-sky-400 uppercase">Thông tin đã chọn:</h3>
               {selectedClinic && (
                 <div>
-                  <p className="text-xs text-emerald-300">BỆNH VIỆN:</p>
+                  <p className="text-xs text-sky-300">BỆNH VIỆN:</p>
                   <p className="text-sm font-bold">{selectedClinic.name}</p>
-                  <p className="text-[11px] text-emerald-200 line-clamp-1">{selectedClinic.address}</p>
+                  <p className="text-[11px] text-sky-200 line-clamp-1">{selectedClinic.address}</p>
                 </div>
               )}
               {selectedDoctor && (
-                <div className="pt-2 border-t border-emerald-900">
-                  <p className="text-xs text-emerald-300">BÁC SĨ KHÁM:</p>
+                <div className="pt-2 border-t border-sky-900">
+                  <p className="text-xs text-sky-300">BÁC SĨ KHÁM:</p>
                   <p className="text-sm font-bold">{selectedDoctor.name}</p>
-                  <p className="text-xs text-emerald-200">Chuyên khoa: {selectedDoctor.specialty}</p>
+                  <p className="text-xs text-sky-200">Chuyên khoa: {selectedDoctor.specialty}</p>
                 </div>
               )}
             </div>

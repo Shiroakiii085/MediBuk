@@ -26,7 +26,7 @@ interface MapProps {
     lng: number;
     title: string;
     description?: string;
-    color?: 'emerald' | 'blue' | 'rose' | 'amber';
+    color?: 'emerald' | 'blue' | 'sky' | 'rose' | 'amber';
   }[];
   onLocationSelect?: (lat: number, lng: number) => void;
   zoom?: number;
