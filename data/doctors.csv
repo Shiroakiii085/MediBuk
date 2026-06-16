@@ -1,53 +1,289 @@
-doctor_id,name,clinic_id,specialty,symptoms_handled,work_hours
-doc_1,"BS.CK1 Nguyễn Việt Cường",1,"Tim mạch","đau ngực;khó thở;tim đập nhanh;chóng mặt;huyết áp cao","07:30-11:30,13:30-17:00"
-doc_2,"BS.CK1 Trần Thị Mai Hương",1,"Hô hấp","ho;khó thở;đau ngực;viêm phổi;hen suyễn","08:00-12:00,13:30-17:30"
-doc_3,"GS.TS Phạm Minh Đức",1,"Thần kinh","đau đầu;đau nửa đầu;đi bệnh Parkinson;co giật;mất ngủ","08:00-11:30"
-doc_4,"TS.BS Hoàng Văn Nam",1,"Tiêu hóa","đau bụng;buồn nôn;ợ chua;viêm loét dạ dày;tiêu chảy","08:00-12:00,13:30-17:00"
-doc_5,"BS.CK2 Lê Văn Hùng",2,"Chấn thương chỉnh hình","gãy xương;trật khớp;đau lưng;thoái hóa cột sống;bong gân","07:30-11:30,13:30-16:30"
-doc_6,"PGS.TS Nguyễn Tuấn Anh",2,"Phẫu thuật thần kinh","u não;đau đầu kinh niên;viêm não;bệnh động kinh","08:00-12:00"
-doc_7,"BS.CK2 Vũ Đức Dũng",2,"Ngoại khoa tổng quát","đau ruột thừa;u bướu;phẫu thuật nội soi;thoát vị","07:30-11:30,13:30-17:00"
-doc_8,"BS.CK1 Phạm Thị Lan",3,"Da liễu","ngứa;mẩn đỏ;mụn;dị ứng da;viêm da cơ địa;nám","08:00-12:00,13:30-17:00"
-doc_9,"BS.CK1 Đặng Hùng Mạnh",3,"Tai Mũi Họng","viêm amidan;viêm xoang;đau họng;ù tai;viêm tai giữa","08:00-12:00,13:30-17:30"
-doc_10,"TS.BS Trịnh Thị Thu Hà",4,"Nhi","sốt;ho;tiêu chảy;phát ban;biếng ăn;suy dinh dưỡng","08:00-12:00,13:30-17:00"
-doc_11,"BS.CK2 Lê Quang Thắng",4,"Hô hấp Nhi","ho;khò khè;khó thở;viêm phổi;hen suyễn","08:00-12:00,13:30-17:30"
-doc_12,"PGS.TS Phạm Thị Thu",4,"Tim mạch Nhi","tim bẩm sinh;đau tim;khó thở;tim đập nhanh;tím tái","08:00-11:30"
-doc_13,"BS.CK2 Hoàng Minh Tuấn",5,"Tim mạch","đau ngực;huyết áp;viêm cơ tim;nhồi máu cơ tim","08:00-12:00,13:30-17:00"
-doc_14,"BS.CK1 Nguyễn Khánh Linh",5,"Da liễu","ngứa;mẩn đỏ;mụn;dị ứng;zona;vẩy nến","08:00-12:00,13:30-17:30"
-doc_15,"TS.BS Trần Văn Phúc",5,"Ung bướu","u bướu;ung thư;hóa trị;xạ trị;chẩn đoán ung thư","08:00-11:30"
-doc_16,"PGS.TS Vũ Thị Thanh Hằng",6,"Ung bướu","ung thư vú;ung thư đại tràng;ung thư phổi;hóa trị","08:00-11:30"
-doc_17,"BS.CK2 Đỗ Minh Tuấn",6,"Hóa trị","hóa trị;điều trị ung thư;phẫu thuật ung thư","08:00-12:00"
-doc_18,"BS.CK1 Phạm Đức Long",7,"Tai Mũi Họng","viêm xoang;polyp mũi;viêm tai;điếc nghe;viêm họng","08:00-12:00,13:30-17:30"
-doc_19,"BS.CK1 Trần Thị Bích Hằng",7,"Phẫu thuật đầu mặt cổ","u vùng đầu mặt;phẫu thuật amidan;chỉnh hàm mặt","08:00-12:00"
-doc_20,"PGS.TS Lê Việt Khánh",8,"Mắt","đục thủy tinh thể;glôcôm;bệnh võng mạc;viêm mắt","08:00-12:00,13:30-16:30"
-doc_21,"BS.CK2 Nguyễn Văn Quyết",8,"Phẫu thuật mắt","phẫu thuật mắt;LASIK;đục thủy tinh thể;glôcôm","08:00-12:00"
-doc_22,"GS.TS Hoàng Thị Birch",9,"Sản phụ khoa","khám thai;sinh nở;phẫu thuật phụ khoa;hiếm muộn","08:00-12:00,13:30-17:00"
-doc_23,"TS.BS Nguyễn Thanh Bình",9,"Sơ sinh","trẻ sơ sinh;trẻ sinh non;hồi sức sơ sinh;vàng da","08:00-12:00"
-doc_24,"BS.CK2 Trần Đức Phong",10,"Phẫu thuật tim","phẫu thuật tim;ghép van;bypass;can thiệp mạch vành","08:00-12:00"
-doc_25,"BS.CK1 Nguyễn Thị Mai Phương",10,"Siêu âm tim","siêu âm tim;đo chức năng tim;chẩn đoán tim bẩm sinh","08:00-12:00,13:30-17:00"
-doc_26,"TS.BS Lê Văn Dương",11,"Ung bướu","ung thư phổi;ung thư dạ dày;ung thư gan;điều trị ung thư","08:00-11:30"
-doc_27,"BS.CK2 Hoàng Thị Ngọc Ánh",11,"Xạ trị","xạ trị;điều trị ung thư;bức xạ ion hóa","08:00-12:00"
-doc_28,"BS.CK2 Phạm Minh Đức",12,"Nội tổng quát","mệt mỏi;đau đầu;đau bụng;ho;sốt;huyết áp","07:30-11:30,13:30-17:00"
-doc_29,"BS.CK1 Đỗ Thị Hằng",12,"Tim mạch","đau ngực;huyết áp;đo nồng độ oxy;mạch","08:00-12:00,13:30-17:00"
-doc_30,"BS.CK1 Trần Văn Nam",13,"Ngoại khoa","chấn thương;gãy xương;đau ruột thừa;u bướu","07:30-11:30,13:30-17:00"
-doc_31,"TS.BS Nguyễn Thị Thuần",14,"Hô hấp","ho;khó thở;viêm phổi;hen suyễn;LAO;COPD","08:00-12:00,13:30-17:00"
-doc_32,"BS.CK2 Hoàng Anh Tuấn",14,"Lao phổi","lao phổi;lao ngoài phổi;điều trị lao","08:00-12:00"
-doc_33,"PGS.TS Phạm Thị Loan",15,"Y học cổ truyền","đau lưng;thoái hóa;đau khớp;viêm đa khớp;mãn tính","08:00-12:00,13:30-17:00"
-doc_34,"BS.CK1 Đặng Văn Hùng",15,"Châm cứu","đau đầu;đau cơ;liệt mặt;đau dây thần kinh;tê bì","08:00-12:00,13:30-17:00"
-doc_35,"BS.CK2 Lê Thị Thanh",16,"Da liễu","nám;trứng cá;mụn;viêm da;vẩy nến;zona","08:00-12:00,13:30-17:00"
-doc_36,"TS.BS Phạm Quang Huy",16,"Dị ứng","dị ứng da;dị ứng thức ăn;viêm da cơ địa;mẩn ngứa","08:00-12:00"
-doc_37,"BS.CK1 Vũ Thị Phương",17,"Vật lý trị liệu","đau lưng;thoái hóa;phục hồi chức năng;liệt","08:00-12:00,13:30-17:00"
-doc_38,"BS.CK1 Nguyễn Thị Thu Hà",18,"Lão khoa","suy giảm trí nhớ;Alzheimer;Parkinson;ngã ở người già","08:00-12:00,13:30-16:30"
-doc_39,"PGS.TS Hoàng Đức Linh",19,"Nội tiết","đái tháo đường;bướu cổ;hội chứng Cushing;thiếu máu","08:00-12:00,13:30-16:30"
-doc_40,"BS.CK2 Phạm Thị Ngọc Mai",19,"Rối loạn chuyển hóa","béo phì;giảm cân;cholesterol cao;axit uric cao","08:00-12:00"
-doc_41,"TS.BS Trần Đức Phong",20,"Răng Hàm Mặt","viêm nướu;sâu răng;mảng bám;viêm tủy","08:00-12:00,13:30-17:00"
-doc_42,"BS.CK2 Đỗ Văn Tuấn",20,"Phẫu thuật hàm mặt","u hàm mặt;chỉnh hàm;phẫu thuật sau chấn thương","08:00-12:00"
-doc_43,"BS.CK1 Nguyễn Thanh Tùng",21,"Sản phụ khoa","khám thai;siêu âm;phẫu thuật phụ khoa;triệt sản","08:00-12:00,13:30-17:00"
-doc_44,"TS.BS Lê Thị Mai Hương",21,"Nhi","sốt;ho;tiêu chảy;phát ban;suy dinh dưỡng","08:00-12:00,13:30-17:00"
-doc_45,"BS.CK2 Hoàng Văn Phúc",22,"Chấn thương chỉnh hình","gãy xương;trật khớp;đau lưng;thoái hóa;viêm gân","08:00-12:00,13:30-17:00"
-doc_46,"BS.CK1 Phạm Thị Thu Trang",22,"Tim mạch","siêu âm tim;đo ECG;đo huyết áp;chẩn đoán tim","08:00-12:00,13:30-17:00"
-doc_47,"TS.BS Đặng Minh Đức",23,"Ung bướu","ung thư vú;ung thư cổ tử cung;hóa trị;xạ trị","08:00-11:30"
-doc_48,"BS.CK2 Trần Văn Hùng",23,"Da liễu","nám;trứng cá;mụn;sẹo;trẻ hóa da","08:00-12:00,13:30-17:00"
-doc_49,"BS.CK1 Lê Quang Thịnh",24,"Tai Mũi Họng","viêm amidan;viêm xoang;viêm tai;ù tai;khó nuốt","08:00-12:00,13:30-17:00"
-doc_50,"BS.CK1 Nguyễn Thị Hồng",24,"Sản phụ khoa","khám thai;điều trị hiếm muộn;siêu âm 4D","08:00-12:00,13:30-17:00"
-doc_51,"TS.BS Hoàng Minh Tâm",25,"Nội tổng quát","mệt mỏi;đau đầu;đau bụng;ho;sốt;kiểm tra sức khỏe","07:30-11:30,13:30-17:00"
-doc_52,"BS.CK2 Vũ Thị Thanh",25,"Mắt","khám mắt;đeo kính;viêm mắt;đục thủy tinh thể","08:00-12:00,13:30-17:00"
+doctor_id,name,gender,clinic_id,specialty,symptoms,experience_years
+1,"PGS.TS Nguyễn Văn An",Nam,1,"Tim mạch;Hô hấp","Đau ngực;Khó thở;Ho kéo dài;Mệt mỏi;Huyết áp cao",25
+2,"TS.BS Trần Thị Bình",Nữ,1,"Thần kinh;Đầu","Đau đầu;Chóng mặt;Rối loạn giấc ngủ;Tê bì tay chân;Suy giảm trí nhớ",20
+3,"BSCKII Lê Văn Cường",Nam,1,"Tiêu hóa;Nội khoa","Đau bụng;Đầy bụng;Buồn nôn;Tiêu chảy;Chán ăn",18
+4,"PGS.TS Phạm Thị Dung",Nữ,1,"Ung bướu;Huyết học","Sút cân không rõ nguyên nhân;Sưng hạch;Mệt mỏi;Đau xương;Thiếu máu",22
+5,"TS.BS Hoàng Minh Đức",Nam,2,"Ngoại khoa;Chấn thương chỉnh hình","Đau khớp;Gãy xương;Chấn thương;Đau lưng;Thoái hóa khớp",20
+6,"BSCKII Vũ Thị Em",Nữ,2,"Tim mạch can thiệp","Đau ngực;Khó thở;Nhịp tim nhanh;Huyết áp cao;Mạch yếu",15
+7,"BSCKI Đỗ Văn Giang",Nam,2,"Ghép tạng;Tiết niệu","Tiểu buốt;Tiểu máu;Sưng thận;Mệt mỏi;Đau vùng thắt lưng",18
+8,"TS.BS Nguyễn Thị Hà",Nữ,3,"Nhi;Da liễu","Sốt;Phát ban;Ngứa;Ho;Sổ mũi;Khóc đêm;Chán ăn",15
+9,"BSCKII Trương Văn Hùng",Nam,3,"Tai Mũi Họng","Đau tai;Chảy mũi;Viêm họng;Nghẹt mũi;Ù tai",12
+10,"BSCKI Phùng Thị Lan",Nữ,3,"Sản phụ khoa;Mắt","Đau bụng kinh;Rối loạn kinh nguyệt;Đau mắt;Mờ mắt",10
+11,"PGS.TS Lê Thị Mai",Nữ,4,"Nhi;Hô hấp Nhi","Sốt;Ho;Khó thở;Sổ mũi;Viêm phổi;Viêm phế quản",20
+12,"TS.BS Bùi Văn Nam",Nam,4,"Tim mạch Nhi","Tim đập nhanh;Khó thở;Mệt mỏi;Da xanh;Chán ăn",18
+13,"BSCKII Ngô Thị Oanh",Nữ,4,"Nhi thần kinh","Co giật;Động kinh;Chậm phát triển;Hay khóc;Rối loạn giấc ngủ",15
+14,"TS.BS Hoàng Văn Phong",Nam,5,"Tim mạch;Nội khoa","Đau ngực;Khó thở;Huyết áp cao;Cholesterol cao;Tiểu đường",18
+15,"BSCKII Lê Thị Quỳnh",Nữ,5,"Da liễu;Dị ứng","Ngứa;Nổi mẩn đỏ;Chàm;Mụn;Viêm da cơ địa",12
+16,"BSCKI Trần Văn Rồng",Nam,5,"Phẫu thuật thần kinh","Đau đầu dữ dội;Chóng mặt;Tê bì;Yếu liệt;Mất ngủ",15
+17,"PGS.TS Phạm Văn Sơn",Nam,6,"Ung bướu","Khối u;Sút cân;Mệt mỏi;Đau xương;Chán ăn;Sưng hạch",20
+18,"TS.BS Đỗ Thị Tuyết",Nữ,6,"Hóa trị;Xạ trị","Buồn nôn;Rụng tóc;Mệt mỏi;Sốt;Giảm bạch cầu",15
+19,"BSCKII Bùi Văn UNITY",Nam,6,"Chẩn đoán ung thư","Khối u bất thường;Xét nghiệm marker ung thư;Chụp CT;Sinh thiết",12
+20,"PGS.TS Nguyễn Thị Uyên",Nữ,7,"Tai Mũi Họng","Đau tai;Viêm xoang;Nghẹt mũi;Chảy mũi máu;Ù tai",18
+21,"TS.BS Lê Văn Vũ",Nam,7,"Phẫu thuật đầu mặt cổ","Khối u đầu mặt;Viêm amidan;Viêm VA;Điếc nghe",15
+22,"BSCKII Hoàng Thị Xuân",Nữ,7,"Điếc nghe;Rối loạn giọng nói","Ù tai;Giọng khàn;Khó nghe;Viêm thanh quản",10
+23,"PGS.TS Trần Văn Yên",Nam,8,"Mắt;Phẫu thuật mắt","Mờ mắt;Đau mắt đỏ;Glôcôm;Đục thủy tinh thể;Khô mắt",20
+24,"TS.BS Phạm Thị Zin",Nữ,8,"Võng mạc;Glôcôm","Bóng mắt;Mờ mắt;Đau mắt;Thiệt hại võng mạc",15
+25,"BSCKII Ngô Văn An",Nam,8,"Nhãn nhi;Đo khúc xạ","Mắt trẻ em;Cận thị;Loạn thị;Viêm mắt trẻ",12
+26,"PGS.TS Đỗ Thị Bích",Nữ,9,"Sản phụ khoa","Đau bụng kinh;Rối loạn kinh nguyệt;Khám thai;Vô sinh",22
+27,"TS.BS Nguyễn Văn Cường",Nam,9,"Phẫu thuật phụ khoa","U nang buồng trứng;U xơ tử cung;Viêm phụ khoa",18
+28,"BSCKII Trần Thị Diệu",Nữ,9,"Sơ sinh;Hiếm muộn","Sơ sinh;IVF;Thụ tinh nhân tạo;Dấu hiệu sinh",15
+29,"PGS.TS Lê Văn Em",Nam,10,"Tim mạch;Phẫu thuật tim","Đau ngực;Khó thở;Nhịp tim bất thường;Huyết áp cao",25
+30,"TS.BS Phạm Thị Giang",Nữ,10,"Can thiệp mạch vành","Đau thắt ngực;Nhồi máu cơ tim;Stent mạch vành",20
+31,"BSCKII Hoàng Văn Hùng",Nam,10,"Siêu âm tim;Chức năng tim","Siêu âm tim;Điện tâm đồ;Thử gắng sức;Chức năng tim",15
+32,"PGS.TS Vũ Thị Kim",Nữ,11,"Ung bướu;Hóa trị","Khối u;Sút cân;Buồn nôn;Mệt mỏi;Rụng tóc",20
+33,"TS.BS Bùi Văn Long",Nam,11,"Phẫu thuật ung thư","Phẫu thuật loại bỏ u;Khối u vú;Khối u đại trực tràng",18
+34,"BSCKII Ngô Thị Mai",Nữ,11,"Xạ trị;Chẩn đoán hình ảnh","Xạ trị;CT Scanner;Chụp PET;Nhiễu xạ",15
+35,"TS.BS Trương Văn Nghiêm",Nam,12,"Nội tổng quát","Mệt mỏi;Sốt;Đau đầu;Chán ăn;Giảm cân",15
+36,"BSCKII Đỗ Thị Oanh",Nữ,12,"Ngoại khoa;Cấp cứu","Chấn thương;Phẫu thuật;Cấp cứu;Gãy xương",12
+37,"BSCKI Lê Văn Phúc",Nam,12,"Tim mạch;Sản phụ khoa","Đau ngực;Huyết áp cao;Khám thai;Rối loạn kinh nguyệt",10
+38,"TS.BS Nguyễn Thị Qúy",Nữ,13,"Nội tổng quát;Da liễu","Mệt mỏi;Phát ban;Ngứa;Đau đầu;Rối loạn tiêu hóa",15
+39,"BSCKII Trần Văn Rạng",Nam,13,"Ngoại khoa;Tai Mũi Họng","Viêm amidan;Đau họng;Phẫu thuật nội soi",12
+40,"BSCKI Hoàng Thị Sương",Nữ,13,"Tim mạch","Đau ngực;Khó thở;Huyết áp cao;Tim đập nhanh",10
+41,"PGS.TS Phạm Văn Thái",Nam,14,"Hô hấp;Lao phổi","Ho kéo dài;Khó thở;Đờm máu;Đau ngực;Sụt cân",22
+42,"TS.BS Vũ Thị Thu",Nữ,14,"Chẩn đoán hình ảnh phổi","Chụp CT phổi;X-quang phổi;Nội soi phế quản",18
+43,"BSCKII Bùi Văn Tùng",Nam,14,"Phẫu thuật lồng ngực","Phẫu thuật phổi;Ung thư phổi;Viêm màng phổi",15
+44,"PGS.TS Ngô Thị Uyên",Nữ,15,"Y học cổ truyền;Châm cứu","Đau nhức;Viêm khớp;Mất ngủ;Đau lưng;Tê bì",20
+45,"TS.BS Lê Văn Việt",Nam,15,"Xoa bóp;Vật lý trị liệu","Đau cơ;Thoái hóa;Phục hồi sau phẫu thuật;Liệt",15
+46,"BSCKII Đỗ Thị Xuân",Nữ,15,"Phục hồi chức năng","Liệt;Chấn thương;Phục hồi đột quỵ;Đau mãn tính",12
+47,"PGS.TS Trần Văn Y",Nam,16,"Da liễu;Ngoại da liễu","Nám;Tàn nhang;U nhọt;Viêm da;Dị ứng da",18
+48,"TS.BS Hoàng Thị Zinh",Nữ,16,"Nội tiết;Dị ứng","Dị ứng;Nổi mẩn;Huyến;Viêm da cơ địa",15
+49,"BSCKII Phạm Văn An",Nam,16,"Bệnh phong;Nhiễu trùng da","Viêm da;Nhiễu trùng;Bệnh da liễu",10
+50,"PGS.TS Bùi Thị Bình",Nữ,17,"Châm cứu;Xoa bóp","Đau nhức;Viêm khớp;Đau lưng;Mất ngủ;Stress",20
+51,"TS.BS Vũ Văn Cường",Nam,17,"Vật lý trị liệu;Phục hồi chức năng","Đau cơ;Thoái hóa;Chấn thương;Liệt;Phục hồi",15
+52,"BSCKII Nguyễn Thị Dung",Nữ,17,"Y học cổ truyền","Bệnh mãn tính;Đau nhức;Mệt mỏi;Rối loạn tiêu hóa",12
+53,"PGS.TS Lê Văn Em",Nam,18,"Lão khoa;Suy giảm trí nhớ","Suy giảm trí nhớ;Alzheimer;Parkinson;Mệt mỏi người già",20
+54,"TS.BS Phạm Thị Giang",Nữ,18,"Bệnh mãn tính người cao tuổi","Huyết áp cao;Tiểu đường;Thoái hóa;Mất ngủ",15
+55,"BSCKII Trần Văn Hùng",Nam,18,"Alzheimer;Parkinson","Đãng trí;Rùng mình;Rối loạn vận động;Lo lắng",12
+56,"PGS.TS Hoàng Thị Kim",Nữ,19,"Nội tiết;Đái tháo đường","Khát nước;Tiểu nhiều;Sụt cân;Mệt mỏi;Vết thương chậm lành",22
+57,"TS.BS Ngô Văn Long",Nam,19,"Bướu cổ;Rối loạn chuyển hóa","Sưng cổ;Mệt mỏi;Tăng cân;Rối loạn giấc ngủ",18
+58,"BSCKII Vũ Thị Mai",Nữ,19,"Bệnh tuyến giáp","Rối loạn tuyến giáp;Suy giáp;Cường giáp;Mệt mỏi",15
+59,"PGS.TS Bùi Văn Nam",Nam,20,"Răng Hàm Mặt;Nha khoa","Đau răng;Sưng nướu;Răng khôn;Viêm nha chu",20
+60,"TS.BS Lê Thị Oanh",Nữ,20,"Phẫu thuật hàm mặt","Khối u hàm mặt;Chỉnh hình hàm;Chấn thương hàm",15
+61,"BSCKII Đỗ Văn Phúc",Nam,20,"Implant;Chỉnh nha","Răng缺失;Niềng răng;Implant;Chỉnh hình răng",12
+62,"PGS.TS Nguyễn Thị Quỳnh",Nữ,21,"Sản phụ khoa;Nhi","Khám thai;Sinh nở;Nhi khoa;Sơ sinh",18
+63,"TS.BS Trần Văn Rồng",Nam,21,"Tim mạch;Ung bướu","Đau ngực;Khó thở;Khối u;Sút cân",15
+64,"BSCKII Phạm Thị Sương",Nữ,21,"Tiêu hóa;Cấp cứu","Đau bụng cấp;Viêm ruột;Trúng thực;Cấp cứu",12
+65,"PGS.TS Hoàng Văn Thái",Nam,22,"Nội tổng quát;Ngoại khoa","Mệt mỏi;Đau nhức;Phẫu thuật;Chấn thương",20
+66,"TS.BS Vũ Thị Thu",Nữ,22,"Tim mạch;Chấn thương chỉnh hình","Đau ngực;Gãy xương;Đau khớp;Thoái hóa",15
+67,"BSCKII Bùi Văn Tùng",Nam,22,"Sản phụ khoa;Nhi","Khám thai;Nhi khoa;Sơ sinh;Phẫu thuật nhi",12
+68,"PGS.TS Lê Thị Uyên",Nữ,23,"Nội tổng quát;Da liễu","Mệt mỏi;Phát ban;Ngứa;Rối loạn tiêu hóa",18
+69,"TS.BS Ngô Văn Việt",Nam,23,"Ngoại khoa;Tim mạch","Phẫu thuật;Đau ngực;Huyết áp cao",15
+70,"BSCKII Đỗ Thị Xuân",Nữ,23,"Ung bướu;Nhi","Khối u;Sút cân;Nhi khoa;Phẫu thuật ung thư",12
+71,"PGS.TS Trần Văn Yên",Nam,24,"Nội tổng quát;Sản phụ khoa","Mệt mỏi;Đau bụng;Rối loạn kinh nguyệt;Khám thai",20
+72,"TS.BS Phạm Thị Zin",Nữ,24,"Ngoại khoa;Tai Mũi Họng","Viêm amidan;Đau họng;Phẫu thuật nội soi",15
+73,"BSCKII Hoàng Văn An",Nam,24,"Da liễu;Nhi","Phát ban;Ngứa;Viêm da;Mụn trẻ em",12
+74,"PGS.TS Vũ Thị Bình",Nữ,25,"Nội tổng quát;Mắt","Mệt mỏi;Mờ mắt;Đau mắt;Khô mắt",18
+75,"TS.BS Bùi Văn Cường",Nam,25,"Ngoại khoa;Tim mạch","Phẫu thuật;Đau ngực;Huyết áp cao;Mạch vành",15
+76,"BSCKII Lê Thị Dung",Nữ,25,"Da liễu;Tai Mũi Họng","Ngứa;Phát ban;Viêm mũi;Ù tai",12
+77,"BS Nguyễn Văn Hải",Nam,26,"Nội khoa","Sốt;Ho;Mệt mỏi;Đau đầu;Chán ăn",10
+78,"BS Trần Thị Lan",Nữ,26,"Ngoại khoa","Đau bụng;Phẫu thuật;Chấn thương;Gãy xương",8
+79,"BS Phạm Văn Nam",Nam,26,"Tim mạch","Đau ngực;Khó thở;Huyết áp cao;Tim đập nhanh",12
+80,"BS Lê Thị Oanh",Nữ,26,"Sản phụ khoa","Đau bụng kinh;Khám thai;Rối loạn kinh nguyệt",8
+81,"BS Hoàng Văn Phúc",Nam,27,"Tai Mũi Họng","Đau tai;Viêm họng;Nghẹt mũi;Chảy mũi",10
+82,"BS Đỗ Thị Quỳnh",Nữ,27,"Răng Hàm Mặt","Đau răng;Sưng nướu;Viêm nha chu;Răng khôn",8
+83,"BS Vũ Văn Rồng",Nam,27,"Mắt","Mờ mắt;Đau mắt đỏ;Glôcôm;Khô mắt",10
+84,"BS Nguyễn Thị Sương",Nữ,27,"Nhi","Sốt;Ho;Sổ mũi;Phát ban;Chán ăn",8
+85,"BS Trần Văn Thái",Nam,28,"Sản phụ khoa","Khám thai;Sinh nở;Hiếm muộn;Phẫu thuật phụ khoa",12
+86,"BS Phạm Thị Thu",Nữ,28,"Nhi khoa","Sốt;Ho;Sổ mũi;Viêm phổi;Dinh dưỡng",10
+87,"BS Lê Văn Tùng",Nam,28,"Sơ sinh","Sơ sinh;Nuôi con;Bú mẹ;Sức khỏe sơ sinh",8
+88,"BS Hoàng Thị Uyên",Nữ,28,"Cấp cứu sản nhi","Cấp cứu sản;Sơ sinh;Dấu hiệu sinh",10
+89,"BS Ngô Văn Việt",Nam,29,"Tim mạch can thiệp","Đau ngực;Nhồi máu cơ tim;Stent mạch vành",12
+90,"BS Vũ Thị Xuân",Nữ,29,"Thần kinh","Đau đầu;Chóng mặt;Động kinh;Tê bì",10
+91,"BS Bùi Văn Yên",Nam,29,"Ngoại khoa","Phẫu thuật;Chấn thương;Phẫu thuật nội soi",8
+92,"BS Lê Thị Zinh",Nữ,29,"Nội khoa","Mệt mỏi;Sốt;Đau đầu;Rối loạn tiêu hóa",8
+93,"BS Đỗ Văn An",Nam,30,"Tai Mũi Họng","Đau tai;Viêm xoang;Nghẹt mũi;Ù tai",10
+94,"BS Trần Thị Bình",Nữ,30,"Ngoại khoa","Phẫu thuật;Chấn thương;Gãy xương",8
+95,"BS Phạm Văn Cường",Nam,30,"Nội khoa","Mệt mỏi;Sốt;Đau đầu;Chán ăn",10
+96,"BS Hoàng Thị Dung",Nữ,30,"Răng Hàm Mặt","Đau răng;Sưng nướu;Viêm nha chu",8
+97,"BS Lê Văn Em",Nam,31,"Ung bướu","Khối u;Sút cân;Mệt mỏi;Chán ăn",12
+98,"BS Vũ Thị Giang",Nữ,31,"Hóa trị","Buồn nôn;Rụng tóc;Mệt mỏi;Sốt",10
+99,"BS Bùi Văn Hùng",Nam,31,"Phẫu thuật ung thư","Phẫu thuật loại bỏ u;Khối u",8
+100,"BS Ngô Thị Kim",Nữ,31,"Chẩn đoán hình ảnh","Chụp CT;Chụp MRI;Siêu âm;X-quang",10
+101,"BS Đỗ Văn Long",Nam,32,"Tâm thần học","Mất ngủ;Lo lắng;Stress;Trầm cảm",10
+102,"BS Trần Thị Mai",Nữ,32,"Tâm lý lâm sàng","Lo lắng;Trầm cảm;Rối loạn giấc ngủ;Stress",8
+103,"BS Phạm Văn Nam",Nam,32,"Điều trị nghiện","Nghiện rượu;Nghiện thuốc;Điều trị cai nghiện",10
+104,"BS Hoàng Thị Oanh",Nữ,32,"Tư vấn tâm lý","Tư vấn;Liệu pháp tâm lý;Hỗ trợ tâm thần",8
+105,"BS Lê Văn Phúc",Nam,33,"Y học cổ truyền","Đau nhức;Viêm khớp;Mệt mỏi;Mãn tính",10
+106,"BS Vũ Thị Quỳnh",Nữ,33,"Châm cứu","Đau nhức;Mất ngủ;Viêm khớp;Tê bì",8
+107,"BS Bùi Văn Rồng",Nam,33,"Xoa bóp","Đau cơ;Thoái hóa;Chấn thương",8
+108,"BS Ngô Thị Sương",Nữ,33,"Vật lý trị liệu","Liệt;Phục hồi;Chấn thương;Đau mãn tính",10
+109,"BS Đỗ Văn Thái",Nam,34,"Da liễu","Nám;Tàn nhang;Viêm da;Mụn;Dị ứng",10
+110,"BS Trần Thị Thu",Nữ,34,"Thẩm mỹ da","Trẻ hoá da;Laser;Nám;Tàn nhang",8
+111,"BS Phạm Văn Tùng",Nam,34,"Laser trị liệu","Laser;Điều trị mụn;Trẻ hoá da",8
+112,"BS Hoàng Thị Uyên",Nữ,34,"Bệnh da tự miễn","Viêm da cơ địa;Dị ứng;Bệnh da",8
+113,"BS Lê Văn Việt",Nam,35,"Nhãn khoa","Mờ mắt;Đau mắt;Glôcôm;Đục thủy tinh thể",12
+114,"BS Vũ Thị Xuân",Nữ,35,"Phẫu thuật mắt","Phẫu thuật Phaco;Glôcôm;Võng mạc",10
+115,"BS Bùi Văn Yên",Nam,35,"Bệnh võng mạc","Bóng mắt;Mờ mắt;Thiệt hại võng mạc",8
+116,"BS Ngô Thị Zinh",Nữ,35,"Đo khúc xạ","Cận thị;Loạn thị;Viễn thị;Đo mắt",8
+117,"BS Đỗ Văn An",Nam,36,"Nội khoa","Mệt mỏi;Sốt;Đau đầu;Chán ăn",10
+118,"BS Trần Thị Bình",Nữ,36,"Ngoại khoa","Phẫu thuật;Chấn thương;Gãy xương",8
+119,"BS Phạm Văn Cường",Nam,36,"Tim mạch","Đau ngực;Khó thở;Huyết áp cao",10
+120,"BS Lê Thị Dung",Nữ,36,"Cấp cứu","Cấp cứu;Chấn thương;Sốc;Ngất",8
+121,"BS Hoàng Văn Em",Nam,37,"Nội khoa","Mệt mỏi;Sốt;Đau đầu;Chán ăn",10
+122,"BS Vũ Thị Giang",Nữ,37,"Ngoại khoa","Phẫu thuật;Chấn thương;Gãy xương",8
+123,"BS Bùi Văn Hùng",Nam,37,"Tim mạch","Đau ngực;Khó thở;Huyết áp cao",10
+124,"BS Ngô Thị Kim",Nữ,37,"Ung bướu","Khối u;Sút cân;Mệt mỏi",8
+125,"BS Đỗ Văn Long",Nam,38,"Ngoại khoa;Tim mạch","Đau ngực;Phẫu thuật;Ghép tạng",20
+126,"BS Trần Thị Mai",Nữ,38,"Nội khoa;Tiêu hóa","Đau bụng;Đầy bụng;Buồn nôn",15
+127,"BS Phạm Văn Nam",Nam,38,"Ung bướu;Ghép tạng","Khối u;Sút cân;Ghép tạng",18
+128,"BS Lê Thị Oanh",Nữ,38,"Thần kinh;Đột quỵ","Đau đầu;Chóng mặt;Tê bì;Liệt",12
+129,"BS Hoàng Văn Phúc",Nam,39,"Tim mạch;Cấp cứu","Đau ngực;Khó thở;Cấp cứu;Hồi sức",15
+130,"BS Vũ Thị Quỳnh",Nữ,39,"Ngoại khoa;Hồi sức","Phẫu thuật;Hồi sức;Cấp cứu;Chấn thương",12
+131,"BS Bùi Văn Rồng",Nam,39,"Nội khoa;Sản phụ khoa","Mệt mỏi;Khám thai;Rối loạn kinh nguyệt",10
+132,"BS Ngô Thị Sương",Nữ,39,"Đa khoa","Mệt mỏi;Sốt;Đau đầu;Chán ăn",8
+133,"BS Đỗ Văn Thái",Nam,40,"Ngoại khoa;Nội khoa","Mệt mỏi;Phẫu thuật;Chấn thương;Đau nhức",15
+134,"BS Trần Thị Thu",Nữ,40,"Tim mạch;Thần kinh","Đau ngực;Đau đầu;Huyết áp cao",12
+135,"BS Phạm Văn Tùng",Nam,40,"Da liễu;Mắt","Nám;Mụn;Mờ mắt;Đau mắt",10
+136,"BS Lê Thị Uyên",Nữ,40,"Tai Mũi Họng;Ung bướu","Ù tai;Viêm họng;Khối u đầu mặt",10
+137,"BS Hoàng Văn Việt",Nam,41,"Nhi khoa","Sốt;Ho;Sổ mũi;Phát ban;Chán ăn",10
+138,"BS Vũ Thị Xuân",Nữ,41,"Nhi ngoại","Phẫu thuật nhi;Chấn thương nhi;Hẹp bao quy đầu",8
+139,"BS Bùi Văn Yên",Nam,41,"Tim mạch nhi","Tim đập nhanh;Khó thở;Da xanh;Mệt mỏi",10
+140,"BS Ngô Thị Zinh",Nữ,41,"Hồi sức nhi","Hồi sức;Sơ sinh;Cấp cứu nhi",8
+141,"BS Đỗ Văn An",Nam,42,"Đa khoa;Tim mạch","Mệt mỏi;Đau ngực;Huyết áp cao",12
+142,"BS Trần Thị Bình",Nữ,42,"Thần kinh;Cơ xương khớp","Đau đầu;Đau khớp;Tê bì;Thoái hóa",10
+143,"BS Phạm Văn Cường",Nam,42,"Nội khoa;Ngoại khoa","Mệt mỏi;Phẫu thuật;Chấn thương",10
+144,"BS Lê Thị Dung",Nữ,42,"Ung bướu","Khối u;Sút cân;Mệt mỏi",8
+145,"BS Hoàng Văn Em",Nam,43,"Ngoại khoa;Niệu khoa","Tiểu buốt;Phẫu thuật;Chấn thương",12
+146,"BS Vũ Thị Giang",Nữ,43,"Nam khoa","Vô sinh nam;Rối loạn cương;Viêm tuyến tiền liệt",10
+147,"BS Bùi Văn Hùng",Nam,43,"Ung bướu;Ghép tạng","Khối u;Ghép tạng;Phẫu thuật ung thư",12
+148,"BS Ngô Thị Kim",Nữ,43,"Phẫu thuật tổng quát","Phẫu thuật;Chấn thương;Phẫu thuật nội soi",8
+149,"BS Đỗ Văn Long",Nam,44,"Ung bướu","Khối u;Sút cân;Mệt mỏi;Chán ăn",15
+150,"BS Trần Thị Mai",Nữ,44,"Hóa trị;Xạ trị","Buồn nôn;Rụng tóc;Mệt mỏi;Sốt",12
+151,"BS Phạm Văn Nam",Nam,44,"Phẫu thuật ung thư","Phẫu thuật loại bỏ u;Khối u vú;Khối u đại trực tràng",10
+152,"BS Lê Thị Oanh",Nữ,44,"Chẩn đoán hình ảnh","Chụp CT;Chụp MRI;Siêu âm;X-quang",8
+153,"BS Hoàng Văn Phúc",Nam,45,"Mắt;Phẫu thuật mắt","Mờ mắt;Đau mắt đỏ;Glôcôm;Đục thủy tinh thể",15
+154,"BS Vũ Thị Quỳnh",Nữ,45,"Dịch kính - Võng mạc","Bóng mắt;Mờ mắt;Thiệt hại võng mạc",10
+155,"BS Bùi Văn Rồng",Nam,45,"Glaucoma;Đo khúc xạ","Đau mắt;Mờ mắt;Cận thị;Loạn thị",8
+156,"BS Ngô Thị Sương",Nữ,45,"Nhãn nhi","Mắt trẻ em;Viêm mắt;Khô mắt trẻ",8
+157,"BS Đỗ Văn Thái",Nam,46,"Tai Mũi Họng","Đau tai;Viêm xoang;Nghẹt mũi;Ù tai",12
+158,"BS Trần Thị Thu",Nữ,46,"Phẫu thuật tai mũi họng","Phẫu thuật amidan;Phẫu thuật xoang;Khối u đầu mặt",10
+159,"BS Phạm Văn Tùng",Nam,46,"Ung đầu mặt cổ","Khối u đầu mặt;Phẫu thuật ung thư đầu mặt",8
+160,"BS Lê Thị Uyên",Nữ,46,"Cấy ốc tai","Điếc nghe;Cấy ốc tai;Phục hồi thính lực",10
+161,"BS Hoàng Văn Việt",Nam,47,"Da liễu","Nám;Tàn nhang;Viêm da;Mụn;Dị ứng",10
+162,"BS Vũ Thị Xuân",Nữ,47,"Thẩm mỹ da","Trẻ hoá da;Laser;Nám;Tàn nhang;Mụn",8
+163,"BS Bùi Văn Yên",Nam,47,"Da liễu nhi","Viêm da trẻ em;Chàm;Phát ban trẻ em",8
+164,"BS Ngô Thị Zinh",Nữ,47,"Nhiễu trùng da","Nhiễu trùng;Viêm da;Bệnh da",8
+165,"BS Đỗ Văn An",Nam,48,"Sản phụ khoa","Khám thai;Sinh nở;Hiếm muộn;Phẫu thuật phụ khoa",12
+166,"BS Trần Thị Bình",Nữ,48,"Sản khoa","Sinh nở;Dấu hiệu sinh;Chăm sóc sau sinh",10
+167,"BS Phạm Văn Cường",Nam,48,"Phụ khoa","Viêm phụ khoa;U nang;U xơ tử cung",8
+168,"BS Lê Thị Dung",Nữ,48,"Hiếm muộn - IVF","IVF;Thụ tinh nhân tạo;Vô sinh",10
+169,"BS Hoàng Văn Em",Nam,49,"Phụ sản;Sản khoa","Sinh nở;Phẫu thuật sản;Khám thai",12
+170,"BS Vũ Thị Giang",Nữ,49,"Phụ khoa","Viêm phụ khoa;U nang;Rối loạn kinh nguyệt",10
+171,"BS Bùi Văn Hùng",Nam,49,"Hiếm muộn","Thụ tinh nhân tạo;IVF;Vô sinh",8
+172,"BS Ngô Thị Kim",Nữ,49,"Sơ sinh","Sơ sinh;Nuôi con;Bú mẹ",8
+173,"BS Đỗ Văn Long",Nam,50,"Đa khoa;Tim mạch","Mệt mỏi;Đau ngực;Huyết áp cao",15
+174,"BS Trần Thị Mai",Nữ,50,"Thần kinh;Đột quỵ","Đau đầu;Chóng mặt;Tê bì;Liệt",12
+175,"BS Phạm Văn Nam",Nam,50,"Thận - Niệu","Tiểu buốt;Tiểu máu;Sưng thận",10
+176,"BS Lê Thị Oanh",Nữ,50,"Ghép thận;Ngoại khoa","Ghép thận;Phẫu thuật;Chấn thương",10
+177,"BS Hoàng Văn Phúc",Nam,51,"Đa khoa;Nhi khoa","Mệt mỏi;Sốt;Trẻ em;Sơ sinh",12
+178,"BS Vũ Thị Quỳnh",Nữ,51,"Sản phụ khoa;Tim mạch","Khám thai;Đau ngực;Huyết áp cao",10
+179,"BS Bùi Văn Rồng",Nam,51,"Ung bướu;Ngoại khoa","Khối u;Phẫu thuật;Sút cân",10
+180,"BS Ngô Thị Sương",Nữ,51,"Cấp cứu","Cấp cứu;Chấn thương;Sốc;Ngất",8
+181,"BS Đỗ Văn Thái",Nam,52,"Đa khoa;Tim mạch","Mệt mỏi;Đau ngực;Huyết áp cao",12
+182,"BS Trần Thị Thu",Nữ,52,"Nội khoa;Sản phụ khoa","Mệt mỏi;Khám thai;Rối loạn kinh nguyệt",10
+183,"BS Phạm Văn Tùng",Nam,52,"Nhi khoa","Sốt;Ho;Sổ mũi;Phát ban",10
+184,"BS Lê Thị Uyên",Nữ,52,"Chẩn đoán hình ảnh","Chụp CT;Siêu âm;X-quang",8
+185,"BS Hoàng Văn Việt",Nam,53,"Đa khoa;Ngoại khoa","Mệt mỏi;Phẫu thuật;Chấn thương",10
+186,"BS Vũ Thị Xuân",Nữ,53,"Tim mạch;Nhi khoa","Đau ngực;Trẻ em;Mệt mỏi",8
+187,"BS Bùi Văn Yên",Nam,53,"Sản phụ khoa;Ung bướu","Khám thai;Khối u;Phẫu thuật",10
+188,"BS Ngô Thị Zinh",Nữ,53,"Nội khoa","Mệt mỏi;Sốt;Đau đầu",8
+189,"BS Đỗ Văn An",Nam,54,"Đa khoa","Mệt mỏi;Sốt;Đau đầu;Chán ăn",10
+190,"BS Trần Thị Bình",Nữ,54,"Tim mạch;Cấp cứu","Đau ngực;Khó thở;Cấp cứu",8
+191,"BS Phạm Văn Cường",Nam,54,"Ngoại khoa","Phẫu thuật;Chấn thương;Gãy xương",10
+192,"BS Lê Thị Dung",Nữ,54,"Sản phụ khoa","Khám thai;Sinh nở;Rối loạn kinh nguyệt",8
+193,"BS Hoàng Văn Em",Nam,55,"Nhi khoa","Sốt;Ho;Sổ mũi;Phát ban;Chán ăn",10
+194,"BS Vũ Thị Giang",Nữ,55,"Nhi sơ sinh","Sơ sinh;Nuôi con;Bú mẹ;Sức khỏe sơ sinh",8
+195,"BS Bùi Văn Hùng",Nam,55,"Nhi ngoại","Phẫu thuật nhi;Chấn thương nhi",8
+196,"BS Ngô Thị Kim",Nữ,55,"Hồi sức nhi","Hồi sức;Cấp cứu nhi;Sơ sinh",10
+197,"BS Đỗ Văn Long",Nam,56,"Tâm thần","Mất ngủ;Lo lắng;Stress;Trầm cảm",10
+198,"BS Trần Thị Mai",Nữ,56,"Tâm lý lâm sàng","Lo lắng;Trầm cảm;Rối loạn giấc ngủ",8
+199,"BS Phạm Văn Nam",Nam,56,"Điều trị nghiện","Nghiện rượu;Nghiện thuốc;Cai nghiện",10
+200,"BS Lê Thị Oanh",Nữ,56,"Tâm thần nhi","Trẻ em;Rối loạn hành vi;Tự kỷ",8
+201,"BS Hoàng Văn Phúc",Nam,57,"Y học cổ truyền","Đau nhức;Viêm khớp;Mệt mỏi;Mãn tính",10
+202,"BS Vũ Thị Quỳnh",Nữ,57,"Vật lý trị liệu","Liệt;Phục hồi;Chấn thương;Đau mãn tính",8
+203,"BS Bùi Văn Rồng",Nam,57,"Châm cứu","Đau nhức;Mất ngủ;Viêm khớp;Tê bì",8
+204,"BS Ngô Thị Sương",Nữ,57,"Bấm huyệt","Đau cơ;Thoái hóa;Mệt mỏi",8
+205,"BS Đỗ Văn Thái",Nam,58,"Răng Hàm Mặt","Đau răng;Sưng nướu;Viêm nha chu",10
+206,"BS Trần Thị Thu",Nữ,58,"Nha khoa tổng quát","Khám răng;Sửa răng;Vệ sinh răng",8
+207,"BS Phạm Văn Tùng",Nam,58,"Phẫu thuật hàm mặt","Phẫu thuật;Chấn thương hàm;Khối u hàm",10
+208,"BS Lê Thị Uyên",Nữ,58,"Implant nha khoa","Implant;Phục hồi răng缺失",8
+209,"BS Hoàng Văn Việt",Nam,59,"Đa khoa;Tim mạch","Mệt mỏi;Đau ngực;Huyết áp cao",10
+210,"BS Vũ Thị Xuân",Nữ,59,"Nội khoa;Sản phụ khoa","Mệt mỏi;Khám thai;Rối loạn kinh nguyệt",8
+211,"BS Bùi Văn Yên",Nam,59,"Ngoại khoa;Nhi khoa","Phẫu thuật;Trẻ em;Chấn thương",10
+212,"BS Ngô Thị Zinh",Nữ,59,"Sản phụ khoa;Nhi","Khám thai;Nhi khoa;Sơ sinh",8
+213,"BS Đỗ Văn An",Nam,60,"Đa khoa","Mệt mỏi;Sốt;Đau đầu;Chán ăn",10
+214,"BS Trần Thị Bình",Nữ,60,"Nhi khoa","Sốt;Ho;Sổ mũi;Phát ban",8
+215,"BS Phạm Văn Cường",Nam,60,"Nội khoa","Mệt mỏi;Sốt;Đau đầu",8
+216,"BS Lê Thị Dung",Nữ,60,"Sản phụ khoa","Khám thai;Sinh nở;Rối loạn kinh nguyệt",8
+217,"BS Hoàng Văn Em",Nam,61,"Đa khoa;Nội khoa","Mệt mỏi;Sốt;Đau đầu",10
+218,"BS Vũ Thị Giang",Nữ,61,"Nhi khoa","Sốt;Ho;Sổ mũi;Phát ban",8
+219,"BS Bùi Văn Hùng",Nam,61,"Sản phụ khoa","Khám thai;Sinh nở;Rối loạn kinh nguyệt",8
+220,"BS Ngô Thị Kim",Nữ,61,"Cấp cứu","Cấp cứu;Chấn thương;Sốc;Ngất",10
+221,"BS Đỗ Văn Long",Nam,62,"Đa khoa;Tim mạch","Mệt mỏi;Đau ngực;Huyết áp cao",10
+222,"BS Trần Thị Mai",Nữ,62,"Ngoại khoa;Ung bướu","Phẫu thuật;Khối u;Sút cân",8
+223,"BS Phạm Văn Nam",Nam,62,"Nội khoa","Mệt mỏi;Sốt;Đau đầu",8
+224,"BS Lê Thị Oanh",Nữ,62,"Nhi khoa","Sốt;Ho;Sổ mũi;Phát ban",8
+225,"BS Hoàng Văn Phúc",Nam,63,"Nội khoa;Ngoại khoa","Mệt mỏi;Phẫu thuật;Chấn thương",12
+226,"BS Vũ Thị Quỳnh",Nữ,63,"Tim mạch","Đau ngực;Khó thở;Huyết áp cao",10
+227,"BS Bùi Văn Rồng",Nam,63,"Sản phụ khoa","Khám thai;Sinh nở;Rối loạn kinh nguyệt",8
+228,"BS Ngô Thị Sương",Nữ,63,"Nhi khoa","Sốt;Ho;Sổ mũi;Phát ban",8
+229,"BS Đỗ Văn Thái",Nam,64,"Mắt;Phẫu thuật mắt","Mờ mắt;Đau mắt đỏ;Glôcôm",10
+230,"BS Trần Thị Thu",Nữ,64,"Dịch kính - Võng mạc","Bóng mắt;Mờ mắt;Thiệt hại võng mạc",8
+231,"BS Phạm Văn Tùng",Nam,64,"Đo khúc xạ","Cận thị;Loạn thị;Viễn thị",8
+232,"BS Lê Thị Uyên",Nữ,64,"Mắt trẻ em","Viêm mắt trẻ;Khô mắt trẻ",8
+233,"BS Hoàng Văn Việt",Nam,65,"Hô hấp","Ho kéo dài;Khó thở;Đờm máu",10
+234,"BS Vũ Thị Xuân",Nữ,65,"Lao phổi","Lao;Ho kéo dài;Sụt cân",8
+235,"BS Bùi Văn Yên",Nam,65,"Nội soi phế quản","Nội soi;Chẩn đoán phổi",8
+236,"BS Ngô Thị Zinh",Nữ,65,"Đo chức năng hô hấp","Đo hô hấp;Viêm phế quản",8
+237,"BS Đỗ Văn An",Nam,66,"Nội khoa;Ngoại khoa","Mệt mỏi;Phẫu thuật;Chấn thương",10
+238,"BS Trần Thị Bình",Nữ,66,"Sản phụ khoa","Khám thai;Sinh nở;Rối loạn kinh nguyệt",8
+239,"BS Phạm Văn Cường",Nam,66,"Nhi khoa","Sốt;Ho;Sổ mũi;Phát ban",8
+240,"BS Lê Thị Dung",Nữ,66,"Cấp cứu","Cấp cứu;Chấn thương;Sốc;Ngất",10
+241,"BS Hoàng Văn Em",Nam,67,"Tim mạch;Can thiệp tim mạch","Đau ngực;Nhồi máu cơ tim;Stent mạch vành",12
+242,"BS Vũ Thị Giang",Nữ,67,"Phẫu thuật tim","Phẫu thuật tim;Ghép tim",10
+243,"BS Bùi Văn Hùng",Nam,67,"Siêu âm tim","Siêu âm tim;Điện tâm đồ;Thử gắng sức",8
+244,"BS Ngô Thị Kim",Nữ,67,"Chụp mạch vành","Chụp mạch;Can thiệp mạch",8
+245,"BS Đỗ Văn Long",Nam,68,"Ung bướu","Khối u;Sút cân;Mệt mỏi",10
+246,"BS Trần Thị Mai",Nữ,68,"Hóa trị;Xạ trị","Buồn nôn;Rụng tóc;Mệt mỏi",8
+247,"BS Phạm Văn Nam",Nam,68,"Phẫu thuật ung thư","Phẫu thuật loại bỏ u;Khối u",8
+248,"BS Lê Thị Oanh",Nữ,68,"Chẩn đoán hình ảnh","Chụp CT;Siêu âm;X-quang",8
+249,"BS Hoàng Văn Phúc",Nam,69,"Nội khoa;Ngoại khoa","Mệt mỏi;Phẫu thuật;Chấn thương",10
+250,"BS Vũ Thị Quỳnh",Nữ,69,"Sản phụ khoa","Khám thai;Sinh nở;Rối loạn kinh nguyệt",8
+251,"BS Bùi Văn Rồng",Nam,69,"Nhi khoa","Sốt;Ho;Sổ mũi;Phát ban",8
+252,"BS Ngô Thị Sương",Nữ,69,"Cấp cứu","Cấp cứu;Chấn thương;Sốc;Ngất",10
+253,"BS Đỗ Văn Thái",Nam,70,"Nội khoa;Ngoại khoa","Mệt mỏi;Phẫu thuật;Chấn thương",12
+254,"BS Trần Thị Thu",Nữ,70,"Tim mạch","Đau ngực;Khó thở;Huyết áp cao",10
+255,"BS Phạm Văn Tùng",Nam,70,"Thần kinh","Đau đầu;Chóng mặt;Tê bì",8
+256,"BS Lê Thị Uyên",Nữ,70,"Ung bướu","Khối u;Sút cân;Mệt mỏi",8
+257,"BS Hoàng Văn Việt",Nam,71,"Nội khoa;Ngoại khoa","Mệt mỏi;Phẫu thuật;Chấn thương",15
+258,"BS Vũ Thị Xuân",Nữ,71,"Tim mạch;Thần kinh","Đau ngực;Đau đầu;Huyết áp cao",12
+259,"BS Bùi Văn Yên",Nam,71,"Ung bướu;Ghép tạng","Khối u;Ghép tạng;Phẫu thuật ung thư",12
+260,"BS Ngô Thị Zinh",Nữ,71,"Sản phụ khoa","Khám thai;Sinh nở;Rối loạn kinh nguyệt",10
+261,"BS Đỗ Văn An",Nam,72,"Mắt;Phẫu thuật mắt","Mờ mắt;Đau mắt đỏ;Glôcôm",10
+262,"BS Trần Thị Bình",Nữ,72,"Dịch kính - Võng mạc","Bóng mắt;Mờ mắt;Thiệt hại võng mạc",8
+263,"BS Phạm Văn Cường",Nam,72,"Glôcôm","Đau mắt;Mờ mắt;Áp lực mắt",8
+264,"BS Lê Thị Dung",Nữ,72,"Mắt trẻ em","Viêm mắt trẻ;Khô mắt trẻ",8
+265,"BS Hoàng Văn Em",Nam,73,"Nội khoa;Ngoại khoa","Mệt mỏi;Phẫu thuật;Chấn thương",10
+266,"BS Vũ Thị Giang",Nữ,73,"Tim mạch","Đau ngực;Khó thở;Huyết áp cao",8
+267,"BS Bùi Văn Hùng",Nam,73,"Sản phụ khoa","Khám thai;Sinh nở;Rối loạn kinh nguyệt",8
+268,"BS Ngô Thị Kim",Nữ,73,"Nhi khoa","Sốt;Ho;Sổ mũi;Phát ban",8
+269,"BS Đỗ Văn Long",Nam,74,"Nội khoa;Ngoại khoa","Mệt mỏi;Phẫu thuật;Chấn thương",12
+270,"BS Trần Thị Mai",Nữ,74,"Tim mạch","Đau ngực;Khó thở;Huyết áp cao",10
+271,"BS Phạm Văn Nam",Nam,74,"Thần kinh","Đau đầu;Chóng mặt;Tê bì",8
+272,"BS Lê Thị Oanh",Nữ,74,"Ung bướu","Khối u;Sút cân;Mệt mỏi",8
+273,"BS Hoàng Văn Phúc",Nam,75,"Nội khoa;Ngoại khoa","Mệt mỏi;Phẫu thuật;Chấn thương",10
+274,"BS Vũ Thị Quỳnh",Nữ,75,"Sản phụ khoa","Khám thai;Sinh nở;Rối loạn kinh nguyệt",8
+275,"BS Bùi Văn Rồng",Nam,75,"Nhi khoa","Sốt;Ho;Sổ mũi;Phát ban",8
+276,"BS Ngô Thị Sương",Nữ,75,"Cấp cứu","Cấp cứu;Chấn thương;Sốc;Ngất",10
+277,"BS Đỗ Văn Thái",Nam,76,"Nội khoa;Ngoại khoa","Mệt mỏi;Phẫu thuật;Chấn thương",10
+278,"BS Trần Thị Thu",Nữ,76,"Tim mạch","Đau ngực;Khó thở;Huyết áp cao",8
+279,"BS Phạm Văn Tùng",Nam,76,"Thần kinh","Đau đầu;Chóng mặt;Tê bì",8
+280,"BS Lê Thị Uyên",Nữ,76,"Ung bướu","Khối u;Sút cân;Mệt mỏi",8
+281,"BS Hoàng Văn Việt",Nam,77,"Nội khoa;Ngoại khoa","Mệt mỏi;Phẫu thuật;Chấn thương",12
+282,"BS Vũ Thị Xuân",Nữ,77,"Tim mạch;Thần kinh","Đau ngực;Đau đầu;Huyết áp cao",10
+283,"BS Bùi Văn Yên",Nam,77,"Ung bướu;Ghép tạng","Khối u;Ghép tạng;Phẫu thuật ung thư",10
+284,"BS Ngô Thị Zinh",Nữ,77,"Sản phụ khoa","Khám thai;Sinh nở;Rối loạn kinh nguyệt",8
+285,"BS Đỗ Văn An",Nam,78,"Nội khoa;Ngoại khoa","Mệt mỏi;Phẫu thuật;Chấn thương",10
+286,"BS Trần Thị Bình",Nữ,78,"Tim mạch","Đau ngực;Khó thở;Huyết áp cao",8
+287,"BS Phạm Văn Cường",Nam,78,"Thần kinh","Đau đầu;Chóng mặt;Tê bì",8
+288,"BS Lê Thị Dung",Nữ,78,"Ung bướu","Khối u;Sút cân;Mệt mỏi",8
