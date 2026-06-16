@@ -30,40 +30,17 @@ const SUGGESTIONS = [
   'Bệnh viện Bạch Mai có bác sĩ nào?',
 ];
 
-// Doraemon 2D SVG Avatar
+// Doraemon Avatar using uploaded image
 function DoraemonIcon({ size = 56 }: { size?: number }) {
   return (
-    <svg width={size} height={size} viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-      {/* Body */}
-      <ellipse cx="50" cy="56" rx="38" ry="36" fill="#00A1E9"/>
-      {/* Face (white area) */}
-      <ellipse cx="50" cy="52" rx="28" ry="26" fill="white"/>
-      {/* Eyes */}
-      <ellipse cx="40" cy="42" rx="7" ry="8" fill="white" stroke="#333" strokeWidth="1.5"/>
-      <ellipse cx="60" cy="42" rx="7" ry="8" fill="white" stroke="#333" strokeWidth="1.5"/>
-      <ellipse cx="41" cy="43" rx="3" ry="3.5" fill="#333"/>
-      <ellipse cx="61" cy="43" rx="3" ry="3.5" fill="#333"/>
-      {/* Nose */}
-      <circle cx="50" cy="50" r="4" fill="#E74C3C"/>
-      <ellipse cx="49" cy="49" rx="1.5" ry="1" fill="white" opacity="0.6"/>
-      {/* Mouth */}
-      <path d="M36 56 Q50 68 64 56" stroke="#333" strokeWidth="1.8" fill="none" strokeLinecap="round"/>
-      {/* Whiskers */}
-      <line x1="20" y1="48" x2="36" y2="52" stroke="#333" strokeWidth="1.2"/>
-      <line x1="20" y1="54" x2="36" y2="54" stroke="#333" strokeWidth="1.2"/>
-      <line x1="20" y1="60" x2="36" y2="56" stroke="#333" strokeWidth="1.2"/>
-      <line x1="80" y1="48" x2="64" y2="52" stroke="#333" strokeWidth="1.2"/>
-      <line x1="80" y1="54" x2="64" y2="54" stroke="#333" strokeWidth="1.2"/>
-      <line x1="80" y1="60" x2="64" y2="56" stroke="#333" strokeWidth="1.2"/>
-      {/* Bell */}
-      <circle cx="50" cy="74" r="5" fill="#FFD700" stroke="#DAA520" strokeWidth="1"/>
-      <line x1="45" y1="74" x2="55" y2="74" stroke="#DAA520" strokeWidth="1"/>
-      <circle cx="50" cy="77" r="1.5" fill="#DAA520"/>
-      {/* Collar */}
-      <path d="M22 70 Q50 82 78 70" stroke="#E74C3C" strokeWidth="3" fill="none"/>
-      {/* Pocket */}
-      <ellipse cx="50" cy="68" rx="12" ry="8" fill="white" stroke="#00A1E9" strokeWidth="1.5"/>
-    </svg>
+    <img
+      src="/images/Dora.png"
+      alt="Doraemon Y tế"
+      width={size}
+      height={size}
+      className="object-contain"
+      style={{ width: size, height: size }}
+    />
   );
 }
 
@@ -197,10 +174,10 @@ export default function ChatBot() {
           onClick={() => setIsOpen(!isOpen)}
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
-          className={`relative h-16 w-16 rounded-full shadow-xl flex items-center justify-center transition-all duration-300 ${
+          className={`relative flex items-center justify-center transition-all duration-300 ${
             isOpen
-              ? 'bg-slate-600 hover:bg-slate-700'
-              : 'bg-white hover:shadow-2xl hover:scale-110'
+              ? 'h-14 w-14 rounded-full bg-slate-600 hover:bg-slate-700'
+              : 'hover:scale-110'
           }`}
           aria-label={isOpen ? 'Đóng chat' : 'Mở chat'}
         >
@@ -208,7 +185,7 @@ export default function ChatBot() {
             <X className="h-6 w-6 text-white" />
           ) : (
             <>
-              <DoraemonIcon size={56} />
+              <DoraemonIcon size={70} />
               {/* Notification dot */}
               <span className="absolute -top-1 -right-1 h-4 w-4 bg-red-500 rounded-full border-2 border-white animate-pulse" />
             </>
