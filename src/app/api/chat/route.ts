@@ -3,7 +3,16 @@ import { readCSV } from '@/lib/githubDb';
 
 const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY;
 const OPENROUTER_BASE_URL = 'https://openrouter.ai/api/v1/chat/completions';
-const AI_MODEL = 'qwen/qwen3-next-80b-a3b-instruct:free';
+
+const MODELS = [
+  'openai/gpt-4o-mini',
+  'openai/gpt-oss-120b:free',
+  'meta-llama/llama-3.3-70b-instruct:free',
+  'google/gemma-4-31b-it:free',
+  'nvidia/nemotron-3-super-120b-a12b:free',
+] as const;
+
+const FETCH_TIMEOUT_MS = 30000;
 
 // Compact system prompt - only summaries
 async function buildSystemPrompt(): Promise<string> {
@@ -88,7 +97,7 @@ NGUYÊN TẮC:
 export async function POST(request: Request) {
   try {
     const body = await request.json().catch(() => ({}));
-    const { messages, stream = true } = body;
+    const { messages } = body;
 
     if (!OPENROUTER_API_KEY) {
       return NextResponse.json(
@@ -123,94 +132,100 @@ export async function POST(request: Request) {
       ...messages.slice(-20)
     ];
 
-    // Call OpenRouter with retry
     let lastError = '';
-    for (let attempt = 1; attempt <= 3; attempt++) {
-      try {
-        const response = await fetch(OPENROUTER_BASE_URL, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${OPENROUTER_API_KEY}`,
-            'HTTP-Referer': 'https://medi-buk.vercel.app',
-            'X-OpenRouter-Title': 'MediBuk Medical Assistant',
-          },
-          body: JSON.stringify({
-            model: AI_MODEL,
-            messages: apiMessages,
-            max_tokens: 1024,
-            temperature: 0.7,
-            stream: true,
-          }),
-        });
 
-        if (!response.ok) {
-          const errorData = await response.json().catch(() => ({}));
-          lastError = `${response.status}: ${errorData.error?.message || 'Unknown'}`;
-          console.error(`OpenRouter error (attempt ${attempt}):`, lastError);
-          if (response.status === 429) {
-            await new Promise(r => setTimeout(r, attempt * 2000));
-            continue;
+    for (const model of MODELS) {
+      for (let attempt = 1; attempt <= 2; attempt++) {
+        try {
+          const controller = new AbortController();
+          const timeout = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
+
+          const response = await fetch(OPENROUTER_BASE_URL, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${OPENROUTER_API_KEY}`,
+              'HTTP-Referer': 'https://medi-buk.vercel.app',
+              'X-OpenRouter-Title': 'MediBuk Medical Assistant',
+            },
+            body: JSON.stringify({
+              model,
+              messages: apiMessages,
+              max_tokens: 1024,
+              temperature: 0.7,
+              stream: true,
+            }),
+            signal: controller.signal,
+          });
+
+          clearTimeout(timeout);
+
+          if (!response.ok) {
+            const errorData = await response.json().catch(() => ({}));
+            lastError = `${response.status}: ${errorData.error?.message || 'Unknown'}`;
+            console.error(`OpenRouter error [${model}] (attempt ${attempt}):`, lastError);
+
+            if (response.status === 429 || response.status === 502 || response.status === 503) {
+              if (attempt < 2) await new Promise(r => setTimeout(r, attempt * 2000));
+              continue;
+            }
+
+            break;
           }
-          return NextResponse.json(
-            { error: `Lỗi từ AI: ${lastError}` },
-            { status: response.status }
-          );
-        }
 
-        // Stream response
-        const reader = response.body?.getReader();
-        if (!reader) {
-          return NextResponse.json({ error: 'Không đọc được dữ liệu từ AI.' }, { status: 500 });
-        }
+          const reader = response.body?.getReader();
+          if (!reader) {
+            lastError = 'No reader';
+            break;
+          }
 
-        const encoder = new TextEncoder();
-
-        const streamResponse = new ReadableStream({
-          async start(controller) {
-            try {
-              while (true) {
-                const { done, value } = await reader.read();
-                if (done) break;
-                const chunk = new TextDecoder().decode(value);
-                const lines = chunk.split('\n').filter(line => line.trim() !== '');
-                for (const line of lines) {
-                  if (line.startsWith('data: ')) {
-                    const data = line.slice(6);
-                    if (data === '[DONE]') {
-                      controller.enqueue(encoder.encode('data: [DONE]\n\n'));
-                    } else {
-                      try {
-                        const parsed = JSON.parse(data);
-                        const content = parsed.choices?.[0]?.delta?.content;
-                        if (content) {
-                          controller.enqueue(encoder.encode(`data: ${JSON.stringify({ content })}\n\n`));
-                        }
-                      } catch {}
+          const encoder = new TextEncoder();
+          const streamResponse = new ReadableStream({
+            async start(controller) {
+              try {
+                while (true) {
+                  const { done, value } = await reader.read();
+                  if (done) break;
+                  const chunk = new TextDecoder().decode(value);
+                  const lines = chunk.split('\n').filter(line => line.trim() !== '');
+                  for (const line of lines) {
+                    if (line.startsWith('data: ')) {
+                      const data = line.slice(6);
+                      if (data === '[DONE]') {
+                        controller.enqueue(encoder.encode('data: [DONE]\n\n'));
+                      } else {
+                        try {
+                          const parsed = JSON.parse(data);
+                          const content = parsed.choices?.[0]?.delta?.content;
+                          if (content) {
+                            controller.enqueue(encoder.encode(`data: ${JSON.stringify({ content })}\n\n`));
+                          }
+                        } catch {}
+                      }
                     }
                   }
                 }
+              } catch (error) {
+                console.error('Stream error:', error);
+              } finally {
+                controller.close();
               }
-            } catch (error) {
-              console.error('Stream error:', error);
-            } finally {
-              controller.close();
-            }
-          },
-        });
+            },
+          });
 
-        return new Response(streamResponse, {
-          headers: { 'Content-Type': 'text/event-stream', 'Cache-Control': 'no-cache', 'Connection': 'keep-alive' },
-        });
-      } catch (err: any) {
-        lastError = err.message || 'Network error';
-        console.error(`Fetch error (attempt ${attempt}):`, lastError);
-        if (attempt < 3) await new Promise(r => setTimeout(r, attempt * 2000));
+          return new Response(streamResponse, {
+            headers: { 'Content-Type': 'text/event-stream', 'Cache-Control': 'no-cache', 'Connection': 'keep-alive' },
+          });
+        } catch (err: any) {
+          lastError = err.name === 'AbortError' ? 'Timeout' : (err.message || 'Network error');
+          console.error(`Fetch error [${model}] (attempt ${attempt}):`, lastError);
+          if (attempt < 2) await new Promise(r => setTimeout(r, attempt * 2000));
+        }
       }
     }
 
     return NextResponse.json(
-      { error: `AI đang bận, vui lòng thử lại sau.` },
+      { error: `AI đang bận, vui lòng thử lại sau. (${lastError})` },
       { status: 503 }
     );
 
