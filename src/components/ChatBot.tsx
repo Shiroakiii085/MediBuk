@@ -38,7 +38,7 @@ function DoraemonIcon({ size = 56 }: { size?: number }) {
       alt="Doraemon Y tế"
       width={size}
       height={size}
-      className="object-contain"
+      className="object-contain mix-blend-multiply"
       style={{ width: size, height: size }}
     />
   );
@@ -185,7 +185,7 @@ export default function ChatBot() {
             <X className="h-6 w-6 text-white" />
           ) : (
             <>
-              <DoraemonIcon size={70} />
+              <DoraemonIcon size={140} />
               {/* Notification dot */}
               <span className="absolute -top-1 -right-1 h-4 w-4 bg-red-500 rounded-full border-2 border-white animate-pulse" />
             </>
@@ -198,8 +198,8 @@ export default function ChatBot() {
         <div className="fixed bottom-28 right-6 z-50 w-[380px] h-[520px] bg-white rounded-3xl shadow-2xl border border-slate-200 flex flex-col overflow-hidden animate-fadeIn">
           {/* Header */}
           <div className="bg-gradient-to-r from-[#00A1E9] to-[#0088CC] px-5 py-4 flex items-center gap-3">
-            <div className="h-11 w-11 rounded-full overflow-hidden bg-white/20 flex items-center justify-center">
-              <DoraemonIcon size={44} />
+            <div className="h-12 w-12 rounded-full overflow-hidden bg-white/20 flex items-center justify-center">
+              <DoraemonIcon size={48} />
             </div>
             <div className="flex-1">
               <h3 className="text-white font-bold text-sm">Doraemon Y Tế</h3>
@@ -218,7 +218,7 @@ export default function ChatBot() {
                 <div className={`flex items-start gap-2 max-w-[85%] ${
                   msg.role === 'user' ? 'flex-row-reverse' : ''
                 }`}>
-                  <div className={`h-8 w-8 rounded-full flex items-center justify-center shrink-0 ${
+                  <div className={`h-9 w-9 rounded-full flex items-center justify-center shrink-0 ${
                     msg.role === 'user'
                       ? 'bg-slate-200'
                       : 'bg-[#00A1E9]/10 overflow-hidden'
@@ -226,7 +226,7 @@ export default function ChatBot() {
                     {msg.role === 'user' ? (
                       <User className="h-4 w-4 text-slate-600" />
                     ) : (
-                      <DoraemonIcon size={32} />
+                      <DoraemonIcon size={36} />
                     )}
                   </div>
                   <div className={`rounded-2xl px-4 py-2.5 text-sm leading-relaxed ${
@@ -244,8 +244,8 @@ export default function ChatBot() {
             {streamingContent && (
               <div className="flex justify-start">
                 <div className="flex items-start gap-2 max-w-[85%]">
-                  <div className="h-8 w-8 rounded-full flex items-center justify-center shrink-0 bg-[#00A1E9]/10 overflow-hidden">
-                    <DoraemonIcon size={32} />
+                  <div className="h-9 w-9 rounded-full flex items-center justify-center shrink-0 bg-[#00A1E9]/10 overflow-hidden">
+                    <DoraemonIcon size={36} />
                   </div>
                   <div className="rounded-2xl px-4 py-2.5 text-sm leading-relaxed bg-slate-100 text-slate-800 rounded-tl-sm">
                     <div className="whitespace-pre-wrap">{streamingContent}</div>
@@ -258,8 +258,8 @@ export default function ChatBot() {
             {isLoading && !streamingContent && (
               <div className="flex justify-start">
                 <div className="flex items-start gap-2">
-                  <div className="h-8 w-8 rounded-full flex items-center justify-center shrink-0 bg-[#00A1E9]/10 overflow-hidden">
-                    <DoraemonIcon size={32} />
+                  <div className="h-9 w-9 rounded-full flex items-center justify-center shrink-0 bg-[#00A1E9]/10 overflow-hidden">
+                    <DoraemonIcon size={36} />
                   </div>
                   <div className="rounded-2xl px-4 py-3 bg-slate-100">
                     <Loader2 className="h-4 w-4 text-primary animate-spin" />
