@@ -1,8 +1,13 @@
+'use client';
+
 import Link from 'next/link';
 import Image from 'next/image';
 import { MapPin, Clock, Phone, Mail, Shield, Calendar, ArrowRight } from 'lucide-react';
+import { useSession } from 'next-auth/react';
 
 export default function Home() {
+  const { data: session } = useSession();
+
   return (
     <div className="bg-white">
       {/* Top bar */}
@@ -30,7 +35,7 @@ export default function Home() {
                 <span className="text-primary">nhanh chóng & tiện lợi</span>
               </h1>
               <p className="mt-6 text-lg text-slate-600 leading-relaxed max-w-xl mx-auto lg:mx-0">
-                Kết nối bạn với hơn 25 bệnh viện hàng đầu trên toàn quốc. Tìm bác sĩ phù hợp theo triệu chứng, định vị bệnh viện gần nhất và đặt lịch chỉ trong vài phút.
+                Kết nối bạn với hơn 78 bệnh viện hàng đầu trên toàn quốc. Tìm bác sĩ phù hợp theo triệu chứng, định vị bệnh viện gần nhất và đặt lịch chỉ trong vài phút.
               </p>
               <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
                 <Link
@@ -50,15 +55,15 @@ export default function Home() {
               <div className="mt-10 flex items-center gap-8 justify-center lg:justify-start text-sm text-slate-500">
                 <div className="flex items-center gap-2">
                   <div className="w-2 h-2 rounded-full bg-primary"></div>
-                  <span><strong className="text-foreground">25+</strong> Bệnh viện</span>
+                  <span><strong className="text-foreground">78+</strong> Bệnh viện</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <div className="w-2 h-2 rounded-full bg-primary"></div>
-                  <span><strong className="text-foreground">60+</strong> Bác sĩ</span>
+                  <span><strong className="text-foreground">280+</strong> Bác sĩ</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <div className="w-2 h-2 rounded-full bg-primary"></div>
-                  <span><strong className="text-foreground">5</strong> Thành phố</span>
+                  <span><strong className="text-foreground">13</strong> Thành phố</span>
                 </div>
               </div>
             </div>
@@ -86,7 +91,7 @@ export default function Home() {
                     Đội ngũ y bác sĩ chuyên nghiệp
                   </div>
                   <h3 className="text-2xl font-bold text-white leading-snug">
-                    Hơn 60 bác sĩ chuyên khoa<br />
+                    Hơn 280 bác sĩ chuyên khoa<br />
                     <span className="text-sky-300">sẵn sàng hỗ trợ bạn</span>
                   </h3>
                   <p className="mt-3 text-sm text-white/80 leading-relaxed">
@@ -157,10 +162,10 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-14">
             <h2 className="text-3xl font-bold text-foreground">Khu vực hoạt động</h2>
-            <p className="mt-3 text-slate-500">Phủ sóng 5 thành phố lớn trên toàn quốc</p>
+            <p className="mt-3 text-slate-500">Phủ sóng 13 thành phố lớn trên toàn quốc</p>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-            {['Hà Nội', 'TP. Hồ Chí Minh', 'Đà Nẵng', 'Hải Phòng', 'Cần Thơ'].map((city) => (
+            {['Hà Nội', 'TP. Hồ Chí Minh', 'Đà Nẵng', 'Hải Phòng', 'Cần Thơ', 'Nha Trang', 'Huế', 'Quy Nhơn', 'Vinh', 'Đà Lạt'].map((city) => (
               <div key={city} className="bg-white p-5 rounded-lg border border-border text-center shadow-sm">
                 <MapPin className="h-5 w-5 text-primary mx-auto mb-2" />
                 <p className="font-semibold text-slate-800 text-sm">{city}</p>
@@ -170,26 +175,51 @@ export default function Home() {
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="py-20">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="bg-primary rounded-2xl p-10 sm:p-14 text-center text-white">
-            <h2 className="text-3xl font-bold">Bắt đầu đặt lịch khám ngay</h2>
-            <p className="mt-4 text-sky-100 max-w-xl mx-auto">
-              Đăng ký tài khoản miễn phí để trải nghiệm quy trình đặt lịch khám bệnh hiện đại và chuyên nghiệp.
-            </p>
-            <div className="mt-8">
-              <Link
-                href="/auth/signup"
-                className="inline-flex items-center gap-2 bg-white text-primary font-semibold px-8 py-3.5 rounded-lg hover:bg-sky-50 transition-colors shadow-sm cursor-pointer"
-              >
-                Đăng ký tài khoản
-                <ArrowRight className="h-4 w-4" />
-              </Link>
+      {/* CTA - Only show when not logged in */}
+      {!session && (
+        <section className="py-20">
+          <div className="max-w-7xl mx-auto px-6">
+            <div className="bg-primary rounded-2xl p-10 sm:p-14 text-center text-white">
+              <h2 className="text-3xl font-bold">Bắt đầu đặt lịch khám ngay</h2>
+              <p className="mt-4 text-sky-100 max-w-xl mx-auto">
+                Đăng ký tài khoản miễn phí để trải nghiệm quy trình đặt lịch khám bệnh hiện đại và chuyên nghiệp.
+              </p>
+              <div className="mt-8">
+                <Link
+                  href="/auth/signup"
+                  className="inline-flex items-center gap-2 bg-white text-primary font-semibold px-8 py-3.5 rounded-lg hover:bg-sky-50 transition-colors shadow-sm cursor-pointer"
+                >
+                  Đăng ký tài khoản
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
+              </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
+
+      {/* Show different CTA when logged in */}
+      {session && (
+        <section className="py-20">
+          <div className="max-w-7xl mx-auto px-6">
+            <div className="bg-primary rounded-2xl p-10 sm:p-14 text-center text-white">
+              <h2 className="text-3xl font-bold">Chào mừng bạn quay trở lại!</h2>
+              <p className="mt-4 text-sky-100 max-w-xl mx-auto">
+                Bạn đã sẵn sàng đặt lịch khám bệnh chưa? Hãy bắt đầu ngay bây giờ.
+              </p>
+              <div className="mt-8">
+                <Link
+                  href="/booking"
+                  className="inline-flex items-center gap-2 bg-white text-primary font-semibold px-8 py-3.5 rounded-lg hover:bg-sky-50 transition-colors shadow-sm cursor-pointer"
+                >
+                  Đặt lịch khám ngay
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
     </div>
   );
 }

@@ -4,7 +4,6 @@ import { readCSV } from '@/lib/githubDb';
 const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY;
 const OPENROUTER_BASE_URL = 'https://openrouter.ai/api/v1/chat/completions';
 
-// Build system prompt with CSV context
 async function buildSystemPrompt(): Promise<string> {
   const [clinics, doctors, symptoms] = await Promise.all([
     readCSV<any>('clinics.csv'),
@@ -12,50 +11,108 @@ async function buildSystemPrompt(): Promise<string> {
     readCSV<any>('symptoms.csv'),
   ]);
 
-  const clinicList = clinics.map((c: any) => 
-    `- ${c.name}: ${c.address} | Chuyên khoa: ${c.specialties}`
-  ).join('\n');
+  // Group clinics by city
+  const clinicsByCity: Record<string, any[]> = {};
+  clinics.forEach((c: any) => {
+    const addr = c.address || '';
+    let city = 'Khác';
+    if (addr.includes('Hà Nội') || addr.includes('Hai Bà') || addr.includes('Đống Đa') || addr.includes('Hoàn Kiếm') || addr.includes('Cầu Giấy') || addr.includes('Ba Đình') || addr.includes('Long Biên') || addr.includes('Tây Hồ') || addr.includes('Thanh Nhàn') || addr.includes('Bách Khoa') || addr.includes('Phương Mai') || addr.includes('Ngọc Hà')) city = 'Hà Nội';
+    else if (addr.includes('Đà Nẵng') || addr.includes('Hải Châu') || addr.includes('Thanh Khê') || addr.includes('Ngũ Hành') || addr.includes('Liên Chiểu') || addr.includes('Cẩm Lệ') || addr.includes('Sơn Trà')) city = 'Đà Nẵng';
+    else if (addr.includes('TP.HCM') || addr.includes('Quận') || addr.includes('Thành phố Hồ Chí Minh')) city = 'TP.HCM';
+    else if (addr.includes('Hải Phòng')) city = 'Hải Phòng';
+    else if (addr.includes('Cần Thơ')) city = 'Cần Thơ';
+    else if (addr.includes('Nha Trang') || addr.includes('Khánh Hòa')) city = 'Nha Trang';
+    else if (addr.includes('Huế')) city = 'Huế';
+    else if (addr.includes('Quy Nhơn') || addr.includes('Bình Định')) city = 'Quy Nhơn';
+    else if (addr.includes('Nghệ An') || addr.includes('Vinh')) city = 'Vinh';
+    else if (addr.includes('Đà Lạt') || addr.includes('Lâm Đồng')) city = 'Đà Lạt';
+    else if (addr.includes('Nam Định')) city = 'Nam Định';
+    else if (addr.includes('Thanh Hóa')) city = 'Thanh Hóa';
+    else if (addr.includes('Hải Dương')) city = 'Hải Dương';
+    if (!clinicsByCity[city]) clinicsByCity[city] = [];
+    clinicsByCity[city].push(c);
+  });
+
+  const clinicListByCity = Object.entries(clinicsByCity).map(([city, list]) => {
+    const items = list.map((c: any) => `  + ${c.name} - ${c.address} [${c.specialties}]`).join('\n');
+    return `${city}:\n${items}`;
+  }).join('\n\n');
 
   const doctorList = doctors.map((d: any) => {
     const clinic = clinics.find((c: any) => c.clinic_id.toString() === d.clinic_id.toString());
-    return `- ${d.name} (${d.specialty}) tại ${clinic?.name || 'N/A'} | Triệu chứng: ${d.symptoms_handled} | Giờ: ${d.work_hours}`;
+    return `  + ${d.name} - ${d.specialty} - ${clinic?.name || 'N/A'} - Triệu chứng: ${d.symptoms}`;
   }).join('\n');
 
   const symptomList = symptoms.map((s: any) => 
-    `- ${s.name} (${s.severity}): ${s.description}`
+    `  + ${s.name} (${s.severity}) -> Chuyên khoa: ${s.specialty_hint} - ${s.description}`
   ).join('\n');
 
-  return `Bạn là trợ lý AI thông minh của hệ thống MediBuk. Bạn có thể trả lời bất kỳ câu hỏi nào, ngoại trừ những nội dung vi phạm đạo đức và pháp luật.
+  return `BẠN LÀ TRỢ LÝ AI CỦA MEDIBUK - HỆ THỐNG ĐẶT LỊCH KHÁM BỆNH TRỰC TUYẾN.
 
-Bạn có kiến thức về:
-' Y tế và sức khỏe (triệu chứng, bệnh viện, bác sĩ)
-' Công nghệ, lập trình, khoa học
-' Lịch sử, văn hóa, xã hội
-' Giáo dục, học tập
-' Và nhiều lĩnh vực khác
+========================================
+DỮ LIỆU BỆNH VIỆN THEO TỪNG THÀNH PHỐ:
+========================================
+${clinicListByCity}
 
-Đặc biệt, bạn có thông tin từ dữ liệu MediBuk về 25 bệnh viện tại Hà Nội, 52 bác sĩ, và 50 triệu chứng y tế.
+========================================
+DANH SÁCH BÁC SĨ (${doctors.length} bác sĩ):
+========================================
+${doctorList}
 
-KHI NGƯỜI DÙNG HỎI VỀ Y TẾ:
-' Cung cấp thông tin từ dữ liệu MediBuk (bệnh viện, bác sĩ, triệu chứng)
-' Gợi ý chuyên khoa phù hợp
-' Lưu ý: Đây chỉ là tư vấn sơ bộ, cần đến bệnh viện khám trực tiếp
+========================================
+DANH SÁCH TRIỆU CHỨNG (${symptoms.length} triệu chứng):
+========================================
+${symptomList}
 
-KHI NGƯỜI DÙNG HỎI VỀ MEDIBUK:
-' Hướng dẫn cách đặt lịch khám, xem lịch hẹn, quản lý tài khoản
-' Quy trình 4 bước: Nhập địa chỉ, Chọn bệnh viện, Nhập triệu chứng, Chọn ngày giờ
+========================================
+WORKFLOW HƯỚNG DẪN NGƯỜI DÙNG:
+========================================
 
-TỐI ƯU TỐC ĐỘ:
-' Trả lời ngắn gọn, súc tích
-' Sử dụng bullet points khi liệt kê
-' Không giải thích dài dòng`;
+WORKFLOW 1: TƯ VẤN TRIỆU CHỨNG -> CHUYÊN KHOA
+Khi người dùng mô tả triệu chứng:
+  Bước 1: Xác định triệu chứng từ mô tả
+  Bước 2: Gợi ý chuyên khoa phù hợp (dựa trên danh sách triệu chứng)
+  Bước 3: Gợi ý bệnh viện có chuyên khoa đó (ưu tiên thành phố người dùng ở)
+  Bước 4: Gợi ý bác sĩ phù hợp tại bệnh viện đó
+  Bước 5: Hướng dẫn đặt lịch tại /booking
+
+WORKFLOW 2: TÌM BỆNH VIỆN GẦN NHẤT
+Khi người dùng hỏi bệnh viện gần nhất:
+  Bước 1: Hỏi địa chỉ/thành phố của người dùng
+  Bước 2: Liệt kê bệnh viện tại thành phố đó
+  Bước 3: Sắp xếp theo chuyên khoa phù hợp
+  Bước 4: Hướng dẫn đến /booking để đặt lịch
+
+WORKFLOW 3: ĐẶT LỊCH KHÁM
+Khi người dùng muốn đặt lịch:
+  Bước 1: Giới thiệu quy trình 3 bước
+  Bước 2: Hướng dẫn nhập địa chỉ để tìm bệnh viện gần
+  Bước 3: Hướng dẫn chọn bệnh viện và bác sĩ
+  Bước 4: Hướng dẫn nhập triệu chứng
+  Bước 5: Chọn ngày giờ khám
+  Bước 6: Xác nhận và nhận email
+
+WORKFLOW 4: TRẢ LỜI CÂU HỎI TỔNG QUÁT
+Khi người dùng hỏi về y tế/không liên quan MediBuk:
+  + Trả lời ngắn gọn, súc tích
+  + Nếu liên quan y tế, gợi ý đến bệnh viện phù hợp
+  + Luôn kết thúc bằng gợi ý đặt lịch nếu phù hợp
+
+========================================
+NGUYÊN TẮC TRẢ LỜI:
+========================================
++ Luôn trả lời bằng tiếng Việt
++ Sử dụng ' thay vì * hoặc - để liệt kê
++ Ngắn gọn, súc tích, không dài dòng
++ Nếu nghiêm trọng (severe) cảnh báo đến bệnh viện ngay
++ Luôn gợi ý đặt lịch tại /booking nếu liên quan khám bệnh
++ Không đưa chẩn đoán chính xác, chỉ tư vấn sơ bộ`;
 }
 
-// Web search tool for when needed
 async function webSearch(query: string): Promise<string> {
   try {
     const res = await fetch(
-      `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query + ' Hà Nội')}&limit=3&countrycodes=vn`,
+      `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&limit=3&countrycodes=vn`,
       { headers: { 'User-Agent': 'MediBuk/1.0' } }
     );
     const data = await res.json();
@@ -81,7 +138,6 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Tin nhắn không hợp lệ.' }, { status: 400 });
     }
 
-    // Only block clearly unethical requests
     const lastUserMsg = messages[messages.length - 1]?.content || '';
     const blockedTopics = [
       'cách làm bom', 'cách hack', 'cách đánh cắp', 'cách lừa đảo',
@@ -97,16 +153,13 @@ export async function POST(request: Request) {
       });
     }
 
-    // Build system prompt with CSV context
     const systemPrompt = await buildSystemPrompt();
 
-    // Prepare messages with system prompt
     const apiMessages = [
       { role: 'system', content: systemPrompt },
-      ...messages.slice(-20) // Keep last 20 messages for context
+      ...messages.slice(-20)
     ];
 
-    // Check if user needs web search
     const needsWebSearch = lastUserMsg.toLowerCase().includes('tìm') || 
                            lastUserMsg.toLowerCase().includes('tra cứu') ||
                            lastUserMsg.toLowerCase().includes('search') ||
@@ -121,7 +174,6 @@ export async function POST(request: Request) {
       });
     }
 
-    // Use streaming for fast response
     if (stream) {
       const response = await fetch(OPENROUTER_BASE_URL, {
         method: 'POST',
@@ -149,7 +201,6 @@ export async function POST(request: Request) {
         );
       }
 
-      // Stream the response
       const reader = response.body?.getReader();
       const encoder = new TextEncoder();
 
@@ -204,7 +255,6 @@ export async function POST(request: Request) {
       });
     }
 
-    // Non-streaming fallback
     const response = await fetch(OPENROUTER_BASE_URL, {
       method: 'POST',
       headers: {
