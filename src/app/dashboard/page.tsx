@@ -112,6 +112,30 @@ function DashboardContent() {
     }
   };
 
+  const handleDeleteAppointment = async (appId: string) => {
+    if (!confirm('Bạn có chắc chắn muốn XÓA vĩnh viễn lịch hẹn này? Hành động không thể hoàn tác.')) return;
+    setErrorMsg('');
+    setSuccessMsg('');
+
+    try {
+      const res = await fetch('/api/dashboard', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'deleteAppointment', appointment_id: appId })
+      });
+      const data = await res.json();
+
+      if (!res.ok) {
+        setErrorMsg(data.error || 'Xóa lịch thất bại.');
+      } else {
+        setSuccessMsg('Đã xóa lịch hẹn thành công.');
+        loadDashboard();
+      }
+    } catch (err) {
+      setErrorMsg('Lỗi kết nối.');
+    }
+  };
+
   // -------------------------------------------------------------
   // Clinic Admin Actions
   // -------------------------------------------------------------
@@ -429,16 +453,22 @@ function DashboardContent() {
                         </span>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-center">
-                        {app.status === 'confirmed' ? (
+                        <div className="flex justify-center gap-x-1">
+                          {app.status === 'confirmed' && (
+                            <button
+                              onClick={() => handleCancelAppointment(app.appointment_id)}
+                              className="px-3 py-1.5 text-xs font-semibold text-amber-600 hover:bg-amber-50 rounded-lg border border-amber-100 transition-colors"
+                            >
+                              Hủy lịch
+                            </button>
+                          )}
                           <button
-                            onClick={() => handleCancelAppointment(app.appointment_id)}
+                            onClick={() => handleDeleteAppointment(app.appointment_id)}
                             className="px-3 py-1.5 text-xs font-semibold text-rose-600 hover:bg-rose-50 rounded-lg border border-rose-100 transition-colors"
                           >
-                            Hủy lịch
+                            Xóa
                           </button>
-                        ) : (
-                          <span className="text-slate-400 text-xs">Không khả dụng</span>
-                        )}
+                        </div>
                       </td>
                     </tr>
                   ))}
@@ -607,16 +637,22 @@ function DashboardContent() {
                             </span>
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-center">
-                            {app.status === 'confirmed' ? (
+                            <div className="flex justify-center gap-x-1">
+                              {app.status === 'confirmed' && (
+                                <button
+                                  onClick={() => handleCancelAppointment(app.appointment_id)}
+                                  className="text-amber-600 hover:text-amber-800 font-semibold text-xs border border-amber-100 rounded-lg px-2.5 py-1 hover:bg-amber-50"
+                                >
+                                  Hủy lịch
+                                </button>
+                              )}
                               <button
-                                onClick={() => handleCancelAppointment(app.appointment_id)}
-                                className="text-rose-600 hover:text-rose-800 font-semibold text-xs border border-rose-100 rounded-lg px-2.5 py-1"
+                                onClick={() => handleDeleteAppointment(app.appointment_id)}
+                                className="text-rose-600 hover:text-rose-800 font-semibold text-xs border border-rose-100 rounded-lg px-2.5 py-1 hover:bg-rose-50"
                               >
-                                Hủy lịch
+                                Xóa
                               </button>
-                            ) : (
-                              <span className="text-slate-400 text-xs">Đã kết thúc</span>
-                            )}
+                            </div>
                           </td>
                         </tr>
                       ))}

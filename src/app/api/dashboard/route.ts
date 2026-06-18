@@ -3,6 +3,14 @@ import { getServerSession } from 'next-auth/next';
 import { authOptions } from '@/lib/auth';
 import { readCSV, writeCSV, Appointment, Clinic, Doctor } from '@/lib/githubDb';
 
+function getTodayStr(): string {
+  const now = new Date();
+  const y = now.getFullYear();
+  const m = String(now.getMonth() + 1).padStart(2, '0');
+  const d = String(now.getDate()).padStart(2, '0');
+  return `${y}-${m}-${d}`;
+}
+
 export async function GET() {
   try {
     const session = await getServerSession(authOptions);
@@ -14,9 +22,17 @@ export async function GET() {
     const role = (session.user as any).role;
 
     // Load datasets
-    const appointments = await readCSV<Appointment>('appointments.csv');
+    let appointments = await readCSV<Appointment>('appointments.csv');
     const clinics = await readCSV<Clinic>('clinics.csv');
     const doctors = await readCSV<Doctor>('doctors.csv');
+
+    // Auto-delete past appointments (date < today)
+    const todayStr = getTodayStr();
+    const beforeCount = appointments.length;
+    appointments = appointments.filter(app => app.date >= todayStr);
+    if (appointments.length < beforeCount) {
+      await writeCSV<Appointment>('appointments.csv', appointments);
+    }
 
     // Enrich appointments with clinic name and doctor name
     const enrichedAppointments = appointments.map(app => {
@@ -84,6 +100,27 @@ export async function POST(request: Request) {
       await writeCSV<Appointment>('appointments.csv', appointments);
 
       return NextResponse.json({ message: 'Hủy lịch hẹn thành công!' });
+    }
+
+    // Handle Patient/Admin action: permanently delete appointment
+    if (action === 'deleteAppointment') {
+      const { appointment_id } = body;
+      let appointments = await readCSV<Appointment>('appointments.csv');
+      const appIndex = appointments.findIndex(app => app.appointment_id === appointment_id);
+
+      if (appIndex === -1) {
+        return NextResponse.json({ error: 'Không tìm thấy lịch hẹn cần xóa.' }, { status: 404 });
+      }
+
+      // Check authorization (patient can only delete their own booking)
+      if (role !== 'admin' && appointments[appIndex].user_id.toString() !== (session.user as any).id.toString()) {
+        return NextResponse.json({ error: 'Không có quyền thực hiện thao tác này.' }, { status: 403 });
+      }
+
+      appointments = appointments.filter(app => app.appointment_id !== appointment_id);
+      await writeCSV<Appointment>('appointments.csv', appointments);
+
+      return NextResponse.json({ message: 'Xóa lịch hẹn thành công!' });
     }
 
     // Protect administrative actions
