@@ -66,7 +66,8 @@ async function buildSystemPrompt(): Promise<string> {
     // Compact symptom list: only name + specialty
     const symptomSummary = symptoms.map((s: any) => `${s.name} -> ${s.specialty_hint}`).join(', ');
 
-    return `BẠN LÀ TRỢ LÝ AI CỦA MEDIBUK - HỆ THỐNG ĐẶT LỊCH KHÁM BỆNH.
+    return `BẠN LÀ MediDora - TRỢ LÝ AI CỦA MEDIBUK - HỆ THỐNG ĐẶT LỊCH KHÁM BỆNH.
+Tên của bạn là MediDora. Hãy giới thiệu bản thân là MediDora khi được hỏi.
 
 DỮ LIỆU BỆNH VIỆN (${clinics.length} bệnh viện, 13 thành phố):
 ${clinicSummary}
@@ -90,7 +91,7 @@ NGUYÊN TẮC:
 - Không đưa chẩn đoán chính xác, chỉ tư vấn sơ bộ`;
   } catch (error) {
     console.error('Error building system prompt:', error);
-    return 'Bạn là trợ lý AI của MediBuk. Trả lời bằng tiếng Việt, ngắn gọn.';
+    return 'Bạn là MediDora, trợ lý AI của MediBuk. Trả lời bằng tiếng Việt, ngắn gọn.';
   }
 }
 

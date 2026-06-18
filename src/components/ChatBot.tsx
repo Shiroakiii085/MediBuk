@@ -11,7 +11,7 @@ interface Message {
 
 const WELCOME_MESSAGE: Message = {
   role: 'assistant',
-  content: `Xin chào! Tôi là trợ lý AI y tế của MediBuk. 
+  content: `Xin chào! Tôi là MediDora - trợ lý AI y tế của MediBuk. 
 
 Tôi có thể giúp bạn:
 • Hướng dẫn đặt lịch khám bệnh
@@ -26,8 +26,7 @@ Bạn cần giúp gì hôm nay?`,
 const SUGGESTIONS = [
   'Hướng dẫn đặt lịch khám',
   'Tôi bị đau đầu và sốt',
-  'Tìm bệnh viện gần tôi',
-  'Bệnh viện Bạch Mai có bác sĩ nào?',
+  'Cho tôi biết một số bác sĩ của bệnh viện Bạch Mai',
 ];
 
 // Doraemon Avatar using uploaded image
@@ -202,7 +201,7 @@ export default function ChatBot() {
               <DoraemonIcon size={48} />
             </div>
             <div className="flex-1">
-              <h3 className="text-white font-bold text-sm">Doraemon Y Tế</h3>
+              <h3 className="text-white font-bold text-sm">MediDora</h3>
               <p className="text-sky-100 text-xs">Trợ lý AI MediBuk • Sẵn sàng hỗ trợ</p>
             </div>
             <div className="h-2.5 w-2.5 bg-green-400 rounded-full animate-pulse" />
