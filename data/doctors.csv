@@ -1,4 +1,4 @@
-doctor_id,name,gender,clinic_id,specialty,symptoms,experience_years
+doctor_id,name,gender,clinic_id,specialty,symptoms_handled,experience_years
 1,"PGS.TS Nguyễn Văn An",Nam,1,"Tim mạch;Hô hấp","Đau ngực;Khó thở;Ho kéo dài;Mệt mỏi;Huyết áp cao",25
 2,"TS.BS Trần Thị Bình",Nữ,1,"Thần kinh;Đầu","Đau đầu;Chóng mặt;Rối loạn giấc ngủ;Tê bì tay chân;Suy giảm trí nhớ",20
 3,"BSCKII Lê Văn Cường",Nam,1,"Tiêu hóa;Nội khoa","Đau bụng;Đầy bụng;Buồn nôn;Tiêu chảy;Chán ăn",18
