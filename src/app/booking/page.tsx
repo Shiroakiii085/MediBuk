@@ -149,14 +149,16 @@ export default function BookingPage() {
     }
   };
 
-  // Fetch symptom suggestions
+  // Fetch symptom suggestions — uses only the segment after the last comma
   const fetchSymptomSuggestions = useCallback(async (query: string) => {
-    if (query.length < 2) {
+    const segments = query.split(',');
+    const lastSegment = (segments[segments.length - 1] || '').trim();
+    if (lastSegment.length < 2) {
       setSymptomSuggestions([]);
       return;
     }
     try {
-      const res = await fetch(`/api/symptoms?q=${encodeURIComponent(query)}`);
+      const res = await fetch(`/api/symptoms?q=${encodeURIComponent(lastSegment)}`);
       const data = await res.json();
       setSymptomSuggestions(data.symptoms || []);
     } catch {
@@ -564,7 +566,11 @@ export default function BookingPage() {
                           type="button"
                           className="w-full text-left px-4 py-2 hover:bg-slate-50 text-sm border-b border-slate-100 last:border-0"
                           onMouseDown={() => {
-                            setSymptomInput(prev => prev ? `${prev}, ${s.name}` : s.name);
+                            const segments = symptomInput.split(',');
+                            // Replace only the last segment (the one being typed) with the suggestion
+                            segments[segments.length - 1] = ` ${s.name}`;
+                            const newInput = segments.join(',').trim();
+                            setSymptomInput(newInput);
                             setShowSuggestions(false);
                           }}
                         >
