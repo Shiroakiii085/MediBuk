@@ -1,0 +1,2 @@
+appointment_id,user_id,patient_name,patient_email,doctor_id,clinic_id,date,time,duration_minutes,status,symptom
+apt_1781837919194,usr_1781445873305,Hieu Pham,hphamle159@gmail.com,50,17,2026-06-21,17:00,45,confirmed,"đau đầu, tê bì"
