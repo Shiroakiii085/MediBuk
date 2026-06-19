@@ -1,2 +1,0 @@
-appointment_id,user_id,patient_name,patient_email,doctor_id,clinic_id,date,time,duration_minutes,status,symptom
-apt_1781757591457,usr_1781445873305,Hieu Pham,hphamle159@gmail.com,1,1,2026-06-19,10:00,60,confirmed,"đau, đau ngực"
