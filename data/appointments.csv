@@ -1,3 +1,4 @@
 appointment_id,user_id,patient_name,patient_email,doctor_id,clinic_id,date,time,duration_minutes,status,symptom
 apt_1782698964431,usr_1782698520250,"Vũ Mạnh Cường ",manhcuongggg0506@gmail.com,45,15,2026-07-03,16:40,45,confirmed,"tôi buồn nôn bruh 
 "
+apt_1782699312343,usr_1782699167207,"Mạnh Cường Vũ ",manhcuonggg0506@gmail.com,3,1,2026-07-03,15:15,60,confirmed,"tôi mệt "
