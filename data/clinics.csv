@@ -26,7 +26,7 @@ clinic_id,name,address,lat,lng,specialties
 25,"Bệnh viện Đa khoa Quốc tế Thu Cúc","286 Thụy Khuê, Bưởi, Tây Hồ, Hà Nội",21.0451,105.8145,"Nội tổng quát;Ngoại khoa;Tim mạch;Da liễu;Tai Mũi Họng;Mắt"
 26,"Bệnh viện Đà Nẵng","124 Hải Phòng, Thanh Bình, Hải Châu, Đà Nẵng",16.0730163,108.2154346,"Nội khoa;Ngoại khoa;Tim mạch;Thần kinh;Ung bướu;Sản phụ khoa;Nhi khoa;Cấp cứu;Hồi sức cấp cứu"
 27,"Bệnh viện C Đà Nẵng","122 Hải Phòng, Thanh Bình, Hải Châu, Đà Nẵng",16.0731892,108.2166433,"Tai Mũi Họng;Răng Hàm Mặt;Mắt;Ngoại khoa;Nội khoa;Sản phụ khoa;Nhi khoa;Cấp cứu"
-28,"Bệnh viện Phụ sản - Nhi Đà Nẵng","Đường Yersin, Ngũ Hành Sơn, Đà Nẵng",16.0226568,108.2493882,"Sản phụ khoa;Nhi khoa;Sản khoa;Phụ khoa;Sơ sinh;Vô sinh hiếm muộn;Cấp cứu sản nhi"
+28,"Bệnh viện Phụ sản - Nhi Đà Nẵng","402 Lê Văn Hiến, Khuê Mỹ, Ngũ Hành Sơn, Đà Nẵng",16.0060,108.2265,"Sản phụ khoa;Nhi khoa;Sản khoa;Phụ khoa;Sơ sinh;Vô sinh hiếm muộn;Cấp cứu sản nhi"
 29,"Bệnh viện Đa khoa Hoàn Mỹ Đà Nẵng","291 Nguyễn Văn Linh, Thanh Khê, Đà Nẵng",16.0594010,108.2098753,"Tim mạch can thiệp;Phẫu thuật tim hở;Thần kinh;Ngoại khoa;Nội khoa;Cấp cứu"
 30,"Bệnh viện 199 Bộ Công an","216 Nguyễn Công Trứ, Sơn Trà, Đà Nẵng",16.0655999,108.2358983,"Tai Mũi Họng;Ngoại khoa;Nội khoa;Răng Hàm Mặt;Mắt;Cấp cứu"
 31,"Bệnh viện Ung bướu Đà Nẵng","Đường Hoàng Thị Loan, Hòa Minh, Liên Chiểu, Đà Nẵng",16.0742,108.1728,"Ung bướu;Xạ trị;Hóa trị;Phẫu thuật ung thư;Chẩn đoán hình ảnh"
